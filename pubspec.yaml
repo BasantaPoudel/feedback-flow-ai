@@ -35,6 +35,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # The following adds Business Logic Component (BLoC) to your application.
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
+
+  # The following adds the Material Components library to your application.
+  material: ^1.0.0+2
+
+  #The following adds the Hive database to your application.
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

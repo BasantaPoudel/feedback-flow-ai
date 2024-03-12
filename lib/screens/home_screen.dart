@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/screens/activities_screen.dart';
 import 'package:feedback_flow/screens/feedback_screen.dart';
 import 'package:feedback_flow/screens/profile_screen.dart';
 import 'package:feedback_flow/screens/search_screen.dart';
 import 'package:feedback_flow/screens/stats_screen.dart';
 import 'package:feedback_flow/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -81,6 +83,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    var firebaseDataRef = FirebaseFirestore.instance.collection('role_based');
+    final query = firebaseDataRef.where('email', isEqualTo: user!.email);
+    firebaseDataRef.doc('DPVYhvXnxd2xYp5jA7GD').get().then(
+      (DocumentSnapshot documentSnapshot) {
+        // if (documentSnapshot.exists) {
+        //   if (documentSnapshot.get('role') == "student") {
+        //     print("AUTH GATE: Student");
+        //   }
+        // }
+
+        final data = documentSnapshot.data() as Map<String, dynamic>;
+        for (var value in data.values) {
+          print("Value: $value");
+        }
+        // ...
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

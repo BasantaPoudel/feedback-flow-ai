@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/screens/activities_screen.dart';
+import 'package:feedback_flow/screens/activities_screen_teacher.dart';
 import 'package:feedback_flow/screens/feedback_screen.dart';
 import 'package:feedback_flow/screens/profile_screen.dart';
 import 'package:feedback_flow/screens/search_screen.dart';
@@ -86,17 +87,76 @@ class _HomeScreenState extends State<HomeScreen> {
     User? user = FirebaseAuth.instance.currentUser;
     var firebaseDataRef = FirebaseFirestore.instance.collection('role_based');
     final query = firebaseDataRef.where('email', isEqualTo: user!.email);
-    firebaseDataRef.doc('DPVYhvXnxd2xYp5jA7GD').get().then(
-      (DocumentSnapshot documentSnapshot) {
+    query.get().then(
+      (QuerySnapshot documentSnapshot) {
         // if (documentSnapshot.exists) {
         //   if (documentSnapshot.get('role') == "student") {
         //     print("AUTH GATE: Student");
         //   }
         // }
-
-        final data = documentSnapshot.data() as Map<String, dynamic>;
+        final data = documentSnapshot.docs.first as Map<String, dynamic>;
+        final role = data['role'];
+        print("Role: $role");
         for (var value in data.values) {
           print("Value: $value");
+        }
+
+        if (role == "student") {
+          _children.clear();
+          _children.addAll([
+            WelcomeScreen(),
+            Activities(),
+            Search(),
+            Stats(),
+            ProfileScreen(
+              appBar: AppBar(
+                title: const Text('User Profile'),
+              ),
+              actions: [
+                SignedOutAction((context) {
+                  Navigator.of(context).pop();
+                })
+              ],
+              children: [
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    // child: Image.asset('flutterfire_300x.png'),
+                  ),
+                ),
+              ],
+            ),
+          ]);
+        } else {
+          _children.clear();
+          _children.addAll([
+            WelcomeScreen(),
+            ActivitiesTeacher(),
+            Search(),
+            Stats(),
+            ProfileScreen(
+              appBar: AppBar(
+                title: const Text('User Profile'),
+              ),
+              actions: [
+                SignedOutAction((context) {
+                  Navigator.of(context).pop();
+                })
+              ],
+              children: [
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    // child: Image.asset('flutterfire_300x.png'),
+                  ),
+                ),
+              ],
+            ),
+          ]);
         }
         // ...
       },

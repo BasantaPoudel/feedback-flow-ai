@@ -84,25 +84,43 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
-    var firebaseDataRef = FirebaseFirestore.instance.collection('role_based');
-    final query = firebaseDataRef.where('email', isEqualTo: user!.email);
-    firebaseDataRef.doc('DPVYhvXnxd2xYp5jA7GD').get().then(
-      (DocumentSnapshot documentSnapshot) {
-        // if (documentSnapshot.exists) {
-        //   if (documentSnapshot.get('role') == "student") {
-        //     print("AUTH GATE: Student");
-        //   }
-        // }
 
-        final data = documentSnapshot.data() as Map<String, dynamic>;
-        for (var value in data.values) {
-          print("Value: $value");
+    //get list of role based users
+    var role_based_users = FirebaseFirestore.instance.collection('role_based');
+
+    //try adding some users to the database
+    final new_user = <String, dynamic>{
+      "role": "student",
+      "email": "welcomesarad@gmail.com"
+    };
+
+    final new_user2 = <String, dynamic>{
+      "role": "teacher",
+      "email": "claudia@gmail.com"
+    };
+
+    // Adding Successful
+    // role_based_users.doc("sharad").set(new_user);
+    // role_based_users.add(new_user2);
+
+    //Perform Simple Query
+    //Step-1 [Create query object]
+    var roleBasedUsersRef = FirebaseFirestore.instance.collection('role_based');
+    final query = roleBasedUsersRef.where("role", isEqualTo: "teacher");
+    final query2 =
+        roleBasedUsersRef.where("user", isEqualTo: "bpmessage@gmail.com");
+
+    //Step-2 [use get to retrieve the results]
+    query.get().then(
+      (querySnapshot) {
+        print("Query1 - Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
         }
-        // ...
+        ;
       },
-      onError: (e) => print("Error getting document: $e"),
+      onError: (e) => print("Error completing: $e"),
     );
-
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

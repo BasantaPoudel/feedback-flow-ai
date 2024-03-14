@@ -47,9 +47,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  List<Widget> _children = [
+  late List<Widget> _children = [
     WelcomeScreen(),
-    ActivitiesTeacher(),
+    Activities(),
     Search(),
     Stats(),
     ProfileScreen(
@@ -74,70 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
 
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
-  void loadTeacherWidgets() {
-    setState(() {
-      _children = [
-        WelcomeScreen(),
-        ActivitiesTeacher(),
-        Search(),
-        Stats(),
-        ProfileScreen(
-          appBar: AppBar(
-            title: const Text('User Profile'),
-          ),
-          actions: [
-            SignedOutAction((context) {
-              Navigator.of(context).pop();
-            })
-          ],
-          children: [
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(2),
-              child: AspectRatio(
-                aspectRatio: 1,
-                // child: Image.asset('flutterfire_300x.png'),
-              ),
-            ),
-          ],
-        ),
-      ];
-    });
-  }
-
-  void loadStudentWidgets() {
-    setState(() {});
-  }
-
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     User? user = FirebaseAuth.instance.currentUser;
 
-    //get list of role based users
-    var role_based_users = FirebaseFirestore.instance.collection('role_based');
-
-    //try adding some users to the database
-    final new_user = <String, dynamic>{
-      "role": "student",
-      "email": "welcomesarad@gmail.com"
-    };
-
-    final new_user2 = <String, dynamic>{
-      "role": "teacher",
-      "email": "claudia@gmail.com"
-    };
-
-    // Adding Successful
-    // role_based_users.doc("sharad").set(new_user);
-    // role_based_users.add(new_user2);
-
-    //Perform Simple Query
     //Step-1 [Create query object]
     var roleBasedUsersRef = FirebaseFirestore.instance.collection('role_based');
     final query = roleBasedUsersRef.where("email", isEqualTo: user!.email);
@@ -150,8 +90,59 @@ class _HomeScreenState extends State<HomeScreen> {
           print('${docSnapshot.id} => ${docSnapshot.data()}');
           if (docSnapshot.data().containsValue("teacher")) {
             print("[Reached Teacher If]");
-            // loadTeacherWidgets();
+            _children = [
+              WelcomeScreen(),
+              ActivitiesTeacher(),
+              Search(),
+              Stats(),
+              ProfileScreen(
+                appBar: AppBar(
+                  title: const Text('User Profile'),
+                ),
+                actions: [
+                  SignedOutAction((context) {
+                    Navigator.of(context).pop();
+                  })
+                ],
+                children: [
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      // child: Image.asset('flutterfire_300x.png'),
+                    ),
+                  ),
+                ],
+              ),
+            ];
           } else {
+            _children = [
+              WelcomeScreen(),
+              Activities(),
+              Search(),
+              Stats(),
+              ProfileScreen(
+                appBar: AppBar(
+                  title: const Text('User Profile'),
+                ),
+                actions: [
+                  SignedOutAction((context) {
+                    Navigator.of(context).pop();
+                  })
+                ],
+                children: [
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      // child: Image.asset('flutterfire_300x.png'),
+                    ),
+                  ),
+                ],
+              ),
+            ];
             print("[Reached Student If]");
             // loadStudentWidgets();
           }
@@ -160,7 +151,17 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       onError: (e) => print("Error completing: $e"),
     );
+    super.initState();
+  }
 
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

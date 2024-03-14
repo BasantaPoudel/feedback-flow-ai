@@ -47,13 +47,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _children = [
-    //TODO - Attempt to add a welcome screen
+  List<Widget> _children = [
     WelcomeScreen(),
-    Activities(),
+    ActivitiesTeacher(),
     Search(),
     Stats(),
-    // Profile(),
     ProfileScreen(
       appBar: AppBar(
         title: const Text('User Profile'),
@@ -82,6 +80,41 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void loadTeacherWidgets() {
+    setState(() {
+      _children = [
+        WelcomeScreen(),
+        ActivitiesTeacher(),
+        Search(),
+        Stats(),
+        ProfileScreen(
+          appBar: AppBar(
+            title: const Text('User Profile'),
+          ),
+          actions: [
+            SignedOutAction((context) {
+              Navigator.of(context).pop();
+            })
+          ],
+          children: [
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.all(2),
+              child: AspectRatio(
+                aspectRatio: 1,
+                // child: Image.asset('flutterfire_300x.png'),
+              ),
+            ),
+          ],
+        ),
+      ];
+    });
+  }
+
+  void loadStudentWidgets() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
@@ -107,9 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //Perform Simple Query
     //Step-1 [Create query object]
     var roleBasedUsersRef = FirebaseFirestore.instance.collection('role_based');
-    final query = roleBasedUsersRef.where("role", isEqualTo: "teacher");
-    final query2 =
-        roleBasedUsersRef.where("user", isEqualTo: "bpmessage@gmail.com");
+    final query = roleBasedUsersRef.where("email", isEqualTo: user!.email);
 
     //Step-2 [use get to retrieve the results]
     query.get().then(
@@ -117,69 +148,19 @@ class _HomeScreenState extends State<HomeScreen> {
         print("Query1 - Successfully completed");
         for (var docSnapshot in querySnapshot.docs) {
           print('${docSnapshot.id} => ${docSnapshot.data()}');
+          if (docSnapshot.data().containsValue("teacher")) {
+            print("[Reached Teacher If]");
+            // loadTeacherWidgets();
+          } else {
+            print("[Reached Student If]");
+            // loadStudentWidgets();
+          }
+          ;
         }
-        ;
       },
       onError: (e) => print("Error completing: $e"),
     );
 
-    // if (role == "student") {
-    //   _children.clear();
-    //   _children.addAll([
-    //     WelcomeScreen(),
-    //     Activities(),
-    //     Search(),
-    //     Stats(),
-    //     ProfileScreen(
-    //       appBar: AppBar(
-    //         title: const Text('User Profile'),
-    //       ),
-    //       actions: [
-    //         SignedOutAction((context) {
-    //           Navigator.of(context).pop();
-    //         })
-    //       ],
-    //       children: [
-    //         const Divider(),
-    //         Padding(
-    //           padding: const EdgeInsets.all(2),
-    //           child: AspectRatio(
-    //             aspectRatio: 1,
-    //             // child: Image.asset('flutterfire_300x.png'),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ]);
-    // } else {
-    //   _children.clear();
-    //   _children.addAll([
-    //     WelcomeScreen(),
-    //     ActivitiesTeacher(),
-    //     Search(),
-    //     Stats(),
-    //     ProfileScreen(
-    //       appBar: AppBar(
-    //         title: const Text('User Profile'),
-    //       ),
-    //       actions: [
-    //         SignedOutAction((context) {
-    //           Navigator.of(context).pop();
-    //         })
-    //       ],
-    //       children: [
-    //         const Divider(),
-    //         Padding(
-    //           padding: const EdgeInsets.all(2),
-    //           child: AspectRatio(
-    //             aspectRatio: 1,
-    //             // child: Image.asset('flutterfire_300x.png'),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ]);
-    //
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

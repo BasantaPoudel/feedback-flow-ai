@@ -1,8 +1,11 @@
+import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
+import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/firebase_options.dart';
 import 'package:feedback_flow/screens/home_screen.dart';
 import 'package:feedback_flow/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,12 +33,14 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const AuthGate(),
-    );
+    //TODO - Refactor if the BlocProvider is not needed
+    return BlocProvider(
+        create: (_) => HomeScreenCubit(),
+        child: MaterialApp(
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: const AuthGate()));
   }
 }
 

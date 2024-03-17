@@ -7,96 +7,50 @@ import 'package:flutter/material.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
 abstract class HomeScreenState {
-  int _currentIndex = 0;
-
-  //Definition of state variables
-  late List<Widget> _children = [
-    WelcomeScreen(),
-    Activities(),
-    Search(),
-    Stats(),
-    ProfileScreen(
-      appBar: AppBar(
-        title: const Text('User Profile'),
-      ),
-      actions: [
-        SignedOutAction((context) {
-          Navigator.of(context).pop();
-        })
-      ],
-      children: [
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 1,
-            // child: Image.asset('flutterfire_300x.png'),
-          ),
-        ),
-      ],
-    ),
-  ];
+  get children => null;
+  get currentIndex => null;
 }
 
 class UserLoadingState extends HomeScreenState {}
 
 class TeacherLoggedInState extends HomeScreenState {
-  final List<Widget> _children = [
-    WelcomeScreen(),
-    ActivitiesTeacher(),
-    Search(),
-    Stats(),
-    ProfileScreen(
-      appBar: AppBar(
-        title: const Text('User Profile'),
-      ),
-      actions: [
-        SignedOutAction((context) {
-          Navigator.of(context).pop();
-        })
-      ],
-      children: [
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 1,
-            // child: Image.asset('flutterfire_300x.png'),
-          ),
-        ),
-      ],
-    ),
-  ];
+  int _currentIndex;
+  List<Widget> _children;
+  TeacherLoggedInState(this._currentIndex, this._children);
+
+  @override
+  get children => _children;
+  @override
+  get currentIndex => _currentIndex;
 }
 
 class StudentLoggedInState extends HomeScreenState {
-  final int _currentIndex = 0;
-  final List<Widget> _children = [
-    WelcomeScreen(),
-    Activities(),
-    Search(),
-    Stats(),
-    ProfileScreen(
-      appBar: AppBar(
-        title: const Text('User Profile'),
-      ),
-      actions: [
-        SignedOutAction((context) {
-          Navigator.of(context).pop();
-        })
-      ],
-      children: [
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 1,
-            // child: Image.asset('flutterfire_300x.png'),
-          ),
-        ),
-      ],
-    ),
-  ];
+  int _currentIndex;
+  List<Widget> _children;
+  StudentLoggedInState(this._currentIndex, this._children);
+
+  @override
+  get children => _children;
+  @override
+  get currentIndex => _currentIndex;
 }
 
 class UserLoggedOutState extends HomeScreenState {}
+
+class UserErrorState extends HomeScreenState {
+  String _message;
+  UserErrorState(this._message);
+
+  get message => _message;
+}
+
+class BottomNavigationChanged extends HomeScreenState {
+  int _currentIndex;
+  List<Widget> _children;
+  BottomNavigationChanged(this._currentIndex, this._children);
+
+  @override
+  get children => _children;
+  @override
+  get currentIndex => _currentIndex;
+}

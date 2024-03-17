@@ -1,6 +1,20 @@
+import 'package:feedback_flow/models/activity.dart';
+import 'package:feedback_flow/models/rubric.dart';
+import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
 
-class Activities extends StatelessWidget {
+class ActivitiesScreen extends StatelessWidget {
+  List<Activity> activities = [
+    Activity(
+      title: 'Activity 1',
+      rubrics: [Rubric(name: 'Rubric 1'), Rubric(name: 'Rubric 2')],
+    ),
+    Activity(
+      title: 'Activity 2',
+      rubrics: [Rubric(name: 'Rubric 3'), Rubric(name: 'Rubric 4')],
+    ),
+    // Add more activities as needed
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,11 +25,23 @@ class Activities extends StatelessWidget {
           subtitle: ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 3, // replace with your actual list length
+            itemCount:
+                activities.length, // replace with your actual list length
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                title: Text('Past Item $index'),
+                title: Text(activities[index].title),
                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RubricScreen(
+                        texts: activities[index]
+                            .rubrics
+                            .map((rubric) => rubric.name)
+                            .toList(),
+                      ),
+                    ),
+                  );
                   // handle your item click here
                 },
               );

@@ -11,14 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'auth_gate.dart';
-// final router = GoRouter(
-//   routes: [
-//     GoRoute(path: '/home', builder: (context, state) => MyApp()),
-//   ],
-// );
-// void main() {
-//   runApp(const MyApp());
-// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,13 +26,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO - Refactor if the BlocProvider is not needed
-    return BlocProvider(
-        create: (_) => HomeScreenCubit(),
-        child: MaterialApp(
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: const AuthGate()));
+    return MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const AuthGate());
   }
 }
 

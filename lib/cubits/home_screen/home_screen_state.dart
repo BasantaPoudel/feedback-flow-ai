@@ -13,6 +13,8 @@ abstract class HomeScreenState {
 
 class UserLoadingState extends HomeScreenState {}
 
+class InitState extends HomeScreenState {}
+
 class TeacherLoggedInState extends HomeScreenState {
   int _currentIndex;
   List<Widget> _children;

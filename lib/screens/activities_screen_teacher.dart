@@ -32,23 +32,34 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                 itemCount:
                     activities.length, // replace with your actual list length
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text(activities[index].title),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RubricScreen(
-                            texts: activities[index]
-                                .rubrics
-                                .map((rubric) => rubric.name)
-                                .toList(),
+                  return Card(
+                      color: Color(0xFF6D7981),
+                      child: ListTile(
+                        title: Text(
+                          activities[index].title,
+                          style: TextStyle(
+                            color: Colors.white, // Change text color to white
                           ),
                         ),
-                      );
-                      // handle your item click here
-                    },
-                  );
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RubricScreen(
+                                texts: activities[index]
+                                    .rubrics
+                                    .map((rubric) => rubric.name)
+                                    .toList(),
+                              ),
+                            ),
+                          );
+                          // handle your item click here
+                        },
+                      ));
+
+                  // handle your item click here
+
+                  // handle your item click here
                 },
               ),
             ),
@@ -57,14 +68,61 @@ class ActivitiesTeacherScreen extends StatelessWidget {
               subtitle: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 5, // replace with your actual list length
+                itemCount:
+                    activities.length, // replace with your actual list length
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text('Current Item $index'),
-                    onTap: () {
-                      // handle your item click here
-                    },
-                  );
+                  return Card(
+                      color: Color(0xFF6D7981),
+                      child: ListTile(
+                          title: Text(
+                            activities[index].title,
+                            style: TextStyle(
+                              color: Colors.white, // Change text color to white
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RubricScreen(
+                                  texts: activities[index]
+                                      .rubrics
+                                      .map((rubric) => rubric.name)
+                                      .toList(),
+                                ),
+                              ),
+                            );
+                            // handle your item click here
+                          },
+                          trailing: FittedBox(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Start button pressed
+                                    // Add your logic here
+                                  },
+                                  child: Text('Start'),
+                                ), // SizedBox(width: 8),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // End button pressed
+                                    // Add your logic here
+                                  },
+                                  child: Text('End'),
+                                ),
+                                // SizedBox(width: 8),
+                                // ElevatedButton(
+                                //   onPressed: () {
+                                //     // Distribute Results button pressed
+                                //     // Add your logic here
+                                //   },
+                                //   child: Text('Distribute Results'),
+                                // ),
+                              ],
+                            ),
+                          )));
                 },
               ),
             ),

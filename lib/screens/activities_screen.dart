@@ -1,6 +1,7 @@
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
+import 'package:feedback_flow/screens/score_screen.dart';
 import 'package:flutter/material.dart';
 
 class ActivitiesScreen extends StatelessWidget {
@@ -40,17 +41,27 @@ class ActivitiesScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
+                        //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                         MaterialPageRoute(
-                          builder: (context) => RubricScreen(
-                            texts: activities[index]
-                                .rubrics
-                                .map((rubric) => rubric.name)
-                                .toList(),
-                          ),
+                          builder: (context) => ScoreScreen(),
                         ),
                       );
                       // handle your item click here
                     },
+                    // onTap: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => RubricScreen(
+                    //         texts: activities[index]
+                    //             .rubrics
+                    //             .map((rubric) => rubric.name)
+                    //             .toList(),
+                    //       ),
+                    //     ),
+                    //   );
+                    //   // handle your item click here
+                    // },
                   ));
 
               // handle your item click here

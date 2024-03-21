@@ -21,6 +21,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
     super.initState();
     // Fetch users from the database and populate the lists
     // performFetch();
+    getUsers();
   }
 
   void getUsers() {
@@ -35,66 +36,66 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // DatabaseScreenCubit? _databaseScreenCubit =
-    // BlocProvider.of<DatabaseScreenCubit>(context);
+    DatabaseScreenCubit? _databaseScreenCubit =
+        BlocProvider.of<DatabaseScreenCubit>(context);
 
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.all(20.0), //The distance you want
-        child: ElevatedButton(
-          child: Text(
-            'Get Users',
-          ),
-          onPressed: getUsers,
-        ),
-      ),
-      FutureBuilder(
-          future: _operationResult,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<UserModel>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text("Waiting for an operation result.");
-            } else if (snapshot.hasError) {
-              return Text("Error in operation: ${snapshot.error}");
-            } else if (!snapshot.hasData) {
-              return const Text("No operation result yet.");
-            } else {
-              List<UserModel> users = snapshot.data!;
-              // bool isPresenter = false;
-              return BlocProvider(
-                  create: (_) => DatabaseScreenCubit(),
-                  child: Expanded(
-                      child: ListView.builder(
-                          itemCount: users.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                                title: Text(users[index].email),
-                                trailing: BlocBuilder<DatabaseScreenCubit,
-                                        DatabaseScreenState>(
-                                    builder: (context, state) {
-                                  if (state is PresenterState) {
-                                    return Checkbox(
-                                      value: state.props![index].isPresenter,
-                                      onChanged: (bool? value) {
-                                        context
-                                            .read<DatabaseScreenCubit>()
-                                            .selectPresenter(users, index);
-                                      },
-                                    );
-                                  } else {
-                                    print("Reached Else");
+    // return Column(children: [
+    //   Padding(
+    //     padding: const EdgeInsets.all(20.0), //The distance you want
+    //     child: ElevatedButton(
+    //       child: Text(
+    //         'Get Users',
+    //       ),
+    //       onPressed: getUsers,
+    //     ),
+    //   ),
+    return FutureBuilder(
+        future: _operationResult,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<UserModel>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text("Waiting for an operation result.");
+          } else if (snapshot.hasError) {
+            return Text("Error in operation: ${snapshot.error}");
+          } else if (!snapshot.hasData) {
+            return const Text("No operation result yet.");
+          } else {
+            List<UserModel> users = snapshot.data!;
+            // bool isPresenter = false;
+            return Expanded(
+                child: ListView.builder(
+                    itemCount: users.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                          color: Color(0xFF6D7981),
+                          child: ListTile(
+                              title: Text(users[index].name),
+                              textColor: Colors.white,
+                              trailing: BlocBuilder<DatabaseScreenCubit,
+                                      DatabaseScreenState>(
+                                  builder: (context, state) {
+                                if (state is PresenterState) {
+                                  return Checkbox(
+                                    value: state.props![index].isPresenter,
+                                    checkColor: Colors.white,
+                                    onChanged: (bool? value) {
+                                      _databaseScreenCubit!
+                                          .selectPresenter(users, index);
+                                    },
+                                  );
+                                } else {
+                                  print("Reached Else");
 
-                                    return Checkbox(
-                                        value: false,
-                                        onChanged: (bool? value) => context
-                                            .read<DatabaseScreenCubit>()
-                                            .selectPresenter(users, index));
-                                  }
-                                }));
-                          })));
-            }
-          }),
-    ]);
+                                  return Checkbox(
+                                      value: false,
+                                      onChanged: (bool? value) =>
+                                          _databaseScreenCubit!
+                                              .selectPresenter(users, index));
+                                }
+                              })));
+                    }));
+          }
+        });
   }
 }
 
@@ -106,7 +107,9 @@ Future<List<UserModel>> fetchUsersFromDatabase() async {
     await roleBasedUsersRef.get().then((QuerySnapshot querySnapshot) async {
       querySnapshot.docs.forEach((doc) {
         Map<String, dynamic> user = doc.data()! as Map<String, dynamic>;
-        users.add(UserModel.fromMap(user));
+        if (user['role'] == 'student') {
+          users.add(UserModel.fromMap(user));
+        }
       });
     });
   } catch (e) {

@@ -1,14 +1,12 @@
-import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
-import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
+import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
+import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/firebase_options.dart';
-import 'package:feedback_flow/screens/home_screen.dart';
-import 'package:feedback_flow/screens/login_screen.dart';
+import 'package:feedback_flow/models/activity.dart';
+import 'package:feedback_flow/models/rubric.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:material_color_gen/material_color_gen.dart';
 
 import 'auth_gate.dart';
 
@@ -18,7 +16,26 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  List<Activity> activities = [
+    Activity(
+      title: 'Activity 1',
+      rubrics: [Rubric(name: 'Rubric 1'), Rubric(name: 'Rubric 2')],
+    ),
+    Activity(
+      title: 'Activity 2',
+      rubrics: [Rubric(name: 'Rubric 3'), Rubric(name: 'Rubric 4')],
+    ),
+    // Add more activities as needed
+  ];
+  runApp(MultiBlocProvider(providers: [
+    // BlocProvider<HomeScreenCubit>(
+    //     create: (BuildContext context) => HomeScreenCubit()),
+
+    BlocProvider(
+        create: (BuildContext context) => ActivitiesScreenCubit(activities)),
+
+    BlocProvider(create: (BuildContext context) => DatabaseScreenCubit())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -28,24 +45,8 @@ class MyApp extends StatelessWidget {
     //TODO - Refactor if the BlocProvider is not needed
     return MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Color(0x049EE0).toMaterialColor(),
         ),
         home: const AuthGate());
   }
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Feedback Flow App',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: LoginScreen(),
-//       // home: const MyHomePage(),
-//     );
-//   }
-// }

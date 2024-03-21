@@ -58,6 +58,7 @@ dependencies:
   go_router: ^13.2.0
   firebase_ui_auth: ^1.13.1
 
+  material_color_gen: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

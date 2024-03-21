@@ -10,8 +10,11 @@ class DatabaseScreenCubit extends Cubit<DatabaseScreenState> {
   DatabaseScreenCubit() : super(DatabaseScreenInitial());
 
   selectPresenter(List<UserModel> users, index) {
+    print("[DatabaseScreenCubit] Reached selectPresenter");
     users[index].isPresenter = !(users[index].isPresenter!);
-    print("[DatabaseScreenCubit] Researched selectPresenter");
-    emit(PresenterState(users));
+
+    users.any((element) => element.isPresenter == true)
+        ? emit(PresenterState(users))
+        : emit(DatabaseScreenLoaded(users));
   }
 }

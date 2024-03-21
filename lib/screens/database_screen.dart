@@ -35,8 +35,8 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // DatabaseScreenCubit? _databaseScreenCubit =
-    // BlocProvider.of<DatabaseScreenCubit>(context);
+    DatabaseScreenCubit? _databaseScreenCubit =
+        BlocProvider.of<DatabaseScreenCubit>(context);
 
     return Column(children: [
       Padding(
@@ -61,37 +61,33 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
             } else {
               List<UserModel> users = snapshot.data!;
               // bool isPresenter = false;
-              return BlocProvider(
-                  create: (_) => DatabaseScreenCubit(),
-                  child: Expanded(
-                      child: ListView.builder(
-                          itemCount: users.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                                title: Text(users[index].email),
-                                trailing: BlocBuilder<DatabaseScreenCubit,
-                                        DatabaseScreenState>(
-                                    builder: (context, state) {
-                                  if (state is PresenterState) {
-                                    return Checkbox(
-                                      value: state.props![index].isPresenter,
-                                      onChanged: (bool? value) {
-                                        context
-                                            .read<DatabaseScreenCubit>()
-                                            .selectPresenter(users, index);
-                                      },
-                                    );
-                                  } else {
-                                    print("Reached Else");
+              return Expanded(
+                  child: ListView.builder(
+                      itemCount: users.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                            title: Text(users[index].email),
+                            trailing: BlocBuilder<DatabaseScreenCubit,
+                                DatabaseScreenState>(builder: (context, state) {
+                              if (state is PresenterState) {
+                                return Checkbox(
+                                  value: state.props![index].isPresenter,
+                                  onChanged: (bool? value) {
+                                    _databaseScreenCubit!
+                                        .selectPresenter(users, index);
+                                  },
+                                );
+                              } else {
+                                print("Reached Else");
 
-                                    return Checkbox(
-                                        value: false,
-                                        onChanged: (bool? value) => context
-                                            .read<DatabaseScreenCubit>()
+                                return Checkbox(
+                                    value: false,
+                                    onChanged: (bool? value) =>
+                                        _databaseScreenCubit!
                                             .selectPresenter(users, index));
-                                  }
-                                }));
-                          })));
+                              }
+                            }));
+                      }));
             }
           }),
     ]);

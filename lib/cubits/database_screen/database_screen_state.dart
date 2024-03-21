@@ -21,8 +21,10 @@ class DatabaseScreenLoading extends DatabaseScreenState {
 }
 
 class DatabaseScreenLoaded extends DatabaseScreenState {
-  DatabaseScreenLoaded()
-      : super.withUsers(<UserModel>[]); // DatabaseScreenLoaded(super.users);
+  List<UserModel>? _users;
+
+  DatabaseScreenLoaded(this._users)
+      : super.withUsers(_users); // DatabaseScreenLoaded(super.users);
   // Add your state properties here
 }
 
@@ -35,6 +37,6 @@ class PresenterState extends DatabaseScreenState {
   // Add your state properties here
   List<UserModel>? _users;
 
-  PresenterState(_users);
+  PresenterState(this._users) : super.withUsers(_users);
   List<UserModel>? get props => _users;
 }

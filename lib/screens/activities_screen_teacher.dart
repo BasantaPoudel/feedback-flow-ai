@@ -1,7 +1,10 @@
+import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ActivitiesTeacherScreen extends StatelessWidget {
   List<Activity> activities = [
@@ -17,6 +20,8 @@ class ActivitiesTeacherScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    DatabaseScreenCubit? _databaseScreenCubit =
+        BlocProvider.of<DatabaseScreenCubit>(context);
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
@@ -94,35 +99,35 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                             );
                             // handle your item click here
                           },
-                          trailing: FittedBox(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Start button pressed
-                                    // Add your logic here
-                                  },
-                                  child: Text('Start'),
-                                ), // SizedBox(width: 8),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // End button pressed
-                                    // Add your logic here
-                                  },
-                                  child: Text('End'),
+                          trailing: BlocBuilder<DatabaseScreenCubit,
+                              DatabaseScreenState>(builder: (context, state) {
+                            if (state is PresenterState) {
+                              return FittedBox(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () {}, child: Text('Start')),
+
+                                    // SizedBox(width: 8),
+                                    // ElevatedButton(
+                                    //   onPressed: null,
+                                    //   child: Text('End'),
+                                    // ),
+                                    // SizedBox(width: 8),
+                                    // ElevatedButton(
+                                    //   onPressed: () {
+                                    //     // Distribute Results button pressed
+                                    //     // Add your logic here
+                                    //   },
+                                    //   child: Text('Distribute Results'),
+                                    // ),
+                                  ],
                                 ),
-                                // SizedBox(width: 8),
-                                // ElevatedButton(
-                                //   onPressed: () {
-                                //     // Distribute Results button pressed
-                                //     // Add your logic here
-                                //   },
-                                //   child: Text('Distribute Results'),
-                                // ),
-                              ],
-                            ),
-                          )));
+                              );
+                            }
+                            return const FittedBox();
+                          })));
                 },
               ),
             ),

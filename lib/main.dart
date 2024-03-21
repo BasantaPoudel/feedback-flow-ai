@@ -1,3 +1,4 @@
+import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
@@ -22,6 +23,9 @@ void main() async {
   runApp(MultiBlocProvider(providers: [
     // BlocProvider<HomeScreenCubit>(
     //     create: (BuildContext context) => HomeScreenCubit()),
+
+    BlocProvider(create: (BuildContext context) => ActivitiesScreenCubit()),
+
     BlocProvider(create: (BuildContext context) => DatabaseScreenCubit())
   ], child: const MyApp()));
 }

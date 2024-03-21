@@ -1,7 +1,10 @@
+import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
+import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
+import 'package:feedback_flow/screens/activities_screen.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +25,10 @@ class ActivitiesTeacherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     DatabaseScreenCubit? _databaseScreenCubit =
         BlocProvider.of<DatabaseScreenCubit>(context);
+
+    ActivitiesScreenCubit? _activitiesScreenCubit =
+        BlocProvider.of<ActivitiesScreenCubit>(context);
+
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
@@ -102,31 +109,69 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                           trailing: BlocBuilder<DatabaseScreenCubit,
                               DatabaseScreenState>(builder: (context, state) {
                             if (state is PresenterState) {
-                              return FittedBox(
-                                child: Row(
+                              return BlocBuilder<ActivitiesScreenCubit,
+                                      ActivitiesScreenState>(
+                                  builder: (context, stateActivity) {
+                                if (stateActivity is InitialState) {
+                                  return FittedBox(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              _activitiesScreenCubit
+                                                  .startActivity();
+                                            },
+                                            child: Text('Start'))
+                                      ],
+                                    ),
+                                  );
+                                } else if (stateActivity is ActivityStarted) {
+                                  return FittedBox(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              _activitiesScreenCubit
+                                                  .endActivity();
+                                            },
+                                            child: Text('End')),
+                                      ],
+                                    ),
+                                  );
+                                } else if (stateActivity is ActivityEnded) {
+                                  return FittedBox(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              _activitiesScreenCubit
+                                                  .distributeResults();
+                                            },
+                                            child: Text('Distribute Results')),
+                                      ],
+                                    ),
+                                  );
+                                }
+
+                                return const FittedBox(
+                                    child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     ElevatedButton(
-                                        onPressed: () {}, child: Text('Start')),
-
-                                    // SizedBox(width: 8),
-                                    // ElevatedButton(
-                                    //   onPressed: null,
-                                    //   child: Text('End'),
-                                    // ),
-                                    // SizedBox(width: 8),
-                                    // ElevatedButton(
-                                    //   onPressed: () {
-                                    //     // Distribute Results button pressed
-                                    //     // Add your logic here
-                                    //   },
-                                    //   child: Text('Distribute Results'),
-                                    // ),
+                                        onPressed: null,
+                                        child: Text('Distribute Results')),
                                   ],
-                                ),
-                              );
+                                ));
+                              });
+                              return const FittedBox();
                             }
+
                             return const FittedBox();
+
+                            // return const FittedBox();
                           })));
                 },
               ),

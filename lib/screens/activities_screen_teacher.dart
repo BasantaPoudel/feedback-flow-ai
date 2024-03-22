@@ -3,18 +3,19 @@ import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.d
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:feedback_flow/screens/score_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ActivitiesTeacherScreen extends StatelessWidget {
+  const ActivitiesTeacherScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    DatabaseScreenCubit? _databaseScreenCubit =
+    DatabaseScreenCubit? databaseScreenCubit =
         BlocProvider.of<DatabaseScreenCubit>(context);
 
-    ActivitiesScreenCubit? _activitiesScreenCubit =
+    ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
 
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
@@ -28,20 +29,20 @@ class ActivitiesTeacherScreen extends StatelessWidget {
           body: ListView(
             children: <Widget>[
               ListTile(
-                title: Text('Past In Class Activities'),
+                title: const Text('Past In Class Activities'),
                 subtitle: ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: activitiesList
                       .length, // replace with your actual list length
                   itemBuilder: (BuildContext context, int index) {
                     if (activitiesList[index].isCompleted == true) {
                       return Card(
-                          color: Color(0xFF6D7981),
+                          color: const Color(0xFF6D7981),
                           child: ListTile(
                             title: Text(
                               activitiesList[index].title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color:
                                     Colors.white, // Change text color to white
                               ),
@@ -51,7 +52,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                 context,
                                 //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                                 MaterialPageRoute(
-                                  builder: (context) => ScoreScreen(),
+                                  builder: (context) => const ScoreScreen(),
                                 ),
                               );
                               // Navigator.push(
@@ -80,20 +81,20 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                   builder: (context, stateActivity) {
                 List<Activity> activitiesList = stateActivity.getActivities;
                 return ListTile(
-                  title: Text('Upcoming In Class Activities'),
+                  title: const Text('Upcoming In Class Activities'),
                   subtitle: ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: activitiesList
                           .length, // replace with your actual list length
                       itemBuilder: (BuildContext context, int index) {
                         if (activitiesList[index].isDistributed == false) {
                           return Card(
-                              color: Color(0xFF6D7981),
+                              color: const Color(0xFF6D7981),
                               child: ListTile(
                                   title: Text(
                                     activitiesList[index].title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors
                                           .white, // Change text color to white
                                     ),
@@ -103,7 +104,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                       context,
                                       //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                                       MaterialPageRoute(
-                                        builder: (context) => ScoreScreen(),
+                                        builder: (context) => const ScoreScreen(),
                                       ),
                                     );
                                     // Navigator.push(
@@ -134,12 +135,12 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                               children: [
                                                 ElevatedButton(
                                                     onPressed: () {
-                                                      _activitiesScreenCubit
+                                                      activitiesScreenCubit
                                                           .startActivity(
                                                               activitiesList,
                                                               index);
                                                     },
-                                                    child: Text('Start'))
+                                                    child: const Text('Start'))
                                               ],
                                             ),
                                           );
@@ -153,12 +154,12 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                               children: [
                                                 ElevatedButton(
                                                     onPressed: () {
-                                                      _activitiesScreenCubit
+                                                      activitiesScreenCubit
                                                           .endActivity(
                                                               activitiesList,
                                                               index);
                                                     },
-                                                    child: Text('End')),
+                                                    child: const Text('End')),
                                               ],
                                             ),
                                           );
@@ -172,12 +173,12 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                               children: [
                                                 ElevatedButton(
                                                     onPressed: () {
-                                                      _activitiesScreenCubit
+                                                      activitiesScreenCubit
                                                           .distributeResults(
                                                               activitiesList,
                                                               index);
                                                     },
-                                                    child: Text(
+                                                    child: const Text(
                                                         'Distribute Results')),
                                               ],
                                             ),
@@ -192,6 +193,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                     }
                                   })));
                         }
+                        return null;
                       }),
                 );
               }),

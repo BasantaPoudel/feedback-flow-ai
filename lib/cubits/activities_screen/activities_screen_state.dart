@@ -1,5 +1,4 @@
 import 'package:feedback_flow/models/activity.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // States
 abstract class ActivitiesScreenState {

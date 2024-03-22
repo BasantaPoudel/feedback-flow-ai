@@ -1,13 +1,6 @@
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
-import 'package:feedback_flow/screens/activities_screen.dart';
-import 'package:feedback_flow/screens/activities_screen_teacher.dart';
-import 'package:feedback_flow/screens/search_screen.dart';
-import 'package:feedback_flow/screens/stats_screen.dart';
-import 'package:feedback_flow/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,20 +26,20 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(body: BlocBuilder<HomeScreenCubit, HomeScreenState>(
             builder: (context, state) {
           if (state is UserLoadingState) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is TeacherLoggedInState ||
               state is StudentLoggedInState) {
             final currentIndex = state.currentIndex;
             final children = state.children;
             return children[currentIndex];
           } else
-            return Center(
-              child: Text("Something went wrong"),
+            return const Center(
+              child: Text("Something went wrong Initial State"),
             );
         }), bottomNavigationBar: BlocBuilder<HomeScreenCubit, HomeScreenState>(
             builder: (context, state) {
           if (state is UserLoadingState) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is TeacherLoggedInState) {
             return BottomNavigationBar(
               onTap: context.read<HomeScreenCubit>().onTabTappedTeacher,
@@ -104,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           } else
-            return Center(
-              child: Text("Something went wrong"),
+            return const Center(
+              child: Text("Something went wrong UserErrorState"),
             );
         })));
   }

@@ -1,5 +1,4 @@
 import 'package:feedback_flow/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 //TODO - Fix constructors and methods to properly set and get the values
 class DatabaseScreenState {
@@ -21,6 +20,7 @@ class DatabaseScreenLoading extends DatabaseScreenState {
 }
 
 class DatabaseScreenLoaded extends DatabaseScreenState {
+  @override
   List<UserModel>? _users;
 
   DatabaseScreenLoaded(this._users)
@@ -35,6 +35,7 @@ class DatabaseScreenError extends DatabaseScreenState {
 
 class PresenterState extends DatabaseScreenState {
   // Add your state properties here
+  @override
   List<UserModel>? _users;
 
   PresenterState(this._users) : super.withUsers(_users);

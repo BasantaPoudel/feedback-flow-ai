@@ -1,6 +1,5 @@
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
-import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:feedback_flow/screens/score_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,25 +15,27 @@ class ActivitiesScreen extends StatelessWidget {
     ),
     // Add more activities as needed
   ];
+
+  ActivitiesScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
       children: <Widget>[
         ListTile(
-          title: Text('Past In Class Activities'),
+          title: const Text('Past In Class Activities'),
           subtitle: ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount:
                 activities.length, // replace with your actual list length
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                  color: Color(0xFF6D7981),
+                  color: const Color(0xFF6D7981),
                   child: ListTile(
                     title: Text(
                       activities[index].title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white, // Change text color to white
                       ),
                     ),
@@ -43,7 +44,7 @@ class ActivitiesScreen extends StatelessWidget {
                         context,
                         //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                         MaterialPageRoute(
-                          builder: (context) => ScoreScreen(),
+                          builder: (context) => const ScoreScreen(),
                         ),
                       );
                       // handle your item click here
@@ -71,19 +72,19 @@ class ActivitiesScreen extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text('Upcoming In Class Activities'),
+          title: const Text('Upcoming In Class Activities'),
           subtitle: ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount:
                 activities.length, // replace with your actual list length
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                  color: Color(0xFF6D7981),
+                  color: const Color(0xFF6D7981),
                   child: ListTile(
                       title: Text(
                         activities[index].title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white, // Change text color to white
                         ),
                       ),
@@ -92,7 +93,7 @@ class ActivitiesScreen extends StatelessWidget {
                           context,
                           //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                           MaterialPageRoute(
-                            builder: (context) => ScoreScreen(),
+                            builder: (context) => const ScoreScreen(),
                           ),
                         );
 

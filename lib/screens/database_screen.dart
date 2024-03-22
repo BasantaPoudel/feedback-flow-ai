@@ -1,54 +1,40 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
 import 'package:feedback_flow/models/user.dart';
+import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DatabaseScreen extends StatefulWidget {
+  const DatabaseScreen({super.key});
+
   @override
   _DatabaseScreenState createState() => _DatabaseScreenState();
 }
 
 class _DatabaseScreenState extends State<DatabaseScreen> {
-  // List<String> users = []; // List of users from the database
   //TODO - Change the futurebuilder to BlocBuilder completely by transfering the business logic to the repository
   Future<List<UserModel>>? _operationResult;
-  // List<bool> isPresenter = List.filled(_operationResult[].length, false, growable: true);; // List to track if a user is a presenter
+  final UserRepository _userRepository = UserRepository();
 
   @override
   void initState() {
     super.initState();
     // Fetch users from the database and populate the lists
-    // performFetch();
     getUsers();
   }
 
   void getUsers() {
     setState(() {
-      _operationResult = fetchUsersFromDatabase();
+      _operationResult = _userRepository.fetchUsersFromDatabase();
     });
   }
 
-  // Future<List<String>>? performFetch() {
-  //   _operationResult = fetchUsersFromDatabase();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    DatabaseScreenCubit? _databaseScreenCubit =
+    DatabaseScreenCubit? databaseScreenCubit =
         BlocProvider.of<DatabaseScreenCubit>(context);
 
-    // return Column(children: [
-    //   Padding(
-    //     padding: const EdgeInsets.all(20.0), //The distance you want
-    //     child: ElevatedButton(
-    //       child: Text(
-    //         'Get Users',
-    //       ),
-    //       onPressed: getUsers,
-    //     ),
-    //   ),
     return FutureBuilder(
         future: _operationResult,
         builder:
@@ -67,7 +53,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                     itemCount: users.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
-                          color: Color(0xFF6D7981),
+                          color: const Color(0xFF6D7981),
                           child: ListTile(
                               title: Text(users[index].name),
                               textColor: Colors.white,
@@ -79,7 +65,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                                     value: state.props![index].isPresenter,
                                     checkColor: Colors.white,
                                     onChanged: (bool? value) {
-                                      _databaseScreenCubit!
+                                      databaseScreenCubit
                                           .selectPresenter(users, index);
                                     },
                                   );
@@ -89,7 +75,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                                   return Checkbox(
                                       value: false,
                                       onChanged: (bool? value) =>
-                                          _databaseScreenCubit!
+                                          databaseScreenCubit
                                               .selectPresenter(users, index));
                                 }
                               })));
@@ -97,23 +83,4 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
           }
         });
   }
-}
-
-Future<List<UserModel>> fetchUsersFromDatabase() async {
-  List<UserModel> users = [];
-  // List<String> users = ['Basanta', 'Santosh', 'Suman'];
-  try {
-    var roleBasedUsersRef = FirebaseFirestore.instance.collection('role_based');
-    await roleBasedUsersRef.get().then((QuerySnapshot querySnapshot) async {
-      querySnapshot.docs.forEach((doc) {
-        Map<String, dynamic> user = doc.data()! as Map<String, dynamic>;
-        if (user['role'] == 'student') {
-          users.add(UserModel.fromMap(user));
-        }
-      });
-    });
-  } catch (e) {
-    print('Error: $e');
-  }
-  return users;
 }

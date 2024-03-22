@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
     //TODO - Refactor if the BlocProvider is not needed
     return MaterialApp(
         theme: ThemeData(
-          primarySwatch: Color(0x049EE0).toMaterialColor(),
+          primarySwatch: const Color(0x00049ee0).toMaterialColor(),
         ),
         home: const AuthGate());
   }

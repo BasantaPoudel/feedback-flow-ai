@@ -17,8 +17,8 @@ class AuthGate extends StatelessWidget {
               EmailAuthProvider(),
             ],
             headerBuilder: (context, constraints, shrinkOffset) {
-              return Padding(
-                padding: const EdgeInsets.all(20),
+              return const Padding(
+                padding: EdgeInsets.all(20),
                 child: AspectRatio(
                   aspectRatio: 1,
                   // child: Image.asset('FeedbackFlow_300x.png'),
@@ -43,8 +43,8 @@ class AuthGate extends StatelessWidget {
               );
             },
             sideBuilder: (context, shrinkOffset) {
-              return Padding(
-                padding: const EdgeInsets.all(20),
+              return const Padding(
+                padding: EdgeInsets.all(20),
                 child: AspectRatio(
                   aspectRatio: 1,
                   // child: Image.asset('FeedbackFlow_300x.png'),
@@ -53,7 +53,7 @@ class AuthGate extends StatelessWidget {
             },
           );
         }
-        return HomeScreen();
+        return const HomeScreen();
       },
     );
   }

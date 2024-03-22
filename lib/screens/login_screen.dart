@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -31,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text('Login'),
+          title: const Text('Login'),
           leading: const BackButton(
             color: Colors.black,
           ),

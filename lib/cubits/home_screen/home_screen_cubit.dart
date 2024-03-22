@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
+import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/activities_screen_teacher.dart';
 import 'package:feedback_flow/screens/database_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,16 +13,15 @@ import 'package:feedback_flow/screens/welcome_screen.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {
   // static final HomeScreenCubit instance = HomeScreenCubit();
-  User? user = FirebaseAuth.instance.currentUser;
-  var roleBasedUsersRef = FirebaseFirestore.instance.collection('role_based');
   int _currentIndex = 0;
-
+  final UserRepository _userRepository = UserRepository();
+  Future<void>? _getRole;
   //TODO - Optimize the list
-  List<Widget> _childrenTeacher = [
-    WelcomeScreen(),
-    ActivitiesTeacherScreen(),
-    DatabaseScreen(),
-    Stats(),
+  final List<Widget> _childrenTeacher = [
+    const WelcomeScreen(),
+    const ActivitiesTeacherScreen(),
+    const DatabaseScreen(),
+    const Stats(),
     ProfileScreen(
       appBar: AppBar(
         title: const Text('User Profile'),
@@ -33,10 +31,10 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
           Navigator.of(context).pop();
         })
       ],
-      children: [
-        const Divider(),
+      children: const [
+        Divider(),
         Padding(
-          padding: const EdgeInsets.all(2),
+          padding: EdgeInsets.all(2),
           child: AspectRatio(
             aspectRatio: 1,
             // child: Image.asset('flutterfire_300x.png'),
@@ -46,11 +44,11 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     ),
   ];
 
-  List<Widget> _childrenStudent = [
-    WelcomeScreen(),
+  final List<Widget> _childrenStudent = [
+    const WelcomeScreen(),
     ActivitiesScreen(),
-    Search(),
-    Stats(),
+    const Search(),
+    const Stats(),
     ProfileScreen(
       appBar: AppBar(
         title: const Text('User Profile'),
@@ -60,10 +58,10 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
           Navigator.of(context).pop();
         })
       ],
-      children: [
-        const Divider(),
+      children: const [
+        Divider(),
         Padding(
-          padding: const EdgeInsets.all(2),
+          padding: EdgeInsets.all(2),
           child: AspectRatio(
             aspectRatio: 1,
             // child: Image.asset('flutterfire_300x.png'),
@@ -74,31 +72,21 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   ];
 
   HomeScreenCubit() : super(UserLoadingState()) {
-    getUserRole();
+    _getRole = getUserRole();
   }
 
   // Consists all the business logic here
-  getUserRole() {
-    final query = roleBasedUsersRef.where("email", isEqualTo: user!.email);
-    //Step-2 [use get to retrieve the results]
-    query.get().then(
-      (querySnapshot) {
-        print("Query1 - Successfully completed");
-        for (var docSnapshot in querySnapshot.docs) {
-          print('${docSnapshot.id} => ${docSnapshot.data()}');
-          if (docSnapshot.data().containsValue("teacher")) {
-            print("[Reached Teacher If]");
-            emit(TeacherLoggedInState(_currentIndex, _childrenTeacher));
-          } else {
-            print("[Reached Student If]");
-            emit(StudentLoggedInState(_currentIndex, _childrenStudent));
-            // loadStudentWidgets();
-          }
-          ;
-        }
-      },
-      onError: (e) => print("Error completing: $e"),
-    );
+  Future<void> getUserRole() async {
+    //TODO - Check How to access Future Data in right manner
+    String userRole = await _userRepository.getUserRole(
+        _currentIndex, _childrenTeacher, _childrenStudent);
+    if (userRole == "teacher") {
+      emit(TeacherLoggedInState(_currentIndex, _childrenTeacher));
+    } else if (userRole == "student") {
+      emit(StudentLoggedInState(_currentIndex, _childrenStudent));
+    } else {
+      emit(UserErrorState("Error in fetching user role"));
+    }
   }
 
   logOut() {

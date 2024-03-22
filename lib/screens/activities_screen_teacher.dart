@@ -1,10 +1,10 @@
-import 'dart:math';
-
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
+import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
+import 'package:feedback_flow/screens/score_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
 
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
-      final activitiesList = stateActivity.getActivities;
+      List<Activity> activitiesList = stateActivity.getActivities;
       return Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {},
@@ -49,15 +49,22 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                             onTap: () {
                               Navigator.push(
                                 context,
+                                //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                                 MaterialPageRoute(
-                                  builder: (context) => RubricScreen(
-                                    texts: activitiesList[index]
-                                        .rubrics
-                                        .map((rubric) => rubric.name)
-                                        .toList(),
-                                  ),
+                                  builder: (context) => ScoreScreen(),
                                 ),
                               );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => RubricScreen(
+                              //       texts: activitiesList[index]
+                              //           .rubrics
+                              //           .map((rubric) => rubric.name)
+                              //           .toList(),
+                              //     ),
+                              //   ),
+                              // );
                               // handle your item click here
                             },
                           ));
@@ -71,7 +78,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
               ),
               BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
                   builder: (context, stateActivity) {
-                final activitiesList = stateActivity.getActivities;
+                List<Activity> activitiesList = stateActivity.getActivities;
                 return ListTile(
                   title: Text('Upcoming In Class Activities'),
                   subtitle: ListView.builder(
@@ -94,15 +101,22 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                   onTap: () {
                                     Navigator.push(
                                       context,
+                                      //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                                       MaterialPageRoute(
-                                        builder: (context) => RubricScreen(
-                                          texts: activitiesList[index]
-                                              .rubrics
-                                              .map((rubric) => rubric.name)
-                                              .toList(),
-                                        ),
+                                        builder: (context) => ScoreScreen(),
                                       ),
                                     );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => RubricScreen(
+                                    //       texts: activitiesList[index]
+                                    //           .rubrics
+                                    //           .map((rubric) => rubric.name)
+                                    //           .toList(),
+                                    //     ),
+                                    //   ),
+                                    // );
                                     // handle your item click here
                                   },
                                   trailing: BlocBuilder<DatabaseScreenCubit,

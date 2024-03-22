@@ -1,14 +1,19 @@
+import 'package:feedback_flow/models/activity.dart';
+
 class UserModel {
   final String name;
   final String role;
   final String email;
   late bool? isPresenter;
 
+  List<Activity>? activities;
+
   UserModel(
       {required this.name,
       required this.email,
       required this.role,
-      this.isPresenter});
+      this.isPresenter,
+      this.activities});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(

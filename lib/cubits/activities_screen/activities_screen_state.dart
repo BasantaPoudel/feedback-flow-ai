@@ -37,3 +37,11 @@ class ResultsDistributed extends ActivitiesScreenState {
   @override
   get getActivities => activities;
 }
+
+class ActivityScoreSet extends ActivitiesScreenState {
+  final List<Activity> activities;
+
+  ActivityScoreSet(this.activities);
+  @override
+  get getActivities => activities;
+}

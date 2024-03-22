@@ -1,5 +1,12 @@
+import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
+import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
+import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
+import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
+import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/repository/score_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScoreScreen extends StatefulWidget {
   const ScoreScreen({super.key});
@@ -19,52 +26,99 @@ class _ScoreScreenState extends State<ScoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Score Screen'),
-      ),
-      body: ListView(
-        children: [
+    // ScoreCubit? scoreCubit = BlocProvider.of<ScoreCubit>(context);
+    // DatabaseScreenCubit? databaseScreenCubit =
+    //     BlocProvider.of<DatabaseScreenCubit>(context);
+
+    ActivitiesScreenCubit? activitiesScreenCubit =
+        BlocProvider.of<ActivitiesScreenCubit>(context);
+    // BlocBuilder<DatabaseScreenCubit, DatabaseScreenState>(
+    //     builder: (context, state) {
+    //   if (state is PresenterState) {
+    //     return ListTile(
+    //       title: Text(state.props![0].toString()),
+    //     );
+    //   }
+    //   return FittedBox();
+    // });
+
+    return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
+        builder: (context, stateActivity) {
+      List<Activity> activitiesList = stateActivity.getActivities;
+      if (stateActivity is ActivityStarted) {
+        return Scaffold(
+            body: ListView(children: <Widget>[
           ListTile(
-            title: const Text('Rubric 1'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (int i = 1; i <= 5; i++)
-                  IconButton(
-                    icon: const Icon(Icons.star),
-                    color: _score1 >= i ? Colors.yellow : Colors.grey,
-                    onPressed: () {
-                      setState(() {
-                        _score1 = i;
-                      });
-                      _sendScoreToFirebase(_score1, _score2);
-                    },
-                  ),
-              ],
+            title: Text(activitiesList[0].title),
+            subtitle: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: activitiesList[0].rubrics.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                    color: const Color(0xFF6D7981),
+                    child: ListTile(
+                      title: Text(activitiesList[0].rubrics[index].name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          )),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (int i = 1; i <= 5; i++)
+                            IconButton(
+                              icon: const Icon(Icons.star),
+                              color: _score1 >= i ? Colors.yellow : Colors.grey,
+                              onPressed: () {
+                                //ToDo: Add the logic to set the score individually
+                                setState(() {
+                                  _score1 = i;
+                                });
+                                _sendScoreToFirebase(_score1, _score2);
+                              },
+                            ),
+                        ],
+                      ),
+                    ));
+              },
             ),
-          ),
+          )
+        ]));
+      } else {
+        return Scaffold(
+            body: ListView(children: <Widget>[
           ListTile(
-            title: const Text('Rubric 2'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (int i = 1; i <= 5; i++)
-                  IconButton(
-                    icon: const Icon(Icons.star),
-                    color: _score2 >= i ? Colors.yellow : Colors.grey,
-                    onPressed: () {
-                      setState(() {
-                        _score2 = i;
-                      });
-                      _sendScoreToFirebase(_score1, _score2);
-                    },
-                  ),
-              ],
+            title: Text(activitiesList[0].title),
+            subtitle: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: activitiesList[0].rubrics.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                    color: const Color(0xFF6D7981),
+                    child: ListTile(
+                      title: Text(activitiesList[0].rubrics[index].name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          )),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (int i = 1; i <= 5; i++)
+                            IconButton(
+                              icon: const Icon(Icons.star),
+                              color: _score1 >= i ? Colors.yellow : Colors.grey,
+                              onPressed: null,
+                            ),
+                        ],
+                      ),
+                    ));
+              },
             ),
-          ),
-        ],
-      ),
-    );
+          )
+        ]));
+      }
+    });
+    // return Text("Hello");
   }
 }

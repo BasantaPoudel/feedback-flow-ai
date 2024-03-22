@@ -104,7 +104,8 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                       context,
                                       //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                                       MaterialPageRoute(
-                                        builder: (context) => const ScoreScreen(),
+                                        builder: (context) =>
+                                            const ScoreScreen(),
                                       ),
                                     );
                                     // Navigator.push(

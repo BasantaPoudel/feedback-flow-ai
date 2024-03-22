@@ -21,4 +21,9 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
     activities[index].isDistributed = true;
     emit(ResultsDistributed(activities));
   }
+
+  void setScore(List<Activity> activities, index, rubricIndex, score) {
+    activities[index].rubrics[rubricIndex].score = score;
+    emit(ActivityScoreSet(activities));
+  }
 }

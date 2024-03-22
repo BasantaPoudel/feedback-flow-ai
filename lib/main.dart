@@ -1,5 +1,6 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
 import 'package:feedback_flow/firebase_options.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
@@ -19,14 +20,21 @@ void main() async {
   List<Activity> activities = [
     Activity(
       title: 'Activity 1',
-      rubrics: [Rubric(name: 'Rubric 1'), Rubric(name: 'Rubric 2')],
+      rubrics: [
+        Rubric(name: 'Rubric 1', score: 0),
+        Rubric(name: 'Rubric 2', score: 0),
+      ],
     ),
     Activity(
       title: 'Activity 2',
-      rubrics: [Rubric(name: 'Rubric 3'), Rubric(name: 'Rubric 4')],
+      rubrics: [
+        Rubric(name: 'Rubric 3', score: 0),
+        Rubric(name: 'Rubric 4', score: 0),
+      ],
     ),
     // Add more activities as needed
   ];
+
   runApp(MultiBlocProvider(providers: [
     // BlocProvider<HomeScreenCubit>(
     //     create: (BuildContext context) => HomeScreenCubit()),
@@ -34,7 +42,8 @@ void main() async {
     BlocProvider(
         create: (BuildContext context) => ActivitiesScreenCubit(activities)),
 
-    BlocProvider(create: (BuildContext context) => DatabaseScreenCubit())
+    BlocProvider(create: (BuildContext context) => DatabaseScreenCubit()),
+    BlocProvider(create: (BuildContext context) => ScoreCubit())
   ], child: const MyApp()));
 }
 

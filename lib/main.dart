@@ -17,19 +17,20 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  //Check why Score is 0 ot null eventhough it is set to 1 in this list
   List<Activity> activities = [
     Activity(
       title: 'Activity 1',
       rubrics: [
-        Rubric(name: 'Rubric 1', score: 0),
-        Rubric(name: 'Rubric 2', score: 0),
+        Rubric(name: 'Rubric 1', score: 1),
+        Rubric(name: 'Rubric 2', score: 1),
       ],
     ),
     Activity(
       title: 'Activity 2',
       rubrics: [
-        Rubric(name: 'Rubric 3', score: 0),
-        Rubric(name: 'Rubric 4', score: 0),
+        Rubric(name: 'Rubric 3', score: 1),
+        Rubric(name: 'Rubric 4', score: 1),
       ],
     ),
     // Add more activities as needed

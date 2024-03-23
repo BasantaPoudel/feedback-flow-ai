@@ -1,8 +1,5 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
-import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/repository/score_repository.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +41,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
 
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
-      List<Activity> activitiesList = stateActivity.getActivities;
+      List<Activity> activitiesList = stateActivity.getUpcomingActivities;
       if (stateActivity is ActivityStarted) {
         return Scaffold(
             body: ListView(children: <Widget>[
@@ -68,12 +65,17 @@ class _ScoreScreenState extends State<ScoreScreen> {
                           for (int i = 1; i <= 5; i++)
                             IconButton(
                               icon: const Icon(Icons.star),
-                              color: _score1 >= i ? Colors.yellow : Colors.grey,
+                              color:
+                                  activitiesList[0].rubrics[index].score! >= i
+                                      ? Colors.yellow
+                                      : Colors.grey,
                               onPressed: () {
                                 //ToDo: Add the logic to set the score individually
-                                setState(() {
-                                  _score1 = i;
-                                });
+                                activitiesScreenCubit!
+                                    .setScore(activitiesList, 0, index, i);
+                                // setState(() {
+                                //   _score1 = i;
+                                // });
                                 _sendScoreToFirebase(_score1, _score2);
                               },
                             ),

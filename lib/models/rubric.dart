@@ -1,6 +1,6 @@
 class Rubric {
   String name;
   // Add other properties as needed
-  int? score;
-  Rubric({required this.name, score});
+  int score = 0;
+  Rubric({required this.name, required score});
 }

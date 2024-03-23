@@ -2,40 +2,46 @@ import 'package:feedback_flow/models/activity.dart';
 
 // States
 abstract class ActivitiesScreenState {
-  get getActivities => null;
+  get getUpcomingActivities => null;
+  get getPastActivities => null;
 }
 
 class InitialState extends ActivitiesScreenState {
-  final List<Activity> activities;
+  final List<Activity> upComingActivities;
 
-  InitialState(this.activities);
+  InitialState(this.upComingActivities);
 
   @override
-  get getActivities => activities;
+  get getUpcomingActivities => upComingActivities;
 }
 
 class ActivityStarted extends ActivitiesScreenState {
-  final List<Activity> activities;
+  final List<Activity> upComingActivities;
 
-  ActivityStarted(this.activities);
+  ActivityStarted(this.upComingActivities);
   @override
-  get getActivities => activities;
+  get getUpcomingActivities => upComingActivities;
 }
 
 class ActivityEnded extends ActivitiesScreenState {
-  final List<Activity> activities;
+  final List<Activity> upComingActivities;
 
-  ActivityEnded(this.activities);
+  ActivityEnded(this.upComingActivities);
   @override
-  get getActivities => activities;
+  get getUpcomingActivities => upComingActivities;
 }
 
 class ResultsDistributed extends ActivitiesScreenState {
-  final List<Activity> activities;
+  final List<Activity> pastActivities;
+  final List<Activity> upComingActivities;
 
-  ResultsDistributed(this.activities);
+  ResultsDistributed(this.pastActivities, this.upComingActivities);
+
   @override
-  get getActivities => activities;
+  get getUpcomingActivities => upComingActivities;
+
+  @override
+  get getPastActivities => pastActivities;
 }
 
 class ActivityScoreSet extends ActivitiesScreenState {
@@ -43,5 +49,5 @@ class ActivityScoreSet extends ActivitiesScreenState {
 
   ActivityScoreSet(this.activities);
   @override
-  get getActivities => activities;
+  get getUpcomingActivities => activities;
 }

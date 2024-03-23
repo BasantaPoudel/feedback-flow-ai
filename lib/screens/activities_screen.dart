@@ -1,24 +1,17 @@
+import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/screens/score_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ActivitiesScreen extends StatelessWidget {
-  List<Activity> activities = [
-    Activity(
-      title: 'Activity 1',
-      rubrics: [Rubric(name: 'Rubric 1'), Rubric(name: 'Rubric 2')],
-    ),
-    Activity(
-      title: 'Activity 2',
-      rubrics: [Rubric(name: 'Rubric 3'), Rubric(name: 'Rubric 4')],
-    ),
-    // Add more activities as needed
-  ];
-
   ActivitiesScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    ActivitiesScreenCubit? activitiesScreenCubit =
+        BlocProvider.of<ActivitiesScreenCubit>(context);
+    List<Activity> activities = activitiesScreenCubit.upcomingActivities;
+
     return Scaffold(
         body: ListView(
       children: <Widget>[

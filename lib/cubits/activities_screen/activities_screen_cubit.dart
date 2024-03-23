@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Cubit
 class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
-  List<Activity> activities;
-  ActivitiesScreenCubit(this.activities) : super(InitialState(activities));
+  List<Activity> upcomingActivities;
+  List<Activity> pastActivities = [];
+  ActivitiesScreenCubit(this.upcomingActivities)
+      : super(InitialState(upcomingActivities));
 
   void startActivity(List<Activity> activities, index) {
     activities[index].isStarted = true;
@@ -18,8 +20,15 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   }
 
   void distributeResults(List<Activity> activities, index) {
+    //Remove the distributed activity from the (upcoming) activities list
     activities[index].isDistributed = true;
-    emit(ResultsDistributed(activities));
+
+    //Add the distributed activity to the (past) activities list
+    pastActivities.add(activities[index]);
+    activities.removeAt(index);
+    // emit(ActivityEnded(activities));
+
+    emit(ResultsDistributed(pastActivities, activities));
   }
 
   void setScore(List<Activity> activities, index, rubricIndex, score) {

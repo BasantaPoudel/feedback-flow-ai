@@ -20,7 +20,8 @@ class ActivitiesTeacherScreen extends StatelessWidget {
 
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
-      List<Activity> activitiesList = stateActivity.getActivities;
+      List<Activity> activitiesList = stateActivity.getUpcomingActivities;
+      List<Activity>? pastActivities = stateActivity.getPastActivities;
       return Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {},
@@ -33,15 +34,16 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                 subtitle: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: activitiesList
-                      .length, // replace with your actual list length
+
+                  //BM - https://stackoverflow.com/questions/64278595/null-check-operator-used-on-a-null-value
+                  itemCount: pastActivities?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) {
-                    if (activitiesList[index].isCompleted == true) {
+                    if (pastActivities?[index].isDistributed == true) {
                       return Card(
                           color: const Color(0xFF6D7981),
                           child: ListTile(
                             title: Text(
-                              activitiesList[index].title,
+                              pastActivities![index].title,
                               style: const TextStyle(
                                 color:
                                     Colors.white, // Change text color to white
@@ -79,7 +81,8 @@ class ActivitiesTeacherScreen extends StatelessWidget {
               ),
               BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
                   builder: (context, stateActivity) {
-                List<Activity> activitiesList = stateActivity.getActivities;
+                List<Activity> activitiesList =
+                    stateActivity.getUpcomingActivities;
                 return ListTile(
                   title: const Text('Upcoming In Class Activities'),
                   subtitle: ListView.builder(
@@ -194,7 +197,10 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                     }
                                   })));
                         }
-                        return null;
+                        return const FittedBox(
+                            child: Text("isDistributed is true"));
+
+                        // return null;
                       }),
                 );
               }),

@@ -7,6 +7,8 @@ class DatabaseScreenState {
 
   DatabaseScreenState.withUsers(this._users);
   DatabaseScreenState();
+
+  List<UserModel>? get props => _users;
 }
 
 class DatabaseScreenInitial extends DatabaseScreenState {
@@ -39,5 +41,7 @@ class PresenterState extends DatabaseScreenState {
   List<UserModel>? _users;
 
   PresenterState(this._users) : super.withUsers(_users);
+
+  @override
   List<UserModel>? get props => _users;
 }

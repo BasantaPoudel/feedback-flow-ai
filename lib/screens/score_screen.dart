@@ -2,6 +2,7 @@ import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.d
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
+import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/score_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,9 +18,9 @@ class _ScoreScreenState extends State<ScoreScreen> {
   final ScoreRepository _scoreRepository = ScoreRepository();
   int _score2 = 0;
   int _score1 = 0;
-  void _sendScoreToFirebase(score1, score2) {
+  void _sendScoreToFirebase(UserModel presenter) {
     // Send the score to Firebase database
-    _scoreRepository.sendScoreToFirebase(score1, score2);
+    _scoreRepository.sendScoreToFirebase(presenter);
   }
 
   @override
@@ -68,28 +69,44 @@ class _ScoreScreenState extends State<ScoreScreen> {
                               style: const TextStyle(
                                 color: Colors.white,
                               )),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              for (int i = 1; i <= 5; i++)
-                                IconButton(
-                                  icon: const Icon(Icons.star),
-                                  color:
-                                      activitiesList[0].rubrics[index].score! >=
+                          trailing: BlocBuilder<ActivitiesScreenCubit,
+                              ActivitiesScreenState>(
+                            builder: (context, stateActivity) {
+                              List<Activity> activitiesList =
+                                  stateActivity.getUpcomingActivities;
+
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  for (int i = 1; i <= 5; i++)
+                                    IconButton(
+                                      icon: const Icon(Icons.star),
+                                      color: activitiesList[0]
+                                                  .rubrics[index]
+                                                  .score! >=
                                               i
                                           ? Colors.yellow
                                           : Colors.grey,
-                                  onPressed: () {
-                                    //ToDo: Add the logic to set the score individually
-                                    activitiesScreenCubit!
-                                        .setScore(activitiesList, 0, index, i);
-                                    // setState(() {
-                                    //   _score1 = i;
-                                    // });
-                                    _sendScoreToFirebase(_score1, _score2);
-                                  },
-                                ),
-                            ],
+                                      onPressed: () {
+                                        //ToDo: Add the logic to set the score individually
+                                        activitiesScreenCubit!.setScore(
+                                            activitiesList,
+                                            0,
+                                            index,
+                                            i,
+                                            presenter);
+                                        // setState(() {
+                                        //   _score1 = i;
+                                        // });
+
+                                        presenter.setActivities(activitiesList);
+
+                                        _sendScoreToFirebase(presenter);
+                                      },
+                                    ),
+                                ],
+                              );
+                            },
                           ),
                         ));
                   },

@@ -1,5 +1,6 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
+import 'package:feedback_flow/models/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Cubit
@@ -31,8 +32,11 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
     emit(ResultsDistributed(pastActivities, activities));
   }
 
-  void setScore(List<Activity> activities, index, rubricIndex, score) {
+  void setScore(List<Activity> activities, index, rubricIndex, score,
+      UserModel presenter) {
     activities[index].rubrics[rubricIndex].score = score;
-    emit(ActivityScoreSet(activities));
+    // emit(ActivityScoreSet(activities));
+
+    emit(ActivityStarted(activities));
   }
 }

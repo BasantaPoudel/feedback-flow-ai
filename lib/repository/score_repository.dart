@@ -21,5 +21,20 @@ class ScoreRepository extends MainRepository {
         });
       }
     });
+
+    //TODO: Update the activities in the roleBasedUsers collection
+
+    roleBasedUsersRef
+        .where("email", isEqualTo: presenter!.email)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        List<dynamic> activities =
+            presenter.activities.map((activity) => activity.toMap()).toList();
+        roleBasedUsersRef.doc(value.docs.first.id).update({
+          'activities': activities,
+        });
+      }
+    });
   }
 }

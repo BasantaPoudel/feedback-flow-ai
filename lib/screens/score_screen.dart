@@ -54,6 +54,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
             appBar: AppBar(
               title: Text("Presenter: $presenterName"),
             ),
+
+            // TODO - Display the selected activiy
             body: ListView(children: <Widget>[
               ListTile(
                 title: Text(activitiesList[0].title),

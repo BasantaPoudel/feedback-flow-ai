@@ -21,7 +21,7 @@ class UserModel {
       email: json['email'],
       role: json['role'],
       isPresenter: json['isPresenter'] ?? false,
-      activities: json['activities'] ?? [],
+      // activities: json['activities'] ?? [],
     );
   }
 
@@ -31,7 +31,7 @@ class UserModel {
       email: map['email'],
       role: map['role'],
       isPresenter: map['isPresenter'] ?? false,
-      activities: map['activities'] ?? [],
+      // activities: map['activities'] as List<Activity>,
     );
   }
 
@@ -41,7 +41,7 @@ class UserModel {
       'email': email,
       'role': role,
       'isPresenter': isPresenter,
-      'activities': activities,
+      // 'activities': activities,
     };
   }
 

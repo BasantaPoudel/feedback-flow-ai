@@ -56,6 +56,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         theme: ThemeData(
           primarySwatch: const Color(0x00049ee0).toMaterialColor(),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Color(0x00108EC5).toMaterialColor(),
+            brightness: Brightness.light,
+            //  const Color(0x00ffffff).toMaterialColor(),
+          ),
+          // // bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          //   // backgroundColor: const Color(0x00049ee0).toMaterialColor(),
+          //   selectedItemColor: const Color(0x006D7981),
+          //   unselectedItemColor: const Color(0x006D7981),
+          // ),
+          // // textTheme: const TextTheme(
+          // //   displayLarge: TextStyle(
+          // //       fontSize: 72.0, fontWeight: FontWeight.bold, color: Colors.red),
+          // //   displayMedium:
+          // //       TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          // //   displaySmall: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+          // // ),
         ),
         home: const AuthGate());
   }

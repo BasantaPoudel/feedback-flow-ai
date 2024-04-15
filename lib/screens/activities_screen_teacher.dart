@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
@@ -8,8 +9,20 @@ import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ActivitiesTeacherScreen extends StatelessWidget {
-  const ActivitiesTeacherScreen({super.key});
+class ActivitiesTeacherScreen extends StatefulWidget {
+  const ActivitiesTeacherScreen({Key? key}) : super(key: key);
+
+  @override
+  _ActivitiesTeacherScreenState createState() =>
+      _ActivitiesTeacherScreenState();
+}
+
+class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
+  final _controllerTitle = TextEditingController();
+  final _controllerRubric = TextEditingController();
+
+  final Stream<QuerySnapshot> _activitiesStream =
+      FirebaseFirestore.instance.collection('activities').snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +35,14 @@ class ActivitiesTeacherScreen extends StatelessWidget {
     ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
 
-    return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
-        builder: (context, stateActivity) {
+    return BlocListener<ActivitiesScreenCubit, ActivitiesScreenState>(
+        listener: (context, state) {
+      if (state is ActivityErrorLoading) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Failed to load items')));
+      }
+    }, child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
+            builder: (context, stateActivity) {
       // List<Activity> activitiesList = stateActivity.getUpcomingActivities;
       List<Activity>? pastActivities = stateActivity.getPastActivities;
       return Scaffold(
@@ -259,7 +278,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
             ],
           ));
       return const FittedBox();
-    });
+    }));
     return const FittedBox();
   }
 }

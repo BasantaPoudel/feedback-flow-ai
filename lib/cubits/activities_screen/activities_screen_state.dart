@@ -23,6 +23,22 @@ class ActivityLoadedState extends ActivitiesScreenState {
   get getUpcomingActivities => upComingActivities;
 }
 
+class ActivityErrorLoading extends ActivitiesScreenState {
+  final List<Activity> upComingActivities;
+
+  ActivityErrorLoading(this.upComingActivities);
+  @override
+  get getUpcomingActivities => upComingActivities;
+}
+
+class ActivityAddedState extends ActivitiesScreenState {
+  final List<Activity> upComingActivities;
+
+  ActivityAddedState(this.upComingActivities);
+  @override
+  get getUpcomingActivities => upComingActivities;
+}
+
 class ActivityStarted extends ActivitiesScreenState {
   final List<Activity> upComingActivities;
 

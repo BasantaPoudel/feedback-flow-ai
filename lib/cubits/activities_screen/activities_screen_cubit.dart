@@ -25,6 +25,8 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
 
   void addActivity(Activity activity) {
     _activityRepository.addActivity(activity);
+
+    emit(ActivityAddedState(upcomingActivities!..add(activity)));
   }
 
   void loadActivities() async {

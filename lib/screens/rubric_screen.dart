@@ -59,16 +59,16 @@ class _RubricScreenState extends State<RubricScreen> {
             // TODO - Display the selected activiy
             body: ListView(children: <Widget>[
               ListTile(
-                title: Text(activitiesList[0].title),
+                title: Text(widget.activity.title),
                 subtitle: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: activitiesList[0].rubrics.length,
+                  itemCount: widget.activity.rubrics.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                         color: const Color(0xFF6D7981),
                         child: ListTile(
-                          title: Text(activitiesList[0].rubrics[index].name,
+                          title: Text(widget.activity.rubrics[index].name,
                               style: const TextStyle(
                                 color: Colors.white,
                               )),
@@ -84,8 +84,7 @@ class _RubricScreenState extends State<RubricScreen> {
                                   for (int i = 1; i <= 5; i++)
                                     IconButton(
                                       icon: const Icon(Icons.star),
-                                      color: activitiesList[0]
-                                                  .rubrics[index]
+                                      color: widget.activity.rubrics[index]
                                                   .score! >=
                                               i
                                           ? Colors.yellow
@@ -132,7 +131,7 @@ class _RubricScreenState extends State<RubricScreen> {
                     return Card(
                         color: const Color(0xFF6D7981),
                         child: ListTile(
-                          title: Text(activitiesList[0].rubrics[index].name,
+                          title: Text(widget.activity.rubrics[index].name,
                               style: const TextStyle(
                                 color: Colors.white,
                               )),

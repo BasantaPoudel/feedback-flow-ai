@@ -10,7 +10,7 @@ class ActivitiesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
-    List<Activity> activities = activitiesScreenCubit.upcomingActivities;
+    List<Activity>? activities = activitiesScreenCubit.upcomingActivities;
 
     return Scaffold(
         body: ListView(
@@ -21,7 +21,7 @@ class ActivitiesScreen extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount:
-                activities.length, // replace with your actual list length
+                activities!.length, // replace with your actual list length
             itemBuilder: (BuildContext context, int index) {
               return Card(
                   color: const Color(0xFF6D7981),

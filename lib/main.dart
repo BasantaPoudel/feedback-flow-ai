@@ -40,8 +40,8 @@ void main() async {
     // BlocProvider<HomeScreenCubit>(
     //     create: (BuildContext context) => HomeScreenCubit()),
 
-    BlocProvider(
-        create: (BuildContext context) => ActivitiesScreenCubit(activities)),
+    //TODO - Refactor the constructor of ActivitiesScreenCubit
+    BlocProvider(create: (BuildContext context) => ActivitiesScreenCubit([])),
 
     BlocProvider(create: (BuildContext context) => DatabaseScreenCubit()),
     BlocProvider(create: (BuildContext context) => ScoreCubit())

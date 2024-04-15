@@ -24,7 +24,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
 
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
-      List<Activity> activitiesList = stateActivity.getUpcomingActivities;
+      // List<Activity> activitiesList = stateActivity.getUpcomingActivities;
       List<Activity>? pastActivities = stateActivity.getPastActivities;
       return Scaffold(
           floatingActionButton: FloatingActionButton(

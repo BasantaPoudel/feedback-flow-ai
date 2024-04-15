@@ -6,12 +6,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Cubit
 class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
-  List<Activity> upcomingActivities;
+  List<Activity>? upcomingActivities;
   List<Activity> pastActivities = [];
-  ActivitiesScreenCubit(this.upcomingActivities)
-      : super(InitialState(upcomingActivities));
+  // ActivitiesScreenCubit(this.upcomingActivities)
+  //     : super(InitialState([]));
 
   final ActivityRepository _activityRepository = ActivityRepository();
+
+  //TODO - Find better logic for fixing the state changes on load
+  ActivitiesScreenCubit(this.upcomingActivities) : super(InitialState([])) {
+    loadActivities();
+  }
 
   void startActivity(List<Activity> activities, index) {
     activities[index].isStarted = true;
@@ -21,6 +26,24 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   void addActivity(Activity activity) {
     _activityRepository.addActivity(activity);
   }
+
+  void loadActivities() async {
+    try {
+      upcomingActivities = await _activityRepository.getActivities();
+      emit(ActivityLoadedState(upcomingActivities!));
+    } catch (e) {
+      print(e);
+    }
+    // await _activityRepository.getActivities().then((activities) {
+    //   upcomingActivities = activities;
+    //   emit(ActivityLoadedState(upcomingActivities!));
+    // });
+  }
+
+//BM - temporary method to add activities
+  // void addActivities() {
+  //   _activityRepository.addActivities();
+  // }
 
   void endActivity(List<Activity> activities, index) {
     activities[index].isCompleted = true;

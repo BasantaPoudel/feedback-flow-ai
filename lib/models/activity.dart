@@ -20,13 +20,17 @@ class Activity {
   factory Activity.fromMap(Map<String, dynamic> map) {
     return Activity(
       title: map['title'],
-      rubrics: map['rubrics'],
+      rubrics: List<Rubric>.from(
+          map['rubrics'].map((rubric) => Rubric.fromMap(rubric))),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'title': title,
+      'isCompleted': isCompleted,
+      'isDistributed': isDistributed,
+      'isStarted': isStarted,
       'rubrics': rubrics.map((rubric) => rubric.toMap()).toList(),
     };
   }

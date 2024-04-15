@@ -15,6 +15,14 @@ class InitialState extends ActivitiesScreenState {
   get getUpcomingActivities => upComingActivities;
 }
 
+class ActivityLoadedState extends ActivitiesScreenState {
+  final List<Activity> upComingActivities;
+
+  ActivityLoadedState(this.upComingActivities);
+  @override
+  get getUpcomingActivities => upComingActivities;
+}
+
 class ActivityStarted extends ActivitiesScreenState {
   final List<Activity> upComingActivities;
 

@@ -4,6 +4,7 @@ import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart'
 import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
+import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:feedback_flow/screens/score_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,7 +106,8 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                 context,
                                 //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                                 MaterialPageRoute(
-                                  builder: (context) => const ScoreScreen(),
+                                  builder: (context) => RubricScreen(
+                                      activity: pastActivities![index]),
                                 ),
                               );
                               // Navigator.push(
@@ -158,8 +160,8 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                       context,
                                       //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ScoreScreen(),
+                                        builder: (context) => RubricScreen(
+                                            activity: activitiesList[index]),
                                       ),
                                     );
                                     // Navigator.push(

@@ -57,3 +57,4 @@ class ActivityRepository extends MainRepository {
   //     addActivity(element);
   //   }
   // }
+}

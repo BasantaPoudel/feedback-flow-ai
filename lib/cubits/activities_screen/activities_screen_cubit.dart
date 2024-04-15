@@ -1,6 +1,7 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/user.dart';
+import 'package:feedback_flow/repository/activity_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Cubit
@@ -10,9 +11,15 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   ActivitiesScreenCubit(this.upcomingActivities)
       : super(InitialState(upcomingActivities));
 
+  final ActivityRepository _activityRepository = ActivityRepository();
+
   void startActivity(List<Activity> activities, index) {
     activities[index].isStarted = true;
     emit(ActivityStarted(activities));
+  }
+
+  void addActivity(Activity activity) {
+    _activityRepository.addActivity(activity);
   }
 
   void endActivity(List<Activity> activities, index) {

@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class MainRepository {
   final roleBasedUsersRef = FirebaseFirestore.instance.collection('role_based');
-  final databaseRef = FirebaseFirestore.instance.collection('scores');
+  final scoreRef = FirebaseFirestore.instance.collection('scores');
+  final activitiesRef = FirebaseFirestore.instance.collection('activities');
   User? user = FirebaseAuth.instance.currentUser;
 
   MainRepository();

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
@@ -12,72 +13,31 @@ class ActivitiesScreen extends StatelessWidget {
         BlocProvider.of<ActivitiesScreenCubit>(context);
     List<Activity>? activities = activitiesScreenCubit.upcomingActivities;
 
-    return Scaffold(
-        body: ListView(
-      children: <Widget>[
-        ListTile(
-          title: const Text('Past In Class Activities'),
-          subtitle: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount:
-                activities!.length, // replace with your actual list length
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  color: const Color(0xFF6D7981),
-                  child: ListTile(
-                    title: Text(
-                      activities[index].title,
-                      style: const TextStyle(
-                        color: Colors.white, // Change text color to white
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              RubricScreen(activity: activities[index]),
-                        ),
-                      );
-                      // handle your item click here
-                    },
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => RubricScreen(
-                    //         texts: activities[index]
-                    //             .rubrics
-                    //             .map((rubric) => rubric.name)
-                    //             .toList(),
-                    //       ),
-                    //     ),
-                    //   );
-                    //   // handle your item click here
-                    // },
-                  ));
+    final Stream<QuerySnapshot> _activityStream =
+        FirebaseFirestore.instance.collection('activities').snapshots();
 
-              // handle your item click here
+    return StreamBuilder<QuerySnapshot>(
+      stream: _activityStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
 
-              // handle your item click here
-            },
-          ),
-        ),
-        ListTile(
-          title: const Text('Upcoming In Class Activities'),
-          subtitle: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount:
-                activities.length, // replace with your actual list length
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  color: const Color(0xFF6D7981),
-                  child: ListTile(
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text("Loading");
+        }
+
+        return ListView(
+          children: snapshot.data!.docs
+              .map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                Activity activity = Activity.fromMap(data);
+                return Card(
+                    color: const Color(0xFF6D7981),
+                    child: ListTile(
                       title: Text(
-                        activities[index].title,
+                        activity.title,
                         style: const TextStyle(
                           color: Colors.white, // Change text color to white
                         ),
@@ -88,27 +48,16 @@ class ActivitiesScreen extends StatelessWidget {
                           //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
                           MaterialPageRoute(
                             builder: (context) =>
-                                RubricScreen(activity: activities[index]),
+                                RubricScreen(activity: activity),
                           ),
                         );
-
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => RubricScreen(
-                        //       texts: activities[index]
-                        //           .rubrics
-                        //           .map((rubric) => rubric.name)
-                        //           .toList(),
-                        //     ),
-                        //   ),
-                        // );
-                        // handle your item click here
-                      }));
-            },
-          ),
-        ),
-      ],
-    ));
+                      },
+                    ));
+              })
+              .toList()
+              .cast(),
+        );
+      },
+    );
   }
 }

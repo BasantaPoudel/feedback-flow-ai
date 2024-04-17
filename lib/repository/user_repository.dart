@@ -22,6 +22,23 @@ class UserRepository extends MainRepository {
     return users;
   }
 
+  updateUser(UserModel user) async {
+    try {
+      // final currentUser = UserModel.fromSnapshot(user);
+      final query = roleBasedUsersRef.where("email", isEqualTo: user!.email);
+      var querySnapshot = await query.get();
+
+      for (var snapshot in querySnapshot.docs) {
+        var documentID = snapshot.id;
+        roleBasedUsersRef
+            .doc(documentID)
+            .update(user.toMap()); // <-- Document ID
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   Future<String> getUserRole(int currentIndex, List<Widget> childrenTeacher,
       List<Widget> childrenStudent) async {
     final query = roleBasedUsersRef.where("email", isEqualTo: user!.email);

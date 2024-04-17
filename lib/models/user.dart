@@ -45,6 +45,10 @@ class UserModel {
     };
   }
 
+  factory UserModel.fromSnapshot(doc) {
+    return UserModel.fromMap(doc.data()!);
+  }
+
   setPresenter(bool isPresenter) {
     this.isPresenter = isPresenter;
   }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/user.dart';
@@ -22,15 +21,29 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   void subscribeToData() {
     emit(InitialState([]));
     _activityRepository.activitiesRef.snapshots().listen((snapshot) {
+      // if (snapshot.docs.isEmpty) {
+      //   emit(ActivityErrorLoading([]));
+      //   return;
+      // }
       emit(ActivityLoadedState(
           snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList()));
+
+      var activities =
+          snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList();
+      if (activities.any((activity) => activity.isStarted == true)) {
+        // Code to execute if there's any activity with isStarted as true
+        emit(ActivityStarted(activities));
+      }
     }, onError: (error) {
       emit(ActivityErrorLoading([]));
     });
+    // Listening to PresenterState changes
   }
 
   void startActivity(List<Activity> activities, index) {
     activities[index].isStarted = true;
+
+    _activityRepository.updateActivity(activities[index]);
     emit(ActivityStarted(activities));
   }
 
@@ -42,8 +55,26 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
 
   void loadActivities() async {
     try {
-      upcomingActivities = await _activityRepository.getActivities();
-      emit(ActivityLoadedState(upcomingActivities!));
+      // upcomingActivities = await _activityRepository.getActivities();
+      _activityRepository.activitiesRef.snapshots().listen((snapshot) {
+        // if (snapshot.docs.isEmpty) {
+        //   emit(ActivityErrorLoading([]));
+        //   return;
+        // }
+        emit(ActivityLoadedState(
+            snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList()));
+
+        var activities =
+            snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList();
+        if (activities.any((activity) => activity.isStarted == true)) {
+          // Code to execute if there's any activity with isStarted as true
+          emit(ActivityStarted(activities));
+        }
+      }, onError: (error) {
+        emit(ActivityErrorLoading([]));
+      });
+
+      // emit(ActivityLoadedState(upcomingActivities!));
     } catch (e) {
       print(e);
     }

@@ -22,11 +22,14 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
         BlocProvider.of<ActivitiesScreenCubit>(context);
     List<Activity>? activities = activitiesScreenCubit.upcomingActivities;
 
-    final Stream<QuerySnapshot> _activityStream =
-        FirebaseFirestore.instance.collection('activities').snapshots();
-
-    return BlocProvider(
-        create: (context) => ActivitiesScreenCubit([])..subscribeToData(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) =>
+                  ActivitiesScreenCubit([])..subscribeToData()),
+          BlocProvider(
+              create: (context) => DatabaseScreenCubit()..subscribeToData())
+        ],
         child: BlocListener<ActivitiesScreenCubit, ActivitiesScreenState>(
             listener: (context, state) {
           if (state is ActivityErrorLoading) {
@@ -118,79 +121,11 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                     //   ),
                                     // );
                                     // handle your item click here
-                                  },
-                                  trailing: BlocBuilder<DatabaseScreenCubit,
-                                          DatabaseScreenState>(
-                                      builder: (context, state) {
-                                    if (state is PresenterState) {
-                                      return BlocBuilder<ActivitiesScreenCubit,
-                                              ActivitiesScreenState>(
-                                          builder: (context, stateActivity) {
-                                        if (activitiesList[index].isStarted ==
-                                            false) {
-                                          return FittedBox(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      activitiesScreenCubit
-                                                          .startActivity(
-                                                              activitiesList,
-                                                              index);
-                                                    },
-                                                    child: const Text('Start'))
-                                              ],
-                                            ),
-                                          );
-                                        } else if (stateActivity
-                                                is ActivityStarted &&
-                                            activitiesList[index].isStarted ==
-                                                true) {
-                                          return FittedBox(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      activitiesScreenCubit
-                                                          .endActivity(
-                                                              activitiesList,
-                                                              index);
-                                                    },
-                                                    child: const Text('End')),
-                                              ],
-                                            ),
-                                          );
-                                        } else if (stateActivity
-                                                is ActivityEnded &&
-                                            activitiesList[index].isCompleted ==
-                                                true) {
-                                          return FittedBox(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      activitiesScreenCubit
-                                                          .distributeResults(
-                                                              activitiesList,
-                                                              index);
-                                                    },
-                                                    child: const Text(
-                                                        'Distribute Results')),
-                                              ],
-                                            ),
-                                          );
-                                        } else {
-                                          return const FittedBox();
-                                        }
-                                      });
-                                      // return const FittedBox();
-                                    } else {
-                                      return const FittedBox();
-                                    }
-                                  })));
+                                  }
+
+                                  // return const FittedBox();
+
+                                  ));
                         }
                         return const FittedBox(
                             child: Text("isDistributed is true"));

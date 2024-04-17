@@ -25,6 +25,7 @@ void main() async {
         Rubric(name: 'Rubric 1', score: 1),
         Rubric(name: 'Rubric 2', score: 1),
       ],
+      isStarted: false,
     ),
     Activity(
       title: 'Activity 2',
@@ -32,6 +33,7 @@ void main() async {
         Rubric(name: 'Rubric 3', score: 1),
         Rubric(name: 'Rubric 4', score: 1),
       ],
+      isStarted: false,
     ),
     // Add more activities as needed
   ];

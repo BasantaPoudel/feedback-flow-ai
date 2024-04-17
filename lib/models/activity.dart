@@ -5,16 +5,18 @@ class Activity {
   String title;
   bool? isCompleted = false;
   bool? isDistributed = false;
-  bool? isStarted = false;
+  bool isStarted;
   List<Rubric> rubrics;
   // Add other properties as needed
 
-  Activity({required this.title, required this.rubrics});
+  Activity(
+      {required this.title, required this.rubrics, required this.isStarted});
 
   factory Activity.fromJson(Map<String, dynamic> json) {
     return Activity(
       title: json['title'],
       rubrics: json['rubrics'],
+      isStarted: json['isStarted'],
     );
   }
 
@@ -23,6 +25,7 @@ class Activity {
       title: map['title'],
       rubrics: List<Rubric>.from(
           map['rubrics'].map((rubric) => Rubric.fromMap(rubric))),
+      isStarted: map['isStarted'],
     );
   }
 

@@ -15,6 +15,23 @@ class ActivityRepository extends MainRepository {
     }
   }
 
+  updateActivity(Activity activity) async {
+    try {
+      // final currentUser = UserModel.fromSnapshot(user);
+      final query = activitiesRef.where("title", isEqualTo: activity.title);
+      var querySnapshot = await query.get();
+
+      for (var snapshot in querySnapshot.docs) {
+        var documentID = snapshot.id;
+        activitiesRef
+            .doc(documentID)
+            .update(activity.toMap()); // <-- Document ID
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   Future<List<Activity>> getActivities() async {
     List<Activity> activities = [];
 

@@ -66,7 +66,15 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                         TextField(
                           controller: _controllerRubric,
                           decoration: const InputDecoration(
-                            hintText: 'Enter rubric',
+                            hintText: 'Enter rubric1',
+                            border: OutlineInputBorder(),
+                          ),
+                          maxLines: null,
+                        ),
+                        TextField(
+                          controller: _controllerRubric,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter rubric2',
                             border: OutlineInputBorder(),
                           ),
                           maxLines: null,
@@ -74,6 +82,12 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                       ],
                     ),
                     actions: [
+                      TextButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
                       TextButton(
                         onPressed: () {
                           if (_controllerRubric.text.trim().isEmpty) return;
@@ -85,6 +99,7 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                                 score: 0,
                               ),
                             ],
+                            isStarted: false,
                           ));
                           Navigator.of(context).pop();
                         },

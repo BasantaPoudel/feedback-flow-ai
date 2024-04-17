@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/models/rubric.dart';
 
 class Activity {
@@ -33,6 +34,10 @@ class Activity {
       'isStarted': isStarted,
       'rubrics': rubrics.map((rubric) => rubric.toMap()).toList(),
     };
+  }
+
+  factory Activity.fromSnapshot(doc) {
+    return Activity.fromMap(doc.data()!);
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/user.dart';
@@ -16,6 +17,16 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   //TODO - Find better logic for fixing the state changes on load
   ActivitiesScreenCubit(this.upcomingActivities) : super(InitialState([])) {
     loadActivities();
+  }
+
+  void subscribeToData() {
+    emit(InitialState([]));
+    _activityRepository.activitiesRef.snapshots().listen((snapshot) {
+      emit(ActivityLoadedState(
+          snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList()));
+    }, onError: (error) {
+      emit(ActivityErrorLoading([]));
+    });
   }
 
   void startActivity(List<Activity> activities, index) {

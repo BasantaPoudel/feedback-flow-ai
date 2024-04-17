@@ -125,7 +125,9 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     if (pastActivities?[index].isDistributed == true) {
                       return Card(
-                          color: const Color(0xFF6D7981),
+                          color: pastActivities![index].isStarted
+                              ? Colors.green
+                              : Color(0xFF6D7981),
                           child: ListTile(
                             title: Text(
                               pastActivities![index].title,
@@ -179,7 +181,9 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         if (activitiesList[index].isDistributed == false) {
                           return Card(
-                              color: const Color(0xFF6D7981),
+                              color: activitiesList[index].isStarted
+                                  ? Colors.green
+                                  : Color(0xFF6D7981),
                               child: ListTile(
                                   title: Text(
                                     activitiesList[index].title,

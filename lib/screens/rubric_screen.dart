@@ -149,19 +149,6 @@ class _RubricScreenState extends State<RubricScreen> {
                                   style: const TextStyle(
                                     color: Colors.white,
                                   )),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  for (int i = 1; i <= 5; i++)
-                                    IconButton(
-                                      icon: const Icon(Icons.star),
-                                      color: _score1 >= i
-                                          ? Colors.yellow
-                                          : Colors.grey,
-                                      onPressed: null,
-                                    ),
-                                ],
-                              ),
                             ));
                       },
                     ),

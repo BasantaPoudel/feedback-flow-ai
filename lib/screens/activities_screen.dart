@@ -91,41 +91,45 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         if (activitiesList[index].isDistributed == false) {
                           return Card(
-                              color: const Color(0xFF6D7981),
+                              color: activitiesList[index].isStarted
+                                  ? Colors.green
+                                  : Color(0xFF6D7981),
                               child: ListTile(
-                                  title: Text(
-                                    activitiesList[index].title,
-                                    style: const TextStyle(
-                                      color: Colors
-                                          .white, // Change text color to white
-                                    ),
+                                title: Text(
+                                  activitiesList[index].title,
+                                  style: const TextStyle(
+                                    color: Colors
+                                        .white, // Change text color to white
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
-                                      MaterialPageRoute(
-                                        builder: (context) => RubricScreen(
-                                            activity: activitiesList[index]),
-                                      ),
-                                    );
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => RubricScreen(
-                                    //       texts: activitiesList[index]
-                                    //           .rubrics
-                                    //           .map((rubric) => rubric.name)
-                                    //           .toList(),
-                                    //     ),
-                                    //   ),
-                                    // );
-                                    // handle your item click here
-                                  }
+                                ),
+                                onTap: activitiesList[index].isStarted
+                                    ? () {
+                                        Navigator.push(
+                                          context,
+                                          //TODO - Correct the logic to display ScoreScreen or RubricScreen based on the activity status
+                                          MaterialPageRoute(
+                                            builder: (context) => RubricScreen(
+                                                activity:
+                                                    activitiesList[index]),
+                                          ),
+                                        );
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) => RubricScreen(
+                                        //       texts: activitiesList[index]
+                                        //           .rubrics
+                                        //           .map((rubric) => rubric.name)
+                                        //           .toList(),
+                                        //     ),
+                                        //   ),
+                                        // );
+                                        // handle your item click here
+                                      }
+                                    : null,
 
-                                  // return const FittedBox();
-
-                                  ));
+                                // return const FittedBox();
+                              ));
                         }
                         return const FittedBox(
                             child: Text("isDistributed is true"));

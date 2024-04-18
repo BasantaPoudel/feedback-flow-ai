@@ -25,6 +25,8 @@ class DatabaseScreenCubit extends Cubit<DatabaseScreenState> {
         if (users.any((user) => user.isPresenter == true)) {
           // Code to execute if there's any activity with isStarted as true
           emit(PresenterState(users));
+        } else {
+          emit(DatabaseScreenLoaded(users));
         }
       });
     } catch (e) {

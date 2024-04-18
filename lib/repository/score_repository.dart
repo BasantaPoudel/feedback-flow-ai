@@ -5,36 +5,22 @@ class ScoreRepository extends MainRepository {
   @override
   User? user = FirebaseAuth.instance.currentUser;
 
-  void sendScoreToFirebase(presenter) {
-    // Send the score to Firebase database
-    scoreRef.where("provider", isEqualTo: user!.email).get().then((value) {
-      if (value.docs.isEmpty) {
-        scoreRef.add({
-          'provider': user!.email,
-          'score1': presenter.activities![0].rubrics[0].score,
-          'score2': presenter.activities![0].rubrics[1].score,
-        });
-      } else {
-        scoreRef.doc(value.docs.first.id).update({
-          'score1': presenter.activities![0].rubrics[0].score,
-          'score2': presenter.activities![0].rubrics[1].score
-        });
-      }
-    });
-
-    //TODO: Update the activities in the roleBasedUsers collection
-
-    roleBasedUsersRef
-        .where("email", isEqualTo: presenter!.email)
-        .get()
-        .then((value) {
-      if (value.docs.isNotEmpty) {
-        List<dynamic> activities =
-            presenter.activities.map((activity) => activity.toMap()).toList();
-        roleBasedUsersRef.doc(value.docs.first.id).update({
-          'activities': activities,
-        });
-      }
-    });
+  void sendScoreToFirebase(presenter) async {
+    try {
+      roleBasedUsersRef
+          .where("email", isEqualTo: presenter!.email)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          List<dynamic> activities =
+              presenter.activities.map((activity) => activity.toMap()).toList();
+          roleBasedUsersRef.doc(value.docs.first.id).update({
+            'activities': activities,
+          });
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

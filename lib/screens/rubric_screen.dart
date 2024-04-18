@@ -104,14 +104,11 @@ class _RubricScreenState extends State<RubricScreen> {
                                             onPressed: () {
                                               //ToDo: Add the logic to set the score individually
                                               activitiesScreenCubit!.setScore(
-                                                  activitiesList,
+                                                  widget.activity,
                                                   0,
                                                   index,
                                                   i,
                                                   presenter);
-                                              // setState(() {
-                                              //   _score1 = i;
-                                              // });
 
                                               presenter.setActivities(
                                                   activitiesList);

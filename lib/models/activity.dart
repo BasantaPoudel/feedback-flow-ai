@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/models/rubric.dart';
 
 class Activity {

@@ -46,120 +46,147 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
           ),
           body: ListView(
             children: <Widget>[
-              ListTile(
-                title: const Text('Past In Class Activities'),
-                subtitle: ListBuilder(),
-              ),
+              Container(
+                  // height: MediaQuery.of(context).size.height * 0.2,
+                  // width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(207, 216, 220, 1),
+                    borderRadius:
+                        BorderRadius.only(bottomRight: Radius.circular(70)),
+                  ),
+                  child: ListTile(
+                    title: const Text('Past In Class Activities'),
+                    subtitle: ListBuilder(),
+                  )),
               BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
                   builder: (context, stateActivity) {
                 List<Activity>? activitiesList =
                     stateActivity.getUpcomingActivities;
-                return ListTile(
-                  title: const Text('Upcoming In Class Activities'),
-                  subtitle: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: activitiesList?.length ?? 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (activitiesList![index].isDistributed == false) {
-                          return Card(
-                              color: activitiesList[index].isStarted
-                                  ? Colors.green
-                                  : const Color(0xFF6D7981),
-                              child: ListTile(
-                                  title: Text(
-                                    activitiesList[index].title,
-                                    style: const TextStyle(
-                                      color: Colors
-                                          .white, // Change text color to white
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => RubricScreen(
-                                            activity: activitiesList[index]),
+                return Container(
+                    // height: MediaQuery.of(context).size.height * 0.2,
+                    // width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.only(topLeft: Radius.circular(70)),
+                    ),
+                    child: ListTile(
+                      title: const Text('Upcoming In Class Activities'),
+                      subtitle: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: activitiesList?.length ?? 0,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (activitiesList![index].isDistributed == false) {
+                              return Card(
+                                  color: activitiesList[index].isStarted
+                                      ? Colors.green
+                                      : const Color(0xFF6D7981),
+                                  child: ListTile(
+                                      title: Text(
+                                        activitiesList[index].title,
+                                        style: const TextStyle(
+                                          color: Colors
+                                              .white, // Change text color to white
+                                        ),
                                       ),
-                                    );
-                                  },
-                                  trailing: BlocBuilder<DatabaseScreenCubit,
-                                          DatabaseScreenState>(
-                                      builder: (context, state) {
-                                    if (state is PresenterState) {
-                                      return BlocBuilder<ActivitiesScreenCubit,
-                                              ActivitiesScreenState>(
-                                          builder: (context, stateActivity) {
-                                        if (stateActivity
-                                            is ActivityLoadedState) {
-                                          return FittedBox(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      activitiesScreenCubit
-                                                          .startActivity(
-                                                              activitiesList,
-                                                              index);
-                                                    },
-                                                    child: const Text('Start'))
-                                              ],
-                                            ),
-                                          );
-                                        } else if (stateActivity
-                                                is ActivityStarted &&
-                                            activitiesList[index].isStarted ==
-                                                true) {
-                                          return FittedBox(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    activitiesScreenCubit
-                                                        .endActivity(
-                                                            activitiesList,
-                                                            index);
-                                                  },
-                                                  child: const Text('End'),
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        } else if (stateActivity
-                                                is ActivityEnded &&
-                                            activitiesList[index].isCompleted ==
-                                                true) {
-                                          return FittedBox(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      activitiesScreenCubit
-                                                          .distributeResults(
-                                                              activitiesList,
-                                                              index);
-                                                    },
-                                                    child: const Text(
-                                                        'Distribute Results')),
-                                              ],
-                                            ),
-                                          );
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => RubricScreen(
+                                                activity:
+                                                    activitiesList[index]),
+                                          ),
+                                        );
+                                      },
+                                      trailing: BlocBuilder<DatabaseScreenCubit,
+                                              DatabaseScreenState>(
+                                          builder: (context, state) {
+                                        if (state is PresenterState) {
+                                          return BlocBuilder<
+                                                  ActivitiesScreenCubit,
+                                                  ActivitiesScreenState>(
+                                              builder:
+                                                  (context, stateActivity) {
+                                            if (stateActivity
+                                                is ActivityLoadedState) {
+                                              return FittedBox(
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          activitiesScreenCubit
+                                                              .startActivity(
+                                                                  activitiesList,
+                                                                  index);
+                                                        },
+                                                        child:
+                                                            const Text('Start'))
+                                                  ],
+                                                ),
+                                              );
+                                            } else if (stateActivity
+                                                    is ActivityStarted &&
+                                                activitiesList[index]
+                                                        .isStarted ==
+                                                    true) {
+                                              return FittedBox(
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        activitiesScreenCubit
+                                                            .endActivity(
+                                                                activitiesList,
+                                                                index);
+                                                      },
+                                                      child: const Text('End'),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            } else if (stateActivity
+                                                    is ActivityEnded &&
+                                                activitiesList[index]
+                                                        .isCompleted ==
+                                                    true) {
+                                              return FittedBox(
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          activitiesScreenCubit
+                                                              .distributeResults(
+                                                                  activitiesList,
+                                                                  index);
+                                                        },
+                                                        child: const Text(
+                                                            'Distribute Results')),
+                                                  ],
+                                                ),
+                                              );
+                                            } else {
+                                              return const FittedBox();
+                                            }
+                                          });
+                                          // return const FittedBox();
                                         } else {
                                           return const FittedBox();
                                         }
-                                      });
-                                      // return const FittedBox();
-                                    } else {
-                                      return const FittedBox();
-                                    }
-                                  })));
-                        }
-                        return const FittedBox(); // return null;
-                      }),
-                );
+                                      })));
+                            }
+                            return const FittedBox(); // return null;
+                          }),
+                    ));
               }),
             ],
           ));

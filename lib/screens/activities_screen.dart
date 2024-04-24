@@ -28,47 +28,64 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
       return Scaffold(
           body: ListView(
         children: <Widget>[
-          ListTile(
-            title: const Text('Past In Class Activities'),
-            subtitle: ListBuilder(),
-          ),
+          Container(
+              // height: MediaQuery.of(context).size.height * 0.2,
+              // width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(207, 216, 220, 1),
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(70)),
+              ),
+              child: ListTile(
+                title: const Text('Past In Class Activities'),
+                subtitle: ListBuilder(),
+              )),
           BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
               builder: (context, stateActivity) {
             List<Activity> activitiesList = stateActivity.getUpcomingActivities;
-            return ListTile(
-              title: const Text('Upcoming In Class Activities'),
-              subtitle: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: activitiesList?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (activitiesList![index].isDistributed == false) {
-                      return Card(
-                          color: activitiesList[index].isStarted
-                              ? Colors.green
-                              : const Color(0xFF6D7981),
-                          child: ListTile(
-                            title: Text(
-                              activitiesList[index].title,
-                              style: const TextStyle(
-                                color:
-                                    Colors.white, // Change text color to white
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RubricScreen(
-                                      activity: activitiesList[index]),
+            return Container(
+                // height: MediaQuery.of(context).size.height * 0.2,
+                // width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
+                ),
+                child: ListTile(
+                  title: const Text('Upcoming In Class Activities'),
+                  subtitle: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: activitiesList?.length ?? 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (activitiesList![index].isDistributed == false) {
+                          return Card(
+                              color: activitiesList[index].isStarted
+                                  ? Colors.green
+                                  : const Color(0xFF6D7981),
+                              child: ListTile(
+                                title: Text(
+                                  activitiesList[index].title,
+                                  style: const TextStyle(
+                                    color: Colors
+                                        .white, // Change text color to white
+                                  ),
                                 ),
-                              );
-                            },
-                          ));
-                    }
-                    return const FittedBox(); // return null;
-                  }),
-            );
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RubricScreen(
+                                          activity: activitiesList[index]),
+                                    ),
+                                  );
+                                },
+                              ));
+                        }
+                        return const FittedBox(); // return null;
+                      }),
+                ));
           }),
         ],
       ));

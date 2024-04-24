@@ -2,6 +2,7 @@ import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.d
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
+import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/score_repository.dart';
 import 'package:flutter/material.dart';
@@ -38,17 +39,18 @@ class _RubricScreenState extends State<RubricScreen> {
         create: (context) => DatabaseScreenCubit()..subscribeToData(),
         child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
             builder: (context, stateActivity) {
-          if (stateActivity is ActivityStarted) {
+          if (stateActivity is ActivityStarted && widget.activity.isStarted) {
             if (databaseScreenCubit.state.props!.isNotEmpty) {
               var presenter = databaseScreenCubit.state.props!
                   .where((element) => element.isPresenter == true)
                   .first;
               String presenterName = presenter.name!;
               return Scaffold(
-                  appBar: AppBar(
-                    title: Text("Presenter: $presenterName"),
-                  ),
-                  body: ListView(children: <Widget>[
+                appBar: AppBar(
+                  title: Text("Presenter: $presenterName"),
+                ),
+                body: ListView(
+                  children: <Widget>[
                     ListTile(
                       title: Text(widget.activity.title),
                       subtitle: ListView.builder(
@@ -93,8 +95,6 @@ class _RubricScreenState extends State<RubricScreen> {
 
                                               presenter.setActivities(
                                                   activitiesList);
-
-                                              _sendScoreToFirebase(presenter);
                                             },
                                           ),
                                       ],
@@ -104,8 +104,17 @@ class _RubricScreenState extends State<RubricScreen> {
                               ));
                         },
                       ),
-                    )
-                  ]));
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        //ToDo: Add the logic to set the score individually
+                        _sendScoreToFirebase(presenter);
+                      },
+                      child: const Text("Submit"),
+                    ),
+                  ],
+                ),
+              );
             }
           } else {
             return Scaffold(
@@ -131,7 +140,18 @@ class _RubricScreenState extends State<RubricScreen> {
                       },
                     ),
                   )
-                ]));
+                ]),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    activitiesScreenCubit!.addRubric(
+                        widget.activity,
+                        Rubric(
+                          name: 'New Rubric from Rubric Screen',
+                          score: 0,
+                        ));
+                  },
+                  child: const Icon(Icons.add),
+                ));
           }
           return FittedBox();
         }));

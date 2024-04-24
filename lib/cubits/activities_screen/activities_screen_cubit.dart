@@ -21,15 +21,15 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
           snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList();
       emit(ActivityLoadedState(activities));
       if (activities.any((activity) =>
-          activity.isStarted == true && activity.isDistributed == true)) {
+          activity.isStarted == true &&
+          activity.isDistributed == false &&
+          activity.isCompleted == false)) {
         // emit(ResultsDistributed(activities));
-        emit(ActivityLoadedState(activities));
-      } else if (activities.any((activity) => activity.isCompleted == true)) {
+        emit(ActivityStarted(activities));
+      } else if (activities.any((activity) =>
+          activity.isCompleted == true && activity.isDistributed == false)) {
         // Code to execute if there's any activity with isStarted as true
         emit(ActivityEnded(activities));
-      } else if (activities.any((activity) => activity.isStarted == true)) {
-        // Code to execute if there's any activity with isStarted as true
-        emit(ActivityStarted(activities));
       }
     }, onError: (error) {
       emit(ActivityErrorLoading([]));
@@ -48,6 +48,12 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
     _activityRepository.addActivity(activity);
 
     emit(ActivityAddedState(upcomingActivities!..add(activity)));
+  }
+
+  void addRubric(Activity activity, rubric) {
+    activity.rubrics.add(rubric);
+    _activityRepository.updateActivity(activity);
+    // emit(ActivityStarted(upcomingActivities!));
   }
 
 //BM - temporary method to add activities

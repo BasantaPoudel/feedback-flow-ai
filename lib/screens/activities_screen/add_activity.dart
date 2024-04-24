@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddActivity extends StatelessWidget {
   final _controllerTitle = TextEditingController();
-  final _controllerRubric = TextEditingController();
+  final _controllerRubric1 = TextEditingController();
+  final _controllerRubric2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class AddActivity extends StatelessWidget {
             maxLines: null,
           ),
           TextField(
-            controller: _controllerRubric,
+            controller: _controllerRubric1,
             decoration: const InputDecoration(
               hintText: 'Enter rubric1',
               border: OutlineInputBorder(),
@@ -33,7 +34,7 @@ class AddActivity extends StatelessWidget {
             maxLines: null,
           ),
           TextField(
-            controller: _controllerRubric,
+            controller: _controllerRubric2,
             decoration: const InputDecoration(
               hintText: 'Enter rubric2',
               border: OutlineInputBorder(),
@@ -51,12 +52,16 @@ class AddActivity extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            if (_controllerRubric.text.trim().isEmpty) return;
+            if (_controllerRubric1.text.trim().isEmpty) return;
             activitiesScreenCubit.addActivity(Activity(
               title: _controllerTitle.text,
               rubrics: [
                 Rubric(
-                  name: _controllerRubric.text,
+                  name: _controllerRubric1.text,
+                  score: 0,
+                ),
+                Rubric(
+                  name: _controllerRubric2.text,
                   score: 0,
                 ),
               ],

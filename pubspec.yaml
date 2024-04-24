@@ -59,6 +59,8 @@ dependencies:
   firebase_ui_auth: ^1.13.1
 
   material_color_gen: ^2.0.0
+  logger: ^2.2.0
+  fl_chart: ^0.67.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

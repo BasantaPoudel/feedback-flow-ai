@@ -15,12 +15,10 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   // static final HomeScreenCubit instance = HomeScreenCubit();
   int _currentIndex = 0;
   final UserRepository _userRepository = UserRepository();
-  Future<void>? _getRole;
-  //TODO - Optimize the list
-  final List<Widget> _childrenTeacher = [
+  // Future<void>? _getRole;
+
+  final List<Widget> _commonChildren = [
     const WelcomeScreen(),
-    const ActivitiesTeacherScreen(),
-    const DatabaseScreen(),
     const Stats(),
     ProfileScreen(
       appBar: AppBar(
@@ -44,42 +42,19 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     ),
   ];
 
-  final List<Widget> _childrenStudent = [
-    const WelcomeScreen(),
-    ActivitiesScreen(),
-    const Search(),
-    const Stats(),
-    ProfileScreen(
-      appBar: AppBar(
-        title: const Text('User Profile'),
-      ),
-      actions: [
-        SignedOutAction((context) {
-          Navigator.of(context).pop();
-        })
-      ],
-      children: const [
-        Divider(),
-        Padding(
-          padding: EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 1,
-            // child: Image.asset('flutterfire_300x.png'),
-          ),
-        ),
-      ],
-    ),
-  ];
+  late List<Widget> _childrenStudent;
+  late List<Widget> _childrenTeacher;
 
   HomeScreenCubit() : super(UserLoadingState()) {
-    _getRole = getUserRole();
+    getUserRole();
+    _childrenStudent = createStudentsWidgets();
+    _childrenTeacher = createTeacherWidgets();
   }
 
   // Consists all the business logic here
   Future<void> getUserRole() async {
     //TODO - Check How to access Future Data in right manner
-    String userRole = await _userRepository.getUserRole(
-        _currentIndex, _childrenTeacher, _childrenStudent);
+    String userRole = await _userRepository.getUserRole();
     if (userRole == "teacher") {
       emit(TeacherLoggedInState(_currentIndex, _childrenTeacher));
     } else if (userRole == "student") {
@@ -101,7 +76,35 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
 
   void changeIndex(int index) {
     _currentIndex = index;
-    // emit(TeacherLoggedInState(_currentIndex, _childrenTeacher));
+  }
+
+  List<Widget> createTeacherWidgets() {
+    List<Widget> childrenTeacher = _commonChildren.toList();
+    return childrenTeacher
+      ..insert(
+        1,
+        const ActivitiesTeacherScreen(),
+      )
+      ..insert(
+        2,
+        const DatabaseScreen(),
+      );
+    // emit(TeacherLoggedInState(_currentIndex, _commonChildrenTeacher));
+  }
+
+  List<Widget> createStudentsWidgets() {
+    List<Widget> childrenStudent = _commonChildren.toList();
+
+    return childrenStudent
+      ..insert(
+        1,
+        ActivitiesScreen(),
+      )
+      ..insert(
+        2,
+        const Search(),
+      );
+    // emit(TeacherLoggedInState(_currentIndex, _commonChildrenTeacher));
   }
 
   void onTabTappedTeacher(int index) {

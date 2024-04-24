@@ -2,20 +2,26 @@ import 'package:feedback_flow/models/rubric.dart';
 
 class Activity {
   String title;
-  bool? isCompleted = false;
-  bool? isDistributed = false;
+  bool isCompleted;
+  bool isDistributed;
   bool isStarted;
   List<Rubric> rubrics;
   // Add other properties as needed
 
   Activity(
-      {required this.title, required this.rubrics, required this.isStarted});
+      {required this.title,
+      required this.rubrics,
+      required this.isStarted,
+      required this.isCompleted,
+      required this.isDistributed});
 
   factory Activity.fromJson(Map<String, dynamic> json) {
     return Activity(
       title: json['title'],
       rubrics: json['rubrics'],
       isStarted: json['isStarted'],
+      isCompleted: json['isCompleted'],
+      isDistributed: json['isDistributed'],
     );
   }
 
@@ -25,6 +31,8 @@ class Activity {
       rubrics: List<Rubric>.from(
           map['rubrics'].map((rubric) => Rubric.fromMap(rubric))),
       isStarted: map['isStarted'],
+      isCompleted: map['isCompleted'],
+      isDistributed: map['isDistributed'],
     );
   }
 

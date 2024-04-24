@@ -6,14 +6,7 @@ abstract class ActivitiesScreenState {
   get getPastActivities => null;
 }
 
-class InitialState extends ActivitiesScreenState {
-  final List<Activity> upComingActivities;
-
-  InitialState(this.upComingActivities);
-
-  @override
-  get getUpcomingActivities => upComingActivities;
-}
+class InitialState extends ActivitiesScreenState {}
 
 class ActivityLoadedState extends ActivitiesScreenState {
   final List<Activity> upComingActivities;
@@ -56,16 +49,16 @@ class ActivityEnded extends ActivitiesScreenState {
 }
 
 class ResultsDistributed extends ActivitiesScreenState {
-  final List<Activity> pastActivities;
+  // final List<Activity> pastActivities;
   final List<Activity> upComingActivities;
 
-  ResultsDistributed(this.pastActivities, this.upComingActivities);
+  ResultsDistributed(this.upComingActivities);
 
   @override
   get getUpcomingActivities => upComingActivities;
 
-  @override
-  get getPastActivities => pastActivities;
+  // @override
+  // get getPastActivities => pastActivities;
 }
 
 class ActivityScoreSet extends ActivitiesScreenState {

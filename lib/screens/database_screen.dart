@@ -1,7 +1,6 @@
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
 import 'package:feedback_flow/models/user.dart';
-import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,10 +12,6 @@ class DatabaseScreen extends StatefulWidget {
 }
 
 class _DatabaseScreenState extends State<DatabaseScreen> {
-  //TODO - Change the futurebuilder to BlocBuilder completely by transfering the business logic to the repository
-  // Future<List<UserModel>>? _operationResult;
-  final UserRepository _userRepository = UserRepository();
-
   @override
   void initState() {
     super.initState();

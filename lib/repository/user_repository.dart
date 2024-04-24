@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/main_repository.dart';
-import 'package:flutter/widgets.dart';
+import 'package:logger/web.dart';
 
 class UserRepository extends MainRepository {
   List<UserModel> users = [];
+  Logger log = Logger();
 
   Future<List<UserModel>> fetchUsersFromDatabase() async {
     try {
@@ -17,15 +18,14 @@ class UserRepository extends MainRepository {
         }
       });
     } catch (e) {
-      print('Error: $e');
+      log.d(e.toString());
     }
     return users;
   }
 
   updateUser(UserModel user) async {
     try {
-      // final currentUser = UserModel.fromSnapshot(user);
-      final query = roleBasedUsersRef.where("email", isEqualTo: user!.email);
+      final query = roleBasedUsersRef.where("email", isEqualTo: user.email);
       var querySnapshot = await query.get();
 
       for (var snapshot in querySnapshot.docs) {
@@ -39,8 +39,7 @@ class UserRepository extends MainRepository {
     }
   }
 
-  Future<String> getUserRole(int currentIndex, List<Widget> childrenTeacher,
-      List<Widget> childrenStudent) async {
+  Future<String> getUserRole() async {
     final query = roleBasedUsersRef.where("email", isEqualTo: user!.email);
     //Step-2 [use get to retrieve the results]
     try {

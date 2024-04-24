@@ -8,29 +8,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   List<Activity>? upcomingActivities;
   List<Activity> pastActivities = [];
-  // ActivitiesScreenCubit(this.upcomingActivities)
-  //     : super(InitialState([]));
 
   final ActivityRepository _activityRepository = ActivityRepository();
 
-  //TODO - Find better logic for fixing the state changes on load
-  ActivitiesScreenCubit(this.upcomingActivities) : super(InitialState([])) {
-    loadActivities();
+  ActivitiesScreenCubit() : super(InitialState()) {
+    subscribeToData();
   }
 
   void subscribeToData() {
-    emit(InitialState([]));
     _activityRepository.activitiesRef.snapshots().listen((snapshot) {
-      // if (snapshot.docs.isEmpty) {
-      //   emit(ActivityErrorLoading([]));
-      //   return;
-      // }
-      emit(ActivityLoadedState(
-          snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList()));
-
       var activities =
           snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList();
-      if (activities.any((activity) => activity.isStarted == true)) {
+      emit(ActivityLoadedState(activities));
+      if (activities.any((activity) =>
+          activity.isStarted == true && activity.isDistributed == true)) {
+        // emit(ResultsDistributed(activities));
+        emit(ActivityLoadedState(activities));
+      } else if (activities.any((activity) => activity.isCompleted == true)) {
+        // Code to execute if there's any activity with isStarted as true
+        emit(ActivityEnded(activities));
+      } else if (activities.any((activity) => activity.isStarted == true)) {
         // Code to execute if there's any activity with isStarted as true
         emit(ActivityStarted(activities));
       }
@@ -53,37 +50,6 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
     emit(ActivityAddedState(upcomingActivities!..add(activity)));
   }
 
-  void loadActivities() async {
-    try {
-      // upcomingActivities = await _activityRepository.getActivities();
-      _activityRepository.activitiesRef.snapshots().listen((snapshot) {
-        // if (snapshot.docs.isEmpty) {
-        //   emit(ActivityErrorLoading([]));
-        //   return;
-        // }
-        emit(ActivityLoadedState(
-            snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList()));
-
-        var activities =
-            snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList();
-        if (activities.any((activity) => activity.isStarted == true)) {
-          // Code to execute if there's any activity with isStarted as true
-          emit(ActivityStarted(activities));
-        }
-      }, onError: (error) {
-        emit(ActivityErrorLoading([]));
-      });
-
-      // emit(ActivityLoadedState(upcomingActivities!));
-    } catch (e) {
-      print(e);
-    }
-    // await _activityRepository.getActivities().then((activities) {
-    //   upcomingActivities = activities;
-    //   emit(ActivityLoadedState(upcomingActivities!));
-    // });
-  }
-
 //BM - temporary method to add activities
   // void addActivities() {
   //   _activityRepository.addActivities();
@@ -91,19 +57,18 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
 
   void endActivity(List<Activity> activities, index) {
     activities[index].isCompleted = true;
+    // activities[index].isStarted = false;
+    _activityRepository.updateActivity(activities[index]);
     emit(ActivityEnded(activities));
   }
 
   void distributeResults(List<Activity> activities, index) {
-    //Remove the distributed activity from the (upcoming) activities list
     activities[index].isDistributed = true;
 
-    //Add the distributed activity to the (past) activities list
     pastActivities.add(activities[index]);
-    activities.removeAt(index);
-    // emit(ActivityEnded(activities));
-
-    emit(ResultsDistributed(pastActivities, activities));
+    _activityRepository.updateActivity(activities[index]);
+    // activities.removeAt(index);
+    emit(ResultsDistributed(activities));
   }
 
   void setScore(

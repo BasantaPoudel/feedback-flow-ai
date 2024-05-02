@@ -51,27 +51,20 @@ class ActivityRepository extends MainRepository {
     return activities;
   }
 
-  // void addActivities() {
-  //   List<Activity> activities = [
-  //     Activity(
-  //       title: 'New Activity 1',
-  //       rubrics: [
-  //         Rubric(name: 'New Rubric 1', score: 1),
-  //         Rubric(name: 'New Rubric 2', score: 1),
-  //       ],
-  //     ),
-  //     Activity(
-  //       title: 'New Activity 2',
-  //       rubrics: [
-  //         Rubric(name: 'New Rubric 3', score: 1),
-  //         Rubric(name: 'New Rubric 4', score: 1),
-  //       ],
-  //     ),
-  //     // Add more activities as needed
-  //   ];
-
-  //   for (var element in activities) {
-  //     addActivity(element);
-  //   }
+  //     Map - Activity(
+  //         title: "Activity 2",
+  //        Array -  rubrics: {
+  //                0 - "uid-1":
+  //                          array 0 - map {Rubric(name: "World History", score: 88),
+  // array 1 - map Rubric(name: "World History", score: 88)
+  // },
+  //       1 - "uid-2":
+  //                 0 - {Rubric(name: "World History", score: 12),
+  // Rubric(name: "World History", score: 82)
   // }
+  //         },
+  //         isStarted: false,
+  //         isCompleted: false,
+  //         isDistributed: false)
+//    }
 }

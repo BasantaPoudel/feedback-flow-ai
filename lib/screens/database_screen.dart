@@ -19,6 +19,11 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
     getUsers();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void getUsers() {
     // setState(() {
     //   _operationResult = _userRepository.fetchUsersFromDatabase();
@@ -30,46 +35,48 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
     DatabaseScreenCubit? databaseScreenCubit =
         BlocProvider.of<DatabaseScreenCubit>(context);
 
-    return BlocProvider(
-        create: (context) => DatabaseScreenCubit()..subscribeToData(),
-        child: BlocBuilder<DatabaseScreenCubit, DatabaseScreenState>(
-            // future: _operationResult,
-            builder: (context, state) {
-          // bool isPresenter = false;
-          var users = databaseScreenCubit.state.props;
-          List<UserModel>? students =
-              users?.where((element) => element.role == "student").toList();
-          return Expanded(
-              child: ListView.builder(
-                  itemCount: students?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        color: const Color(0xFF6D7981),
-                        child: ListTile(
-                            title: Text(students![index].name),
-                            textColor: Colors.white,
-                            trailing: BlocBuilder<DatabaseScreenCubit,
-                                DatabaseScreenState>(builder: (context, state) {
-                              if (state is PresenterState) {
-                                return Checkbox(
-                                  value: state.props![index].isPresenter,
-                                  checkColor: Colors.white,
-                                  onChanged: (bool? value) {
-                                    databaseScreenCubit.selectPresenter(
-                                        users!, index);
-                                  },
-                                );
-                              } else {
-                                print("Reached Else");
+    return BlocBuilder<DatabaseScreenCubit, DatabaseScreenState>(
+        // future: _operationResult,
+        builder: (context, state) {
+      if (state is DatabaseScreenInitial || state is DatabaseScreenLoading) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      // bool isPresenter = false;
+      var users = databaseScreenCubit.state.props;
+      List<UserModel>? students =
+          users?.where((element) => element.role == "student").toList();
+      return ListView.builder(
+          itemCount: students?.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+                color: const Color(0xFF6D7981),
+                child: ListTile(
+                    title: Text(students![index].name),
+                    textColor: Colors.white,
+                    trailing:
+                        BlocBuilder<DatabaseScreenCubit, DatabaseScreenState>(
+                            builder: (context, state) {
+                      if (state is PresenterState) {
+                        return Checkbox(
+                          value: students[index].isPresenter,
+                          checkColor: Colors.white,
+                          onChanged: (bool? value) {
+                            databaseScreenCubit.selectPresenter(
+                                students!, index);
+                          },
+                        );
+                      } else {
+                        print("Reached Else");
 
-                                return Checkbox(
-                                    value: false,
-                                    onChanged: (bool? value) =>
-                                        databaseScreenCubit.selectPresenter(
-                                            users!, index));
-                              }
-                            })));
-                  }));
-        }));
+                        return Checkbox(
+                            value: false,
+                            onChanged: (bool? value) => databaseScreenCubit
+                                .selectPresenter(students!, index));
+                      }
+                    })));
+          });
+    });
   }
 }

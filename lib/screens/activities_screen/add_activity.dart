@@ -1,4 +1,5 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
+import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,10 @@ class AddActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
+
+    DatabaseScreenCubit? databaseScreenCubit =
+        BlocProvider.of<DatabaseScreenCubit>(context);
+
     return AlertDialog(
       title: const Text('Add activity'),
       content: Column(
@@ -55,16 +60,18 @@ class AddActivity extends StatelessWidget {
             if (_controllerRubric1.text.trim().isEmpty) return;
             activitiesScreenCubit.addActivity(Activity(
               title: _controllerTitle.text,
-              rubrics: [
-                Rubric(
-                  name: _controllerRubric1.text,
-                  score: 0,
-                ),
-                Rubric(
-                  name: _controllerRubric2.text,
-                  score: 0,
-                ),
-              ],
+              rubrics: {
+                databaseScreenCubit.getUserId(): [
+                  Rubric(
+                    name: _controllerRubric1.text,
+                    score: 0,
+                  ),
+                  Rubric(
+                    name: _controllerRubric2.text,
+                    score: 0,
+                  ),
+                ],
+              },
               isStarted: false,
               isCompleted: false,
               isDistributed: false,

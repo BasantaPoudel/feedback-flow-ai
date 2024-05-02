@@ -61,4 +61,8 @@ class UserRepository extends MainRepository {
     }
     return "error";
   }
+
+  Future<String> getLoggedInUserId() async {
+    return user!.uid;
+  }
 }

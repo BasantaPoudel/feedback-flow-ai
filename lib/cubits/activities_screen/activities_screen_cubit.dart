@@ -47,11 +47,12 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   void addActivity(Activity activity) {
     _activityRepository.addActivity(activity);
 
-    emit(ActivityAddedState(upcomingActivities!..add(activity)));
+    // emit(ActivityAddedState(upcomingActivities ?? upcomingActivities!
+    //   ..add(activity)));
   }
 
   void addRubric(Activity activity, rubric) {
-    activity.rubrics.add(rubric);
+    activity.rubrics.addEntries(rubric);
     _activityRepository.updateActivity(activity);
     // emit(ActivityStarted(upcomingActivities!));
   }
@@ -77,15 +78,21 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
     emit(ResultsDistributed(activities));
   }
 
-  void setScore(
-      Activity activity, index, rubricIndex, score, UserModel presenter) {
+  void setScore(Activity activity, userId, index, rubricIndex, score,
+      UserModel presenter) {
     // emit(ActivityScoreSet(activities));
     List<Activity> activities = state.getUpcomingActivities;
     var actIndex = activities
         .indexOf(activities.firstWhere((act) => act.title == activity.title));
-    activities.removeAt(actIndex);
-    activity.rubrics[rubricIndex].score = score;
-    activities.add(activity);
+    // activities.removeAt(actIndex);
+    if (activities[actIndex].rubrics[userId] == null) {
+      activities[actIndex].rubrics[userId] =
+          activities[actIndex].rubrics.entries.first.value;
+    }
+    activities[actIndex].rubrics[userId]?.elementAt(rubricIndex).score = score;
+
+    // activity.rubrics[rubricIndex].score = score;
+    // activities.add(activity);
 
     emit(ActivityStarted(activities));
   }

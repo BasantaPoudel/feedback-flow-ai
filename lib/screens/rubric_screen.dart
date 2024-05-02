@@ -1,6 +1,7 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/models/user.dart';
@@ -20,6 +21,7 @@ class _RubricScreenState extends State<RubricScreen> {
   final ScoreRepository _scoreRepository = ScoreRepository();
   void _sendScoreToFirebase(UserModel presenter) {
     _scoreRepository.sendScoreToFirebase(presenter);
+    _scoreRepository.addScoreByProvider(presenter);
   }
 
   @override
@@ -39,7 +41,9 @@ class _RubricScreenState extends State<RubricScreen> {
         create: (context) => DatabaseScreenCubit()..subscribeToData(),
         child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
             builder: (context, stateActivity) {
-          if (stateActivity is ActivityStarted && widget.activity.isStarted) {
+          if (stateActivity is ActivityStarted &&
+              widget.activity.isStarted &&
+              databaseScreenCubit.state is PresenterState) {
             if (databaseScreenCubit.state.props!.isNotEmpty) {
               var presenter = databaseScreenCubit.state.props!
                   .where((element) => element.isPresenter == true)
@@ -56,12 +60,20 @@ class _RubricScreenState extends State<RubricScreen> {
                       subtitle: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: widget.activity.rubrics.length,
+                        //TODO - Fix the index for userID to get the correct rubric
+                        itemCount: widget.activity
+                            .rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
                               color: const Color(0xFF6D7981),
                               child: ListTile(
-                                title: Text(widget.activity.rubrics[index].name,
+                                title: Text(
+                                    widget
+                                        .activity
+                                        .rubrics[
+                                            "CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!
+                                        .elementAt(index)
+                                        .name,
                                     style: const TextStyle(
                                       color: Colors.white,
                                     )),
@@ -79,7 +91,9 @@ class _RubricScreenState extends State<RubricScreen> {
                                             icon: const Icon(Icons.star),
                                             color: widget
                                                         .activity
-                                                        .rubrics[index]
+                                                        .rubrics[
+                                                            "CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!
+                                                        .elementAt(index)
                                                         .score! >=
                                                     i
                                                 ? Colors.yellow
@@ -88,6 +102,8 @@ class _RubricScreenState extends State<RubricScreen> {
                                               //ToDo: Add the logic to set the score individually
                                               activitiesScreenCubit!.setScore(
                                                   widget.activity,
+                                                  databaseScreenCubit
+                                                      .getUserId(),
                                                   0,
                                                   index,
                                                   i,
@@ -106,10 +122,17 @@ class _RubricScreenState extends State<RubricScreen> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        //ToDo: Add the logic to set the score individually
-                        _sendScoreToFirebase(presenter);
-                      },
+                      onPressed: presenter.activities?.isEmpty == false
+                          ? () {
+                              //ToDo: Add the logic to set the score individually
+                              _sendScoreToFirebase(presenter);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('Score Submitted Successfully!'),
+                                duration: Duration(seconds: 2),
+                              ));
+                            }
+                          : null,
                       child: const Text("Submit"),
                     ),
                   ],
@@ -127,12 +150,17 @@ class _RubricScreenState extends State<RubricScreen> {
                     subtitle: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.activity.rubrics.length,
+                      itemCount: widget.activity
+                          .rubrics[databaseScreenCubit.getUserId()]!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                             color: const Color(0xFF6D7981),
                             child: ListTile(
-                              title: Text(widget.activity.rubrics[index].name,
+                              title: Text(
+                                  widget.activity
+                                      .rubrics[databaseScreenCubit.getUserId()]!
+                                      .elementAt(index)
+                                      .name,
                                   style: const TextStyle(
                                     color: Colors.white,
                                   )),

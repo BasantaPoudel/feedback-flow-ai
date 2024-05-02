@@ -17,7 +17,7 @@ class DatabaseScreenCubit extends Cubit<DatabaseScreenState> {
     // emit(DatabaseScreenInitial());
     try {
       _userrepo.roleBasedUsersRef.snapshots().listen((snapshot) {
-        print("Reached Here");
+        print("[Database-C - subscribeToData] Reached Here");
 
         var users =
             snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
@@ -43,5 +43,9 @@ class DatabaseScreenCubit extends Cubit<DatabaseScreenState> {
     users.any((element) => element.isPresenter == true)
         ? emit(PresenterState(users))
         : emit(DatabaseScreenLoaded(users));
+  }
+
+  String getUserId() {
+    return _userrepo.user!.uid;
   }
 }

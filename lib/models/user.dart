@@ -1,6 +1,7 @@
 import 'package:feedback_flow/models/activity.dart';
 
 class UserModel {
+  final String id = '';
   final String name;
   final String role;
   final String email;
@@ -31,6 +32,7 @@ class UserModel {
       email: map['email'],
       role: map['role'],
       isPresenter: map['isPresenter'] ?? false,
+      //TODO: Fix this
       // activities: map['activities'] as List<Activity>,
     );
   }

@@ -5,7 +5,7 @@ class Activity {
   bool isCompleted;
   bool isDistributed;
   bool isStarted;
-  List<Rubric> rubrics;
+  Map<String, List<Rubric>> rubrics;
   // Add other properties as needed
 
   Activity(
@@ -26,13 +26,25 @@ class Activity {
   }
 
   factory Activity.fromMap(Map<String, dynamic> map) {
+    Map<String, List<Rubric>> rubricsM = {};
+
+    var rubrics = map['rubrics'];
+
+    rubrics.forEach((key, value) {
+      List<Rubric> rubricList = [];
+      for (var value in value) {
+        rubricList.add(Rubric.fromJson(value));
+      }
+      rubricsM[key] = rubricList;
+      print(value);
+    });
+
     return Activity(
-      title: map['title'],
-      rubrics: List<Rubric>.from(
-          map['rubrics'].map((rubric) => Rubric.fromMap(rubric))),
-      isStarted: map['isStarted'],
-      isCompleted: map['isCompleted'],
-      isDistributed: map['isDistributed'],
+      title: map['title'] as String,
+      rubrics: rubricsM,
+      isStarted: map['isStarted'] as bool,
+      isCompleted: map['isCompleted'] as bool,
+      isDistributed: map['isDistributed'] as bool,
     );
   }
 
@@ -42,7 +54,8 @@ class Activity {
       'isCompleted': isCompleted,
       'isDistributed': isDistributed,
       'isStarted': isStarted,
-      'rubrics': rubrics.map((rubric) => rubric.toMap()).toList(),
+      'rubrics': rubrics.map(
+          (key, value) => MapEntry(key, value.map((e) => e.toMap()).toList())),
     };
   }
 

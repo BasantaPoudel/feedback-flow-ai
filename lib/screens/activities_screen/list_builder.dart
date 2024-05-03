@@ -1,3 +1,6 @@
+import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/repository/score_repository.dart';
+import 'package:feedback_flow/screens/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
@@ -12,26 +15,34 @@ class ListBuilder extends StatefulWidget {
 
 class _ListBuilderState extends State<ListBuilder> {
   List<Activity> activitiesList = [];
+  final ScoreRepository _scoreRepository = ScoreRepository();
 
   @override
   void initState() {
+    setActivities();
     super.initState();
   }
 
-  void setActivities(List<Activity> activities) => setState(() {
-        activitiesList = activities;
-      });
+  void setActivities() async {
+    activitiesList = await _scoreRepository.getActivities();
+    setState(() {
+      activitiesList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    DatabaseScreenCubit? databaseScreenCubit =
+        BlocProvider.of<DatabaseScreenCubit>(context);
+
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
-      List<Activity>? activitiesList = stateActivity.getUpcomingActivities;
+      // List<Activity>? ac = stateActivity.getUpcomingActivities;
 
       return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: activitiesList?.length ?? 0,
+        itemCount: activitiesList.length,
         itemBuilder: (BuildContext context, int index) {
           if (activitiesList![index].isDistributed == true) {
             return Card(
@@ -48,7 +59,7 @@ class _ListBuilderState extends State<ListBuilder> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            RubricScreen(activity: activitiesList[index]),
+                            ResultsScreen(activity: activitiesList[index]),
                       ),
                     );
                   },

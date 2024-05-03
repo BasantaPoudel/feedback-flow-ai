@@ -19,7 +19,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
 
   final List<Widget> _commonChildren = [
     const WelcomeScreen(),
-    const Stats(),
+    Stats(),
     ProfileScreen(
       appBar: AppBar(
         title: const Text('User Profile'),

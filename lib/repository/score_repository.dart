@@ -42,4 +42,24 @@ class ScoreRepository extends MainRepository {
       print(e.toString());
     }
   }
+
+  Future<List<Activity>> getActivities() async {
+    List<Activity> activities = [];
+    try {
+      await roleBasedUsersRef
+          .where("email", isEqualTo: user!.email)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          activities = value.docs.first
+              .data()['activities']
+              .map<Activity>((activity) => Activity.fromMap(activity))
+              .toList();
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+    return activities;
+  }
 }

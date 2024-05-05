@@ -1,7 +1,7 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/screens/activities_screen/add_activity.dart';
 import 'package:feedback_flow/screens/activities_screen/list_builder.dart';
@@ -23,6 +23,8 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
     ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
 
+    PresenterScreenCubit? databaseScreenCubit =
+        BlocProvider.of<PresenterScreenCubit>(context);
     //Adding BlocProvider here will make it accessible to the childwidget
     return BlocListener<ActivitiesScreenCubit, ActivitiesScreenState>(
         listener: (context, state) {
@@ -61,8 +63,7 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                   )),
               BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
                   builder: (context, stateActivity) {
-                List<Activity>? activitiesList =
-                    stateActivity.getUpcomingActivities;
+                List<Activity>? activitiesList = stateActivity.getAllActivities;
                 return Container(
                     // height: MediaQuery.of(context).size.height * 0.2,
                     // width: MediaQuery.of(context).size.width,
@@ -102,8 +103,9 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                                           ),
                                         );
                                       },
-                                      trailing: BlocBuilder<DatabaseScreenCubit,
-                                              DatabaseScreenState>(
+                                      trailing: BlocBuilder<
+                                              PresenterScreenCubit,
+                                              PresenterScreenState>(
                                           builder: (context, state) {
                                         if (state is PresenterState) {
                                           return BlocBuilder<
@@ -124,6 +126,12 @@ class _ActivitiesTeacherScreenState extends State<ActivitiesTeacherScreen> {
                                                               .startActivity(
                                                                   activitiesList,
                                                                   index);
+
+                                                          databaseScreenCubit
+                                                              .addActivity(
+                                                                  state.props!,
+                                                                  activitiesList[
+                                                                      index]);
                                                         },
                                                         child:
                                                             const Text('Start'))

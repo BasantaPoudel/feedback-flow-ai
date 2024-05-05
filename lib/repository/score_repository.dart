@@ -13,7 +13,7 @@ class ScoreRepository extends MainRepository {
           .get()
           .then((value) {
         if (value.docs.isNotEmpty) {
-          List<dynamic> activities = presenter.activities
+          List<dynamic>? activities = presenter.activities
               ?.map((activity) => activity.toMap())
               .toList();
           roleBasedUsersRef.doc(value.docs.first.id).update({
@@ -28,12 +28,15 @@ class ScoreRepository extends MainRepository {
 
   void addScoreByProvider(presenter) async {
     try {
-      scoreRef.where("email", isEqualTo: presenter!.email).get().then((value) {
+      roleBasedUsersRef
+          .where("email", isEqualTo: presenter!.email)
+          .get()
+          .then((value) {
         if (value.docs.isNotEmpty) {
           List<dynamic> activities = presenter.activities
               ?.map((activity) => activity.toMap())
               .toList();
-          scoreRef.doc(value.docs.first.id).update({
+          roleBasedUsersRef.doc(value.docs.first.id).update({
             'activities': activities,
           });
         }

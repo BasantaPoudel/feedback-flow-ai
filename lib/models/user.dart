@@ -6,7 +6,6 @@ class UserModel {
   final String role;
   final String email;
   late bool? isPresenter;
-
   List<Activity>? activities;
 
   UserModel(
@@ -43,7 +42,7 @@ class UserModel {
       'email': email,
       'role': role,
       'isPresenter': isPresenter,
-      // 'activities': activities,
+      'activities': activities?.map((activity) => activity.toMap()).toList(),
     };
   }
 
@@ -53,6 +52,21 @@ class UserModel {
 
   setPresenter(bool isPresenter) {
     this.isPresenter = isPresenter;
+  }
+
+  addActivity(Activity activity) {
+    List<Activity> temp = [activity];
+
+    if (activities == null) {
+      activities = temp;
+    } else if (activities!
+        .where((ac) => ac.title == activity.title)
+        .isNotEmpty) {
+      activities!.removeWhere((ac) => ac.title == activity.title);
+      activities!.add(activity);
+    } else {
+      activities!.add(activity);
+    }
   }
 
   setActivities(List<Activity> activities) {

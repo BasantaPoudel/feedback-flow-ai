@@ -1,4 +1,4 @@
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/repository/score_repository.dart';
 import 'package:feedback_flow/screens/results_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _ListBuilderState extends State<ListBuilder> {
 
   @override
   void initState() {
-    setActivities();
+    // setActivities();
     super.initState();
   }
 
@@ -32,17 +32,17 @@ class _ListBuilderState extends State<ListBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseScreenCubit? databaseScreenCubit =
-        BlocProvider.of<DatabaseScreenCubit>(context);
+    PresenterScreenCubit? databaseScreenCubit =
+        BlocProvider.of<PresenterScreenCubit>(context);
 
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
-      // List<Activity>? ac = stateActivity.getUpcomingActivities;
+      List<Activity>? activitiesList = stateActivity.getAllActivities;
 
       return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: activitiesList.length,
+        itemCount: activitiesList?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
           if (activitiesList![index].isDistributed == true) {
             return Card(

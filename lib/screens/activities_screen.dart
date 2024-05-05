@@ -43,8 +43,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
               )),
           BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
               builder: (context, stateActivity) {
-            List<Activity>? activitiesList =
-                stateActivity.getUpcomingActivities;
+            List<Activity>? activitiesList = stateActivity.getAllActivities;
             return Container(
                 // height: MediaQuery.of(context).size.height * 0.2,
                 // width: MediaQuery.of(context).size.width,

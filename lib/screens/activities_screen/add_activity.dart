@@ -1,5 +1,5 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,8 @@ class AddActivity extends StatelessWidget {
     ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
 
-    DatabaseScreenCubit? databaseScreenCubit =
-        BlocProvider.of<DatabaseScreenCubit>(context);
+    PresenterScreenCubit? databaseScreenCubit =
+        BlocProvider.of<PresenterScreenCubit>(context);
 
     return AlertDialog(
       title: const Text('Add activity'),

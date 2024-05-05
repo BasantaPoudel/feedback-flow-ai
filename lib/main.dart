@@ -1,5 +1,5 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
 import 'package:feedback_flow/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,7 +21,7 @@ void main() async {
             ActivitiesScreenCubit()..subscribeToData()),
     BlocProvider(
         create: (BuildContext context) =>
-            DatabaseScreenCubit()..subscribeToData()),
+            PresenterScreenCubit()..subscribeToData()),
     BlocProvider(create: (BuildContext context) => ScoreCubit())
   ], child: const MyApp()));
 }

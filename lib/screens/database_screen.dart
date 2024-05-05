@@ -1,5 +1,5 @@
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,10 +32,10 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseScreenCubit? databaseScreenCubit =
-        BlocProvider.of<DatabaseScreenCubit>(context);
+    PresenterScreenCubit? databaseScreenCubit =
+        BlocProvider.of<PresenterScreenCubit>(context);
 
-    return BlocBuilder<DatabaseScreenCubit, DatabaseScreenState>(
+    return BlocBuilder<PresenterScreenCubit, PresenterScreenState>(
         // future: _operationResult,
         builder: (context, state) {
       if (state is DatabaseScreenInitial || state is DatabaseScreenLoading) {
@@ -56,7 +56,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                     title: Text(students![index].name),
                     textColor: Colors.white,
                     trailing:
-                        BlocBuilder<DatabaseScreenCubit, DatabaseScreenState>(
+                        BlocBuilder<PresenterScreenCubit, PresenterScreenState>(
                             builder: (context, state) {
                       if (state is PresenterState) {
                         return Checkbox(

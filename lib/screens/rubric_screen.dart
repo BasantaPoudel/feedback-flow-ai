@@ -1,7 +1,7 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/models/user.dart';
@@ -19,10 +19,11 @@ class RubricScreen extends StatefulWidget {
 
 class _RubricScreenState extends State<RubricScreen> {
   final ScoreRepository _scoreRepository = ScoreRepository();
-  void _sendScoreToFirebase(UserModel presenter) {
-    _scoreRepository.sendScoreToFirebase(presenter);
-    _scoreRepository.addScoreByProvider(presenter);
-  }
+
+  // void _sendScoreToFirebase(UserModel presenter) {
+  //   _scoreRepository.sendScoreToFirebase(presenter);
+  //   _scoreRepository.addScoreByProvider(presenter);
+  // }
 
   @override
   void initState() {
@@ -31,14 +32,14 @@ class _RubricScreenState extends State<RubricScreen> {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseScreenCubit? databaseScreenCubit =
-        BlocProvider.of<DatabaseScreenCubit>(context);
+    PresenterScreenCubit? databaseScreenCubit =
+        BlocProvider.of<PresenterScreenCubit>(context);
 
     ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
 
     return BlocProvider(
-        create: (context) => DatabaseScreenCubit()..subscribeToData(),
+        create: (context) => PresenterScreenCubit()..subscribeToData(),
         child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
             builder: (context, stateActivity) {
           if (stateActivity is ActivityStarted &&
@@ -81,7 +82,7 @@ class _RubricScreenState extends State<RubricScreen> {
                                     ActivitiesScreenState>(
                                   builder: (context, stateActivity) {
                                     List<Activity> activitiesList =
-                                        stateActivity.getUpcomingActivities;
+                                        stateActivity.getAllActivities;
 
                                     return Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -109,8 +110,8 @@ class _RubricScreenState extends State<RubricScreen> {
                                                   i,
                                                   presenter);
 
-                                              presenter.setActivities(
-                                                  activitiesList);
+                                              // presenter
+                                              //     .addActivity(widget.activity);
                                             },
                                           ),
                                       ],
@@ -122,17 +123,18 @@ class _RubricScreenState extends State<RubricScreen> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: presenter.activities?.isEmpty == false
-                          ? () {
-                              //ToDo: Add the logic to set the score individually
-                              _sendScoreToFirebase(presenter);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('Score Submitted Successfully!'),
-                                duration: Duration(seconds: 2),
-                              ));
-                            }
-                          : null,
+                      //TODO - Fix the logic
+                      // onPressed: presenter.activities?.isEmpty == false
+                      onPressed: () {
+                        //ToDo: Add the logic to set the score individually
+                        // _sendScoreToFirebase(presenter);
+                        databaseScreenCubit.updateActivity(
+                            presenter, widget.activity);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Score Submitted Successfully!'),
+                          duration: Duration(seconds: 2),
+                        ));
+                      },
                       child: const Text("Submit"),
                     ),
                   ],
@@ -151,14 +153,14 @@ class _RubricScreenState extends State<RubricScreen> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: widget.activity
-                          .rubrics[databaseScreenCubit.getUserId()]!.length,
+                          .rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                             color: const Color(0xFF6D7981),
                             child: ListTile(
                               title: Text(
                                   widget.activity
-                                      .rubrics[databaseScreenCubit.getUserId()]!
+                                      .rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!
                                       .elementAt(index)
                                       .name,
                                   style: const TextStyle(

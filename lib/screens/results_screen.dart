@@ -1,10 +1,7 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_cubit.dart';
-import 'package:feedback_flow/cubits/database_screen/database_screen_state.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/models/rubric.dart';
-import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/score_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,14 +24,14 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseScreenCubit? databaseScreenCubit =
-        BlocProvider.of<DatabaseScreenCubit>(context);
+    PresenterScreenCubit? databaseScreenCubit =
+        BlocProvider.of<PresenterScreenCubit>(context);
 
     ActivitiesScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActivitiesScreenCubit>(context);
 
     return BlocProvider(
-        create: (context) => DatabaseScreenCubit()..subscribeToData(),
+        create: (context) => PresenterScreenCubit()..subscribeToData(),
         child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
             builder: (context, stateActivity) {
           return Scaffold(

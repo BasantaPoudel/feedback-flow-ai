@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.data_object_sharp),
-                  label: 'Database',
+                  label: 'Presenters',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.bar_chart),

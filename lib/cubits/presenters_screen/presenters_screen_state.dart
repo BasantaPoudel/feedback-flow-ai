@@ -1,27 +1,27 @@
 import 'package:feedback_flow/models/user.dart';
 
 //TODO - Fix constructors and methods to properly set and get the values
-class DatabaseScreenState {
+class PresenterScreenState {
   // Add your state properties here
   late List<UserModel>? _users;
 
-  DatabaseScreenState.withUsers(this._users);
-  DatabaseScreenState();
+  PresenterScreenState.withUsers(this._users);
+  PresenterScreenState();
 
   List<UserModel>? get props => _users;
 }
 
-class DatabaseScreenInitial extends DatabaseScreenState {
+class DatabaseScreenInitial extends PresenterScreenState {
   // DatabaseScreenInitial(super.users);
   // Add your state properties here
 }
 
-class DatabaseScreenLoading extends DatabaseScreenState {
+class DatabaseScreenLoading extends PresenterScreenState {
   // DatabaseScreenLoading(super.users);
   // Add your state properties here
 }
 
-class DatabaseScreenLoaded extends DatabaseScreenState {
+class DatabaseScreenLoaded extends PresenterScreenState {
   @override
   List<UserModel>? _users;
 
@@ -30,12 +30,12 @@ class DatabaseScreenLoaded extends DatabaseScreenState {
   // Add your state properties here
 }
 
-class DatabaseScreenError extends DatabaseScreenState {
+class DatabaseScreenError extends PresenterScreenState {
   // DatabaseScreenError(super.users);
   // Add your state properties here
 }
 
-class PresenterState extends DatabaseScreenState {
+class PresenterState extends PresenterScreenState {
   // Add your state properties here
   @override
   List<UserModel>? _users;

@@ -81,7 +81,7 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
   void setScore(Activity activity, userId, index, rubricIndex, score,
       UserModel presenter) {
     // emit(ActivityScoreSet(activities));
-    List<Activity> activities = state.getUpcomingActivities;
+    List<Activity> activities = state.getAllActivities;
     var actIndex = activities
         .indexOf(activities.firstWhere((act) => act.title == activity.title));
     // activities.removeAt(actIndex);

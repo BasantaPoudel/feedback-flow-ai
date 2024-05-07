@@ -79,7 +79,7 @@ class UserRepository extends MainRepository {
           presenter.activities ??= [];
           presenter.activities!.add(activity);
 
-          roleBasedUsersRef.doc(value.docs.first.id).set({
+          roleBasedUsersRef.doc(value.docs.first.id).update({
             'activities': presenter.activities!
                 .map((activity) => activity.toMap())
                 .toList(),

@@ -53,14 +53,11 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
                   children: [
                     ElevatedButton(
                         onPressed: () {
-                          activitiesScreenCubit.startActivity(
-                              widget.activitiesList, widget.index);
-
                           rubricScreenCubit.addActivityByProfessor(
                               widget.activitiesList[widget.index], presenter);
 
-                          databaseScreenCubit.addActivity(state.props!,
-                              widget.activitiesList[widget.index]);
+                          activitiesScreenCubit.startActivity(
+                              widget.activitiesList, widget.index);
                         },
                         child: const Text('Start'))
                   ],

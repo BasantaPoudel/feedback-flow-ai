@@ -15,19 +15,11 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch users from the database and populate the lists
-    getUsers();
   }
 
   @override
   void dispose() {
     super.dispose();
-  }
-
-  void getUsers() {
-    // setState(() {
-    //   _operationResult = _userRepository.fetchUsersFromDatabase();
-    // });
   }
 
   @override
@@ -36,14 +28,12 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
         BlocProvider.of<PresenterScreenCubit>(context);
 
     return BlocBuilder<PresenterScreenCubit, PresenterScreenState>(
-        // future: _operationResult,
         builder: (context, state) {
       if (state is DatabaseScreenInitial || state is DatabaseScreenLoading) {
         return const Center(
           child: CircularProgressIndicator(),
         );
       }
-      // bool isPresenter = false;
       var users = databaseScreenCubit.state.props;
       List<UserModel>? students =
           users?.where((element) => element.role == "student").toList();
@@ -64,7 +54,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                           checkColor: Colors.white,
                           onChanged: (bool? value) {
                             databaseScreenCubit.selectPresenter(
-                                students!, index);
+                                students, index);
                           },
                         );
                       } else {
@@ -73,7 +63,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                         return Checkbox(
                             value: false,
                             onChanged: (bool? value) => databaseScreenCubit
-                                .selectPresenter(students!, index));
+                                .selectPresenter(students, index));
                       }
                     })));
           });

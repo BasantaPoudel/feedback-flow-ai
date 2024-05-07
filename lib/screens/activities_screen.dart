@@ -1,7 +1,6 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/screens/activities_screen/list_builder.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,15 +30,15 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           Container(
               // height: MediaQuery.of(context).size.height * 0.2,
               // width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
                 color: Color.fromRGBO(207, 216, 220, 1),
                 borderRadius:
                     BorderRadius.only(bottomRight: Radius.circular(70)),
               ),
-              child: ListTile(
-                title: const Text('Past In Class Activities'),
-                subtitle: ListBuilder(),
+              child: const ListTile(
+                title: Text('Past In Class Activities'),
+                // subtitle: ListBuilder(),
               )),
           BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
               builder: (context, stateActivity) {
@@ -47,8 +46,8 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             return Container(
                 // height: MediaQuery.of(context).size.height * 0.2,
                 // width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
                 ),
@@ -73,13 +72,13 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => RubricScreen(
-                                          activity: activitiesList[index]),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => RubricScreen(
+                                  //         activity: activitiesList[index]),
+                                  //   ),
+                                  // );
                                 },
                               ));
                         }

@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class Stats extends StatefulWidget {
+  const Stats({super.key});
+
   @override
   _StatsState createState() => _StatsState();
 }
@@ -33,13 +35,13 @@ class _StatsState extends State<Stats> {
           Expanded(
               child: Container(
                   color: Colors.green,
-                  child: Center(
+                  child: const Center(
                     child: Text('R3'),
                   ))),
           Expanded(
               child: Container(
                   color: Colors.yellow,
-                  child: Center(
+                  child: const Center(
                     child: Text('R4'),
                   ))),
         ],
@@ -47,7 +49,7 @@ class _StatsState extends State<Stats> {
       Expanded(
           child: Container(
         color: Colors.blue,
-        child: Center(
+        child: const Center(
           child: Text('R12'),
         ),
       ))

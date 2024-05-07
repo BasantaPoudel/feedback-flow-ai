@@ -2,7 +2,6 @@ import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.d
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/repository/score_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,8 +14,6 @@ class ResultsScreen extends StatefulWidget {
 }
 
 class _ResultsScreenState extends State<ResultsScreen> {
-  final ScoreRepository _scoreRepository = ScoreRepository();
-
   @override
   void initState() {
     super.initState();
@@ -24,16 +21,26 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PresenterScreenCubit? databaseScreenCubit =
+    PresenterScreenCubit? presenterScreenCubit =
         BlocProvider.of<PresenterScreenCubit>(context);
-
-    ActivitiesScreenCubit? activitiesScreenCubit =
-        BlocProvider.of<ActivitiesScreenCubit>(context);
 
     return BlocProvider(
         create: (context) => PresenterScreenCubit()..subscribeToData(),
         child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
             builder: (context, stateActivity) {
+          List<Activity> activitiesList =
+              presenterScreenCubit.getUserActivities() ?? [];
+          if (activitiesList.isEmpty) {
+            return const Scaffold(
+              body: Center(
+                child: Text("No activities found"),
+              ),
+            );
+          }
+          var activity = activitiesList
+              .where((element) => element.title == widget.activity.title)
+              .first;
+
           return Scaffold(
             appBar: AppBar(
               title: Row(children: <Widget>[
@@ -43,7 +50,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   child: Container(
                     // height: 100,
                     // color: Colors.red,
-                    child: Text("Results"),
+                    child: const Text("Results"),
                   ),
                 ),
                 // Second expanded widget with flex factor of 2
@@ -52,7 +59,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   child: Container(
                     // height: 100,
                     // color: Colors.green,
-                    child: Switch(
+                    child: const Switch(
                         value: true,
                         activeColor: Colors.green,
                         inactiveThumbColor: Colors.blue,
@@ -67,22 +74,22 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 subtitle: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount:
-                      widget.activity.rubrics.entries.elementAt(0).value.length,
+                  itemCount: activity.rubrics.entries.elementAt(0).value.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                         color: const Color(0xFF6D7981),
                         child: ListTile(
                             title: Text(
-                                widget.activity.rubrics.entries
-                                    .elementAt(0)
-                                    .value[index]
-                                    .name,
+                                activity.rubrics.entries
+                                        .elementAt(0)
+                                        .value[index]
+                                        .name ??
+                                    "",
                                 style: const TextStyle(
                                   color: Colors.white,
                                 )),
                             trailing: Text(
-                                widget.activity.rubrics.entries
+                                activity.rubrics.entries
                                     .elementAt(0)
                                     .value[index]
                                     .score

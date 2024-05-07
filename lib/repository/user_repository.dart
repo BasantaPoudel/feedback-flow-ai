@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/main_repository.dart';
 import 'package:logger/web.dart';
@@ -6,6 +7,7 @@ import 'package:logger/web.dart';
 class UserRepository extends MainRepository {
   List<UserModel> users = [];
   Logger log = Logger();
+  final roleBasedUsersRef = FirebaseFirestore.instance.collection('role_based');
 
   Future<List<UserModel>> fetchUsersFromDatabase() async {
     try {
@@ -64,5 +66,49 @@ class UserRepository extends MainRepository {
 
   Future<String> getLoggedInUserId() async {
     return user!.uid;
+  }
+
+//Method to be called when Teacher presses Start on the activity
+  void addActivityWithDefaultRubricToPresenter(presenter, activity) async {
+    try {
+      roleBasedUsersRef
+          .where("email", isEqualTo: presenter!.email)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          presenter.activities ??= [];
+          presenter.activities!.add(activity);
+
+          roleBasedUsersRef.doc(value.docs.first.id).set({
+            'activities': presenter.activities!
+                .map((activity) => activity.toMap())
+                .toList(),
+          });
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+//Method to be called on Results Screen to get the activities of the logged in user
+  Future<List<Activity>> getActivities() async {
+    List<Activity> activities = [];
+    try {
+      await roleBasedUsersRef
+          .where("email", isEqualTo: user!.email)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          activities = value.docs.first
+              .data()['activities']
+              .map<Activity>((activity) => Activity.fromMap(activity))
+              .toList();
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+    return activities;
   }
 }

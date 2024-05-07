@@ -10,6 +10,8 @@ class AddActivity extends StatelessWidget {
   final _controllerRubric1 = TextEditingController();
   final _controllerRubric2 = TextEditingController();
 
+  AddActivity({super.key});
+
   @override
   Widget build(BuildContext context) {
     ActivitiesScreenCubit? activitiesScreenCubit =

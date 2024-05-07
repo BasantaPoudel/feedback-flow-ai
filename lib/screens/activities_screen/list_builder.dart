@@ -1,40 +1,28 @@
+import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
-import 'package:feedback_flow/repository/score_repository.dart';
+import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListBuilder extends StatefulWidget {
   @override
   _ListBuilderState createState() => _ListBuilderState();
+  final List<Activity> activitiesList;
+  const ListBuilder({Key? key, required this.activitiesList}) : super(key: key);
 }
 
 class _ListBuilderState extends State<ListBuilder> {
-  List<Activity> activitiesList = [];
-  final ScoreRepository _scoreRepository = ScoreRepository();
-
   @override
   void initState() {
-    // setActivities();
     super.initState();
-  }
-
-  void setActivities() async {
-    activitiesList = await _scoreRepository.getActivities();
-    setState(() {
-      activitiesList;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    PresenterScreenCubit? databaseScreenCubit =
-        BlocProvider.of<PresenterScreenCubit>(context);
-
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
       List<Activity>? activitiesList = stateActivity.getAllActivities;
@@ -46,7 +34,7 @@ class _ListBuilderState extends State<ListBuilder> {
         itemBuilder: (BuildContext context, int index) {
           if (activitiesList![index].isDistributed == true) {
             return Card(
-                color: Color.fromARGB(255, 231, 196, 191),
+                color: const Color.fromARGB(255, 231, 196, 191),
                 child: ListTile(
                   title: Text(
                     activitiesList[index].title,
@@ -55,6 +43,8 @@ class _ListBuilderState extends State<ListBuilder> {
                     ),
                   ),
                   onTap: () {
+                    //TODO - Check if this is the right way to pass data
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -64,7 +54,7 @@ class _ListBuilderState extends State<ListBuilder> {
                     );
                   },
                 ));
-          }
+          } else if (activitiesList[index].isDistributed == false) {}
           return const FittedBox();
         },
       );

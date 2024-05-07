@@ -1,17 +1,17 @@
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/activity_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Cubit
-class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
+class ActScreenCubit extends Cubit<ActScreenState> {
   List<Activity>? upcomingActivities;
   List<Activity> pastActivities = [];
 
   final ActivityRepository _activityRepository = ActivityRepository();
 
-  ActivitiesScreenCubit() : super(InitialState()) {
+  ActScreenCubit() : super(InitialState()) {
     subscribeToData();
   }
 
@@ -57,7 +57,6 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
 
   void endActivity(List<Activity> activities, index) {
     activities[index].isCompleted = true;
-    // activities[index].isStarted = false;
     _activityRepository.updateActivity(activities[index]);
     emit(ActivityEnded(activities));
   }
@@ -67,18 +66,5 @@ class ActivitiesScreenCubit extends Cubit<ActivitiesScreenState> {
     pastActivities.add(activities[index]);
     _activityRepository.updateActivity(activities[index]);
     emit(ResultsDistributed(activities));
-  }
-
-  void setScore(Activity activity, userId, index, rubricIndex, score,
-      UserModel presenter) {
-    List<Activity> activities = state.getAllActivities;
-    var actIndex = activities
-        .indexOf(activities.firstWhere((act) => act.title == activity.title));
-    if (activities[actIndex].rubrics[userId] == null) {
-      activities[actIndex].rubrics[userId] =
-          activities[actIndex].rubrics.entries.first.value;
-    }
-    activities[actIndex].rubrics[userId]?.elementAt(rubricIndex).score = score;
-    emit(ActivityStarted(activities));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
+import 'package:feedback_flow/screens/act_screen.dart';
 import 'package:feedback_flow/screens/activities_screen_teacher.dart';
 import 'package:feedback_flow/screens/database_screen.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -9,17 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:feedback_flow/screens/activities_screen.dart';
 import 'package:feedback_flow/screens/search_screen.dart';
 import 'package:feedback_flow/screens/stats_screen.dart';
-import 'package:feedback_flow/screens/welcome_screen.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {
-  // static final HomeScreenCubit instance = HomeScreenCubit();
   int _currentIndex = 0;
   final UserRepository _userRepository = UserRepository();
-  // Future<void>? _getRole;
-
   final List<Widget> _commonChildren = [
-    const WelcomeScreen(),
-    Stats(),
+    const ActScreen(),
+    const Stats(),
     ProfileScreen(
       appBar: AppBar(
         title: const Text('User Profile'),
@@ -53,7 +50,6 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
 
   // Consists all the business logic here
   Future<void> getUserRole() async {
-    //TODO - Check How to access Future Data in right manner
     String userRole = await _userRepository.getUserRole();
     if (userRole == "teacher") {
       emit(TeacherLoggedInState(_currentIndex, _childrenTeacher));
@@ -89,7 +85,6 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
         2,
         const DatabaseScreen(),
       );
-    // emit(TeacherLoggedInState(_currentIndex, _commonChildrenTeacher));
   }
 
   List<Widget> createStudentsWidgets() {
@@ -98,13 +93,12 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     return childrenStudent
       ..insert(
         1,
-        ActivitiesScreen(),
+        const ActivitiesScreen(),
       )
       ..insert(
         2,
         const Search(),
       );
-    // emit(TeacherLoggedInState(_currentIndex, _commonChildrenTeacher));
   }
 
   void onTabTappedTeacher(int index) {

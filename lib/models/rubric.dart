@@ -2,6 +2,7 @@ class Rubric {
   String name;
   // Add other properties as needed
   int score;
+
   Rubric({required this.name, required this.score});
 
   factory Rubric.fromJson(Map<String, dynamic> json) {

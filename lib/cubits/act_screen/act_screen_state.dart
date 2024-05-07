@@ -1,14 +1,14 @@
 import 'package:feedback_flow/models/activity.dart';
 
 // States
-abstract class ActivitiesScreenState {
+abstract class ActScreenState {
   get getAllActivities => null;
   get getPastActivities => null;
 }
 
-class InitialState extends ActivitiesScreenState {}
+class InitialState extends ActScreenState {}
 
-class ActivityLoadedState extends ActivitiesScreenState {
+class ActivityLoadedState extends ActScreenState {
   final List<Activity> allActivities;
 
   ActivityLoadedState(this.allActivities);
@@ -16,7 +16,7 @@ class ActivityLoadedState extends ActivitiesScreenState {
   get getAllActivities => allActivities;
 }
 
-class ActivityErrorLoading extends ActivitiesScreenState {
+class ActivityErrorLoading extends ActScreenState {
   final List<Activity> allActivities;
 
   ActivityErrorLoading(this.allActivities);
@@ -24,7 +24,7 @@ class ActivityErrorLoading extends ActivitiesScreenState {
   get getAllActivities => allActivities;
 }
 
-class ActivityAddedState extends ActivitiesScreenState {
+class ActivityAddedState extends ActScreenState {
   final List<Activity> allActivities;
 
   ActivityAddedState(this.allActivities);
@@ -32,7 +32,7 @@ class ActivityAddedState extends ActivitiesScreenState {
   get getAllActivities => allActivities;
 }
 
-class ActivityStarted extends ActivitiesScreenState {
+class ActivityStarted extends ActScreenState {
   final List<Activity> allActivities;
 
   ActivityStarted(this.allActivities);
@@ -40,7 +40,7 @@ class ActivityStarted extends ActivitiesScreenState {
   get getAllActivities => allActivities;
 }
 
-class ActivityEnded extends ActivitiesScreenState {
+class ActivityEnded extends ActScreenState {
   final List<Activity> allActivities;
 
   ActivityEnded(this.allActivities);
@@ -48,7 +48,8 @@ class ActivityEnded extends ActivitiesScreenState {
   get getAllActivities => allActivities;
 }
 
-class ResultsDistributed extends ActivitiesScreenState {
+class ResultsDistributed extends ActScreenState {
+  // final List<Activity> pastActivities;
   final List<Activity> allActivities;
 
   ResultsDistributed(this.allActivities);
@@ -57,7 +58,7 @@ class ResultsDistributed extends ActivitiesScreenState {
   get getAllActivities => allActivities;
 }
 
-class ActivityScoreSet extends ActivitiesScreenState {
+class ActivityScoreSet extends ActScreenState {
   final List<Activity> activities;
 
   ActivityScoreSet(this.activities);

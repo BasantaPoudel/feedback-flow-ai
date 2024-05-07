@@ -21,18 +21,21 @@ class UserModel {
       email: json['email'],
       role: json['role'],
       isPresenter: json['isPresenter'] ?? false,
-      // activities: json['activities'] ?? [],
+      activities: json['activities'] ?? [],
     );
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
+    var activities = map['activities'] != null
+        ? List<Activity>.from(map['activities'].map((x) => Activity.fromMap(x)))
+        : null;
     return UserModel(
       name: map['name'],
       email: map['email'],
       role: map['role'],
       isPresenter: map['isPresenter'] ?? false,
-      //TODO: Fix this
-      // activities: map['activities'] as List<Activity>,
+      //TODO: Verify if this fixed the issue
+      activities: activities ?? [],
     );
   }
 

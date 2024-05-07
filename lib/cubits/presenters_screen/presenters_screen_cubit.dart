@@ -78,6 +78,10 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
     return _userRepo.user!.uid;
   }
 
+  String? getUserEmail() {
+    return _userRepo.user!.email;
+  }
+
   getPresenterActivities(List<UserModel> users) {
     List<UserModel> presenters =
         users.where((user) => user.isPresenter == true).toList();
@@ -89,6 +93,6 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
   }
 
   getUserActivities() {
-    _userRepo.getActivities();
+    return _userRepo.getActivities();
   }
 }

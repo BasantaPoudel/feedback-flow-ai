@@ -28,9 +28,13 @@ class _ResultsScreenState extends State<ResultsScreen> {
         create: (context) => PresenterScreenCubit()..subscribeToData(),
         child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
             builder: (context, stateActivity) {
-          List<Activity> activitiesList =
-              presenterScreenCubit.getUserActivities() ?? [];
-          if (activitiesList.isEmpty) {
+          List<Activity>? activitiesList = presenterScreenCubit.state.props
+              ?.where((element) =>
+                  element.email == presenterScreenCubit.getUserEmail())
+              .first
+              .activities;
+
+          if (activitiesList == null || activitiesList.isEmpty) {
             return const Scaffold(
               body: Center(
                 child: Text("No activities found"),
@@ -89,9 +93,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                   color: Colors.white,
                                 )),
                             trailing: Text(
-                                activity.rubrics.entries
-                                    .elementAt(0)
-                                    .value[index]
+                                activity
+                                    .rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!
+                                    .elementAt(index)
                                     .score
                                     .toString(),
                                 style: const TextStyle(

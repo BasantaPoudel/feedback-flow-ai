@@ -1,5 +1,6 @@
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
+import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/results_screen.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +45,13 @@ class _ListBuilderState extends State<ListBuilder> {
                   ),
                   onTap: () {
                     //TODO - Check if this is the right way to pass data
-
+                    context
+                        .read<ResultScreenCubit>()
+                        .calculateAndLoadActivity(activitiesList[index]);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ResultsScreen(activity: activitiesList[index]),
+                        builder: (context) => ResultsScreen(),
                       ),
                     );
                   },

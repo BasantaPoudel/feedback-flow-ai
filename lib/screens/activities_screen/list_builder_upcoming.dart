@@ -41,7 +41,8 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
     return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
         builder: (context, stateActivity) {
       List<Activity>? activitiesList = widget.activitiesList;
-      if (databaseScreenCubit.state.props!.isNotEmpty) {
+      if (databaseScreenCubit.state is PresenterState &&
+          databaseScreenCubit.state.props!.isNotEmpty) {
         var presenter = databaseScreenCubit.state.props!
             .where((element) => element.isPresenter == true)
             .first;

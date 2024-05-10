@@ -1,19 +1,21 @@
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
+import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
+import 'package:feedback_flow/cubits/result_screen/result_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResultsScreen extends StatefulWidget {
-  const ResultsScreen({super.key, required this.activity});
-
   @override
   _ResultsScreenState createState() => _ResultsScreenState();
-  final Activity activity;
+  // final Activity activity;
 }
 
 class _ResultsScreenState extends State<ResultsScreen> {
+  bool defaultSwitchValue = true;
+
   @override
   void initState() {
     super.initState();
@@ -24,26 +26,21 @@ class _ResultsScreenState extends State<ResultsScreen> {
     PresenterScreenCubit? presenterScreenCubit =
         BlocProvider.of<PresenterScreenCubit>(context);
 
+    ResultScreenCubit resultScreenCubit =
+        BlocProvider.of<ResultScreenCubit>(context);
+
     return BlocProvider(
         create: (context) => PresenterScreenCubit()..subscribeToData(),
         child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
             builder: (context, stateActivity) {
-          List<Activity>? activitiesList = presenterScreenCubit.state.props
-              ?.where((element) =>
-                  element.email == presenterScreenCubit.getUserEmail())
-              .first
-              .activities;
-
-          if (activitiesList == null || activitiesList.isEmpty) {
+          Activity? activity = resultScreenCubit.state.props;
+          if (activity == null || activity.rubrics.isEmpty) {
             return const Scaffold(
               body: Center(
-                child: Text("No activities found"),
+                child: Text("Sorry, you didn't participate in this activity."),
               ),
             );
           }
-          var activity = activitiesList
-              .where((element) => element.title == widget.activity.title)
-              .first;
 
           return Scaffold(
             appBar: AppBar(
@@ -61,20 +58,35 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    // height: 100,
-                    // color: Colors.green,
-                    child: const Switch(
-                        value: true,
-                        activeColor: Colors.green,
-                        inactiveThumbColor: Colors.blue,
-                        onChanged: null),
-                  ),
+                      // height: 100,
+                      // color: Colors.green,
+                      child: Row(
+                    children: [
+                      Text('S'),
+                      Switch(
+                          //Default value
+                          value: defaultSwitchValue,
+                          activeColor: Colors.green,
+                          inactiveThumbColor: Colors.blue,
+                          onChanged: (bool value) {
+                            setState(() {
+                              defaultSwitchValue = value;
+                            });
+                            resultScreenCubit.state is ResultFromStudents
+                                ? resultScreenCubit
+                                    .loadResultFromProfessor(activity)
+                                : resultScreenCubit
+                                    .loadResultFromStudents(activity);
+                          }),
+                      Text('T'),
+                    ],
+                  )),
                 )
               ]),
             ),
             body: ListView(children: <Widget>[
               ListTile(
-                title: Text(widget.activity.title),
+                title: Text(activity.title),
                 subtitle: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -83,18 +95,27 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     return Card(
                         color: const Color(0xFF6D7981),
                         child: ListTile(
-                            title: Text(
-                                activity.rubrics.entries
-                                        .elementAt(0)
-                                        .value[index]
-                                        .name ??
-                                    "",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                )),
-                            trailing: Text(
-                                activity
-                                    .rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!
+                          title: Text(
+                              activity.rubrics.entries
+                                      .elementAt(0)
+                                      .value[index]
+                                      .name ??
+                                  "",
+                              style: const TextStyle(
+                                color: Colors.white,
+                              )),
+                          trailing:
+                              BlocBuilder<ResultScreenCubit, ResultScreenState>(
+                                  builder: (context, state) {
+                            var key;
+                            if (state is ResultFromProfessor) {
+                              key = "professor";
+                            } else if (state is ResultFromStudents) {
+                              key = "students";
+                            }
+
+                            return Text(
+                                activity.rubrics[key]!
                                     .elementAt(index)
                                     .score
                                     .toString(),
@@ -102,26 +123,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                   color: Colors.white,
                                   //TODO - Remove hardcoded font size
                                   fontSize: 18,
-                                ))));
-
-                    // Row(
-                    //       mainAxisSize: MainAxisSize.min,
-                    //       children: [
-                    //         for (int i = 1; i <= 5; i++)
-                    //           IconButton(
-                    //             //TODO - Chnage to const
-                    //             icon: Icon(Icons.star),
-                    //             color: widget.activity.rubrics.entries
-                    //                         .elementAt(0)
-                    //                         .value[index]
-                    //                         .score! >=
-                    //                     i
-                    //                 ? Colors.yellow
-                    //                 : Colors.grey,
-                    //             onPressed: null,
-                    //           ),
-                    //       ],
-                    //     );
+                                ));
+                          }),
+                        ));
                   },
                 ),
               )

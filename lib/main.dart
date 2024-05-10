@@ -2,6 +2,7 @@ import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
 import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
+import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
 import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
 import 'package:feedback_flow/firebase_options.dart';
@@ -28,7 +29,8 @@ void main() async {
     BlocProvider(create: (BuildContext context) => ScoreCubit()),
     BlocProvider(create: (BuildContext context) => ActScreenCubit()),
     BlocProvider(create: (BuildContext context) => HomeScreenCubit()),
-    BlocProvider(create: (BuildContext context) => RubricScreenCubit())
+    BlocProvider(create: (BuildContext context) => RubricScreenCubit()),
+    BlocProvider(create: (BuildContext context) => ResultScreenCubit())
   ], child: const MyApp()));
 }
 

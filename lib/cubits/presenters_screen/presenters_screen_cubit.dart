@@ -1,5 +1,4 @@
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
-import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/user_repository.dart';

@@ -1,5 +1,5 @@
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
@@ -23,8 +23,8 @@ class UpcomingTrailing extends StatefulWidget {
 class _UpcomingTrailingState extends State<UpcomingTrailing> {
   @override
   Widget build(BuildContext context) {
-    ActivitiesScreenCubit? activitiesScreenCubit =
-        BlocProvider.of<ActivitiesScreenCubit>(context);
+    ActScreenCubit? activitiesScreenCubit =
+        BlocProvider.of<ActScreenCubit>(context);
 
     PresenterScreenCubit? databaseScreenCubit =
         BlocProvider.of<PresenterScreenCubit>(context);
@@ -44,7 +44,7 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
               .where((element) => element.isPresenter == true)
               .first;
 
-          return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
+          return BlocBuilder<ActScreenCubit, ActScreenState>(
               builder: (context, stateActivity) {
             if (stateActivity is ActivityLoadedState) {
               return FittedBox(

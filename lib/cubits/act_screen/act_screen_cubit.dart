@@ -1,6 +1,5 @@
 import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/activity_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

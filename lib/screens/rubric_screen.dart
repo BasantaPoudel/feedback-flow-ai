@@ -1,5 +1,5 @@
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
@@ -28,8 +28,8 @@ class _RubricScreenState extends State<RubricScreen> {
     PresenterScreenCubit? databaseScreenCubit =
         BlocProvider.of<PresenterScreenCubit>(context);
 
-    ActivitiesScreenCubit? activitiesScreenCubit =
-        BlocProvider.of<ActivitiesScreenCubit>(context);
+    ActScreenCubit? activitiesScreenCubit =
+        BlocProvider.of<ActScreenCubit>(context);
 
     RubricScreenCubit? rubricScreenCubit =
         BlocProvider.of<RubricScreenCubit>(context);
@@ -43,7 +43,7 @@ class _RubricScreenState extends State<RubricScreen> {
       }
       return BlocProvider(
           create: (context) => PresenterScreenCubit()..subscribeToData(),
-          child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
+          child: BlocBuilder<ActScreenCubit, ActScreenState>(
               builder: (context, stateActivity) {
             if (stateActivity is ActivityStarted &&
                 stateRubric.activity.isStarted &&
@@ -80,8 +80,8 @@ class _RubricScreenState extends State<RubricScreen> {
                                           style: const TextStyle(
                                             color: Colors.white,
                                           )),
-                                  trailing: BlocBuilder<ActivitiesScreenCubit,
-                                      ActivitiesScreenState>(
+                                  trailing: BlocBuilder<ActScreenCubit,
+                                      ActScreenState>(
                                     builder: (context, stateActivity) {
                                       return Row(
                                         mainAxisSize: MainAxisSize.min,

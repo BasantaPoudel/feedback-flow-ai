@@ -1,5 +1,5 @@
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
 import 'package:feedback_flow/cubits/result_screen/result_screen_state.dart';
@@ -23,15 +23,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PresenterScreenCubit? presenterScreenCubit =
-        BlocProvider.of<PresenterScreenCubit>(context);
-
     ResultScreenCubit resultScreenCubit =
         BlocProvider.of<ResultScreenCubit>(context);
 
     return BlocProvider(
         create: (context) => PresenterScreenCubit()..subscribeToData(),
-        child: BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
+        child: BlocBuilder<ActScreenCubit, ActScreenState>(
             builder: (context, stateActivity) {
           Activity? activity = resultScreenCubit.state.props;
           if (activity == null || activity.rubrics.isEmpty) {

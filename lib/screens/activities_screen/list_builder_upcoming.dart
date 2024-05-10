@@ -1,13 +1,12 @@
-import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
-import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/activities_screen/upcoming_trailing.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_state.dart';
+
 import 'package:feedback_flow/models/activity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,7 +39,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
         BlocProvider.of<RubricScreenCubit>(context);
 
     // final ScrollController scrollController = ScrollController();
-    return BlocBuilder<ActivitiesScreenCubit, ActivitiesScreenState>(
+    return BlocBuilder<ActScreenCubit, ActScreenState>(
         builder: (context, stateActivity) {
       List<Activity>? activitiesList = widget.activitiesList;
       if (databaseScreenCubit.state is PresenterState &&

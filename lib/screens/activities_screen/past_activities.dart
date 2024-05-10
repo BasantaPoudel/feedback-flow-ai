@@ -35,25 +35,25 @@ class _PastActivitiesState extends State<PastActivities> {
                       ..color = Colors.black!,
                   )),
               Container(
-                  padding: const EdgeInsets.all(10),
+                  // padding: const EdgeInsets.all(10),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Icon(
-                          Icons.check_circle_outline,
-                          size: 40,
-                          color: Colors.black,
-                        ),
-                        Container(
-                          // height: MediaQuery.of(context).size.height * 0.2,
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          padding: const EdgeInsets.all(10),
-                          child: ListTile(
-                            subtitle: ListBuilder(
-                                activitiesList: widget.activitiesList),
-                          ),
-                        )
-                      ]))
+                    const Icon(
+                      Icons.check_circle_outline,
+                      size: 40,
+                      color: Colors.black,
+                    ),
+                    Container(
+                      // height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      // padding: const EdgeInsets.all(10),
+                      child: ListTile(
+                        subtitle:
+                            ListBuilder(activitiesList: widget.activitiesList),
+                      ),
+                    )
+                  ]))
             ]));
   }
   // Add your widget code here

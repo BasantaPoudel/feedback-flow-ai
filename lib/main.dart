@@ -1,5 +1,4 @@
 import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
-import 'package:feedback_flow/cubits/activities_screen/activities_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
@@ -20,9 +19,6 @@ void main() async {
   );
 
   runApp(MultiBlocProvider(providers: [
-    BlocProvider(
-        create: (BuildContext context) =>
-            ActivitiesScreenCubit()..subscribeToData()),
     BlocProvider(
         create: (BuildContext context) =>
             PresenterScreenCubit()..subscribeToData()),

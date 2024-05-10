@@ -100,7 +100,7 @@ class _RubricScreenState extends State<RubricScreen> {
                                                 rubricScreenCubit.setScore(
                                                     stateRubric.activity,
                                                     index,
-                                                    i,
+                                                    i.toDouble(),
                                                     presenter);
                                               },
                                             ),

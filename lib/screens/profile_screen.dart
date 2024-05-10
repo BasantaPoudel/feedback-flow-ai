@@ -1,3 +1,5 @@
+import 'package:feedback_flow/auth_gate.dart';
+import 'package:feedback_flow/screens/home_screen.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +23,12 @@ class Profile extends StatelessWidget {
                       ),
                       actions: [
                         SignedOutAction((context) {
-                          Navigator.of(context).pop();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AuthGate(),
+                            ),
+                          );
                         })
                       ],
                       children: [

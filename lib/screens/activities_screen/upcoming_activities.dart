@@ -34,9 +34,16 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text("Upcoming Activities"),
+                  Text('Upcoming Activities',
+                      style: TextStyle(
+                        fontSize: 40,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 2
+                          ..color = Colors.blue[700]!,
+                      )),
                   Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    const Icon(Icons.upcoming_outlined),
+                    const Icon(Icons.upcoming_outlined, size: 40),
                     ListBuilderUpcoming(activitiesList: widget.activitiesList)
                   ]),
                 ])));

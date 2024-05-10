@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:feedback_flow/auth_gate.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/act_screen.dart';
@@ -23,18 +24,16 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
       ),
       actions: [
         SignedOutAction((context) {
-          Navigator.of(context).pop();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AuthGate(),
+            ),
+          );
         })
       ],
       children: const [
         Divider(),
-        Padding(
-          padding: EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 1,
-            // child: Image.asset('flutterfire_300x.png'),
-          ),
-        ),
       ],
     ),
   ];

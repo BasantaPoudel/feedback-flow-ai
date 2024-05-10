@@ -26,15 +26,26 @@ class _PastActivitiesState extends State<PastActivities> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text("Past Activities"),
+              Text("Past Activities",
+                  style: TextStyle(
+                    fontSize: 40,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.black!,
+                  )),
               Container(
                   padding: const EdgeInsets.all(10),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Icon(Icons.check_circle_outline),
+                        const Icon(
+                          Icons.check_circle_outline,
+                          size: 40,
+                          color: Colors.black,
+                        ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.2,
+                          // height: MediaQuery.of(context).size.height * 0.2,
                           width: MediaQuery.of(context).size.width * 0.7,
                           padding: const EdgeInsets.all(10),
                           child: ListTile(

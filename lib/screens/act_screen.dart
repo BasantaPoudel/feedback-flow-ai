@@ -4,6 +4,7 @@ import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
+import 'package:feedback_flow/screens/activities_screen/add_activity.dart';
 import 'package:feedback_flow/screens/activities_screen/past_activities.dart';
 import 'package:feedback_flow/screens/activities_screen/upcoming_activities.dart';
 import 'package:flutter/material.dart';
@@ -33,19 +34,26 @@ class _ActScreenState extends State<ActScreen> {
 
       return Scaffold(
         appBar: AppBar(
-          title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Hi, '),
-                Text(userrepo.user?.displayName ?? 'User')
-              ]),
+          backgroundColor: Colors.blue,
+          title: const Text('Activities'),
         ),
+        backgroundColor: Colors.blue,
         body: Container(
-          // color: Color.fromRGBO(133, 196, 223, 1),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.grey.shade300, Colors.white],
+            ),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          ),
           child: Column(
             children: [
               PastActivities(activitiesList: activitiesList ?? []),
-              UpcomingActivities(activitiesList: activitiesList ?? [])
+              Expanded(
+                  child:
+                      UpcomingActivities(activitiesList: activitiesList ?? []))
             ],
           ),
         ),
@@ -54,7 +62,11 @@ class _ActScreenState extends State<ActScreen> {
           if (userState is TeacherLoggedInState) {
             return FloatingActionButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/add_activity');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddActivity(),
+                    ));
               },
               child: const Icon(Icons.add),
             );

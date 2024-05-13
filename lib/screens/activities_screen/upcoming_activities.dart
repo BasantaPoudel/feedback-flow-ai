@@ -30,24 +30,27 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
               color: Color.fromRGBO(9, 230, 182, 1),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text('Upcoming Activities',
-                      style: TextStyle(
-                        fontSize: 30,
-                        foreground: Paint()
-                          ..shader = const LinearGradient(colors: <Color>[
-                            Colors.white,
-                            Colors.yellow,
-                          ]).createShader(
-                              const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
-                      )),
-                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    const Icon(Icons.upcoming_outlined, size: 40),
-                    ListBuilderUpcoming(activitiesList: widget.activitiesList)
-                  ]),
-                ])));
+            child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text('Upcoming Activities',
+                        style: TextStyle(
+                          fontSize: 30,
+                          foreground: Paint()
+                            ..shader = const LinearGradient(colors: <Color>[
+                              Colors.white,
+                              Colors.yellow,
+                            ]).createShader(
+                                const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
+                        )),
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      const Icon(Icons.upcoming_outlined, size: 40),
+                      ListBuilderUpcoming(activitiesList: widget.activitiesList)
+                    ])
+                  ],
+                ))));
   }
 }

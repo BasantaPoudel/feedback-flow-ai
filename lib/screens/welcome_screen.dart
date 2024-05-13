@@ -8,9 +8,9 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserRepository userrepo = UserRepository();
     return Scaffold(
-        backgroundColor: Colors.purple[900],
+        backgroundColor: Colors.blue,
         appBar: AppBar(
-          backgroundColor: Colors.purple[900],
+          backgroundColor: Colors.blue,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -26,11 +26,11 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         body: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.blue, Colors.white],
+                colors: [Colors.grey.shade300, Colors.white],
               ),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),

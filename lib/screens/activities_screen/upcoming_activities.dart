@@ -36,11 +36,13 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                 children: [
                   Text('Upcoming Activities',
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 30,
                         foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 2
-                          ..color = Colors.blue[700]!,
+                          ..shader = const LinearGradient(colors: <Color>[
+                            Colors.white,
+                            Colors.yellow,
+                          ]).createShader(
+                              const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                       )),
                   Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                     const Icon(Icons.upcoming_outlined, size: 40),

@@ -51,8 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.cloud),
-                  label: 'Feedback',
+                  icon: Icon(Icons.present_to_all),
+                  label: 'Activities',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.data_object_sharp),
@@ -79,8 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.cloud),
-                  label: 'Feedback',
+                  icon: Icon(Icons.present_to_all),
+                  label: 'Activities',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.search),

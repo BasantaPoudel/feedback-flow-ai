@@ -28,11 +28,13 @@ class _PastActivitiesState extends State<PastActivities> {
             children: [
               Text("Past Activities",
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 30,
                     foreground: Paint()
-                      ..style = PaintingStyle.stroke
-                      ..strokeWidth = 2
-                      ..color = Colors.black!,
+                      ..shader = const LinearGradient(colors: <Color>[
+                        Colors.white,
+                        Colors.yellow,
+                      ]).createShader(
+                          const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                   )),
               Container(
                   // padding: const EdgeInsets.all(10),

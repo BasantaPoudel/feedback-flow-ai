@@ -26,7 +26,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8), // Set the card border radius
       ),
     ),
-    scaffoldBackgroundColor: Colors.grey[200],
+    // scaffoldBackgroundColor: Colors.grey[200],
   );
 
   static ThemeData darkTheme = ThemeData(

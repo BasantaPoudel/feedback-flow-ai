@@ -27,7 +27,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-              color: Color.fromRGBO(9, 230, 182, 1),
+              color: Color.fromRGBO(117, 186, 197, 1),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: SingleChildScrollView(
@@ -39,12 +39,13 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                     Text('Upcoming Activities',
                         style: TextStyle(
                           fontSize: 30,
-                          foreground: Paint()
-                            ..shader = const LinearGradient(colors: <Color>[
-                              Colors.white,
-                              Colors.yellow,
-                            ]).createShader(
-                                const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
+                          color: Colors.white,
+                          // foreground: Paint()
+                          //   ..shader = const LinearGradient(colors: <Color>[
+                          //     Colors.white,
+                          //     Colors.yellow,
+                          //   ]).createShader(
+                          //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                         )),
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                       const Icon(Icons.upcoming_outlined, size: 40),

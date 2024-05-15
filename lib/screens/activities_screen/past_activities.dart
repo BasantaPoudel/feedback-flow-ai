@@ -19,7 +19,7 @@ class _PastActivitiesState extends State<PastActivities> {
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
-          color: Color.fromRGBO(4, 149, 211, 1),
+          color: Color.fromRGBO(157, 196, 202, 1),
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         child: Column(
@@ -29,12 +29,13 @@ class _PastActivitiesState extends State<PastActivities> {
               Text("Past Activities",
                   style: TextStyle(
                     fontSize: 30,
-                    foreground: Paint()
-                      ..shader = const LinearGradient(colors: <Color>[
-                        Colors.white,
-                        Colors.yellow,
-                      ]).createShader(
-                          const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
+                    color: Colors.white,
+                    // foreground: Paint()
+                    //   ..shader = const LinearGradient(colors: <Color>[
+                    //     Colors.white,
+                    //     Colors.yellow,
+                    //   ]).createShader(
+                    //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                   )),
               Container(
                   // padding: const EdgeInsets.all(10),

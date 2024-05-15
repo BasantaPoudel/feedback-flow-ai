@@ -28,106 +28,109 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
     return BlocProvider(
         create: (context) => PresenterScreenCubit()..subscribeToData(),
-        child: BlocBuilder<ActScreenCubit, ActScreenState>(
-            builder: (context, stateActivity) {
-          Activity? activity = resultScreenCubit.state.props;
-          if (activity == null || activity.rubrics.isEmpty) {
-            return const Scaffold(
-              body: Center(
-                child: Text("Sorry, you didn't participate in this activity."),
-              ),
-            );
-          }
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Row(children: <Widget>[
-                // First expanded widget with flex factor of 1
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    // height: 100,
-                    // color: Colors.red,
-                    child: const Text("Results"),
+        child: BlocBuilder<ResultScreenCubit, ResultScreenState>(
+            buildWhen: (previous, current) =>
+                current is ResultFromProfessor || current is ResultFromStudents,
+            builder: (context, resultState) {
+              Activity? activity = resultScreenCubit.state.props;
+              if (activity == null || activity.rubrics.isEmpty) {
+                return const Scaffold(
+                  body: Center(
+                    child:
+                        Text("Sorry, you didn't participate in this activity."),
                   ),
-                ),
-                // Second expanded widget with flex factor of 2
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                      // height: 100,
-                      // color: Colors.green,
-                      child: Row(
-                    children: [
-                      Text('S'),
-                      Switch(
-                          //Default value
-                          value: defaultSwitchValue,
-                          activeColor: Colors.green,
-                          inactiveThumbColor: Colors.blue,
-                          onChanged: (bool value) {
-                            setState(() {
-                              defaultSwitchValue = value;
-                            });
-                            resultScreenCubit.state is ResultFromStudents
-                                ? resultScreenCubit
-                                    .loadResultFromProfessor(activity)
-                                : resultScreenCubit
-                                    .loadResultFromStudents(activity);
-                          }),
-                      Text('T'),
-                    ],
-                  )),
-                )
-              ]),
-            ),
-            body: ListView(children: <Widget>[
-              ListTile(
-                title: Text(activity.title),
-                subtitle: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: activity.rubrics.entries.elementAt(0).value.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        color: const Color(0xFF6D7981),
-                        child: ListTile(
-                          title: Text(
-                              activity.rubrics.entries
-                                      .elementAt(0)
-                                      .value[index]
-                                      .name ??
-                                  "",
-                              style: const TextStyle(
-                                color: Colors.white,
-                              )),
-                          trailing:
-                              BlocBuilder<ResultScreenCubit, ResultScreenState>(
-                                  builder: (context, state) {
-                            var key;
-                            if (state is ResultFromProfessor) {
-                              key = "professor";
-                            } else if (state is ResultFromStudents) {
-                              key = "students";
-                            }
+                );
+              }
 
-                            return Text(
-                                activity.rubrics[key]!
-                                    .elementAt(index)
-                                    .score
-                                    .toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  //TODO - Remove hardcoded font size
-                                  fontSize: 18,
-                                ));
-                          }),
-                        ));
-                  },
+              return Scaffold(
+                appBar: AppBar(
+                  title: Row(children: <Widget>[
+                    // First expanded widget with flex factor of 1
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        // height: 100,
+                        // color: Colors.red,
+                        child: const Text("Results"),
+                      ),
+                    ),
+                    // Second expanded widget with flex factor of 2
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                          // height: 100,
+                          // color: Colors.green,
+                          child: Row(
+                        children: [
+                          Text('S'),
+                          Switch(
+                              //Default value
+                              value: defaultSwitchValue,
+                              activeColor: Colors.green,
+                              inactiveThumbColor: Colors.blue,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  defaultSwitchValue = value;
+                                });
+                                resultScreenCubit.state is ResultFromStudents
+                                    ? resultScreenCubit
+                                        .loadResultFromProfessor(activity)
+                                    : resultScreenCubit
+                                        .loadResultFromStudents(activity);
+                              }),
+                          Text('T'),
+                        ],
+                      )),
+                    )
+                  ]),
                 ),
-              )
-            ]),
-          );
-        }));
+                body: ListView(children: <Widget>[
+                  ListTile(
+                    title: Text(activity.title),
+                    subtitle: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount:
+                          activity.rubrics.entries.elementAt(0).value.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                            color: const Color(0xFF6D7981),
+                            child: ListTile(
+                              title: Text(
+                                  activity.rubrics.entries
+                                          .elementAt(0)
+                                          .value[index]
+                                          .name ??
+                                      "",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  )),
+                              trailing: BlocBuilder<ResultScreenCubit,
+                                  ResultScreenState>(builder: (context, state) {
+                                var key;
+                                if (state is ResultFromProfessor) {
+                                  key = "professor";
+                                } else if (state is ResultFromStudents) {
+                                  key = "students";
+                                }
+
+                                return Text(
+                                    activity.rubrics[key]!
+                                        .elementAt(index)
+                                        .score
+                                        .toString(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      //TODO - Remove hardcoded font size
+                                      fontSize: 18,
+                                    ));
+                              }),
+                            ));
+                      },
+                    ),
+                  )
+                ]),
+              );
+            }));
   }
 }

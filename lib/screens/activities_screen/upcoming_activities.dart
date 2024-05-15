@@ -30,28 +30,32 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
               color: Color.fromRGBO(117, 186, 197, 1),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
-            child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text('Upcoming Activities',
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
-                          // foreground: Paint()
-                          //   ..shader = const LinearGradient(colors: <Color>[
-                          //     Colors.white,
-                          //     Colors.yellow,
-                          //   ]).createShader(
-                          //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
-                        )),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      const Icon(Icons.upcoming_outlined, size: 40),
-                      ListBuilderUpcoming(activitiesList: widget.activitiesList)
-                    ])
-                  ],
-                ))));
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text('Upcoming Activities',
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      // foreground: Paint()
+                      //   ..shader = const LinearGradient(colors: <Color>[
+                      //     Colors.white,
+                      //     Colors.yellow,
+                      //   ]).createShader(
+                      //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
+                    )),
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  const Icon(Icons.upcoming_outlined, size: 40),
+                  Container(
+                      // height: MediaQuery.of(context).size.height * 0.2,
+                      constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.3),
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: ListBuilderUpcoming(
+                          activitiesList: widget.activitiesList))
+                ])
+              ],
+            )));
   }
 }

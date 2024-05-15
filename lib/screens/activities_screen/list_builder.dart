@@ -28,10 +28,13 @@ class _ListBuilderState extends State<ListBuilder> {
     return BlocBuilder<ActScreenCubit, ActScreenState>(
         builder: (context, stateActivity) {
       List<Activity>? activitiesList = stateActivity.getAllActivities;
+      final ScrollController scrollController = ScrollController();
 
       return ListView.builder(
+        controller: scrollController,
+        scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollableScrollPhysics(),
         itemCount: activitiesList?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
           if (activitiesList![index].isDistributed == true) {

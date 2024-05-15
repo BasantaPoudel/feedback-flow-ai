@@ -51,9 +51,7 @@ class _ActScreenState extends State<ActScreen> {
           child: Column(
             children: [
               PastActivities(activitiesList: activitiesList ?? []),
-              Expanded(
-                  child:
-                      UpcomingActivities(activitiesList: activitiesList ?? []))
+              UpcomingActivities(activitiesList: activitiesList ?? [])
             ],
           ),
         ),

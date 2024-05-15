@@ -49,12 +49,11 @@ class _PastActivitiesState extends State<PastActivities> {
                     ),
                     Container(
                       // height: MediaQuery.of(context).size.height * 0.2,
+                      constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.3),
                       width: MediaQuery.of(context).size.width * 0.8,
                       // padding: const EdgeInsets.all(10),
-                      child: ListTile(
-                        subtitle:
-                            ListBuilder(activitiesList: widget.activitiesList),
-                      ),
+                      child: ListBuilder(activitiesList: widget.activitiesList),
                     )
                   ]))
             ]));

@@ -47,9 +47,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
         var presenter = databaseScreenCubit.state.props!
             .where((element) => element.isPresenter == true)
             .first;
-        return Expanded(
-            child: ListTile(
-                subtitle: ListView.builder(
+        return ListView.builder(
           controller: scrollController,
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
@@ -83,7 +81,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
             }
             return const FittedBox();
           },
-        )));
+        );
       }
       return const FittedBox();
     });

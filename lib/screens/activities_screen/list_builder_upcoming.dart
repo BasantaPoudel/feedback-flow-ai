@@ -47,41 +47,47 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
         var presenter = databaseScreenCubit.state.props!
             .where((element) => element.isPresenter == true)
             .first;
-        return ListView.builder(
-          controller: scrollController,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: activitiesList.length ?? 0,
-          itemBuilder: (BuildContext context, int index) {
-            if (activitiesList[index].isDistributed == false) {
-              return Card(
-                  color: activitiesList[index].isStarted
-                      ? Colors.green
-                      : const Color(0xFF6D7981),
-                  child: ListTile(
-                      title: Text(
-                        activitiesList[index].title,
-                        style: const TextStyle(
-                          color: Colors.black, // Change text color to white
-                        ),
-                      ),
-                      onTap: () {
-                        rubricScreenCubit.addActivityToRubricState(
-                            widget.activitiesList[index], presenter);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                RubricScreen(activity: activitiesList[index]),
+        return Scrollbar(
+            thumbVisibility: true,
+            controller: scrollController,
+            thickness: 5,
+            radius: Radius.circular(50),
+            child: ListView.builder(
+              padding: const EdgeInsets.only(right: 10),
+              controller: scrollController,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: activitiesList.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                if (activitiesList[index].isDistributed == false) {
+                  return Card(
+                      color: activitiesList[index].isStarted
+                          ? Colors.green
+                          : const Color(0xFF6D7981),
+                      child: ListTile(
+                          title: Text(
+                            activitiesList[index].title,
+                            style: const TextStyle(
+                              color: Colors.black, // Change text color to white
+                            ),
                           ),
-                        );
-                      },
-                      trailing: UpcomingTrailing(
-                          activitiesList: activitiesList, index: index)));
-            }
-            return const FittedBox();
-          },
-        );
+                          onTap: () {
+                            rubricScreenCubit.addActivityToRubricState(
+                                widget.activitiesList[index], presenter);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RubricScreen(
+                                    activity: activitiesList[index]),
+                              ),
+                            );
+                          },
+                          trailing: UpcomingTrailing(
+                              activitiesList: activitiesList, index: index)));
+                }
+                return const FittedBox();
+              },
+            ));
       }
       return const FittedBox();
     });

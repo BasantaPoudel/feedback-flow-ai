@@ -27,7 +27,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-              color: Color.fromRGBO(117, 186, 197, 1),
+              color: Color.fromRGBO(106, 178, 189, 1),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: Column(
@@ -36,7 +36,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
               children: [
                 Text('Upcoming Activities',
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       color: Colors.white,
                       // foreground: Paint()
                       //   ..shader = const LinearGradient(colors: <Color>[

@@ -35,7 +35,10 @@ class _ActScreenState extends State<ActScreen> {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: const Text('Activities'),
+          title: const Text(
+            'Activities',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         backgroundColor: Colors.blue,
         body: Container(
@@ -51,26 +54,33 @@ class _ActScreenState extends State<ActScreen> {
           child: Column(
             children: [
               PastActivities(activitiesList: activitiesList ?? []),
-              UpcomingActivities(activitiesList: activitiesList ?? [])
+              UpcomingActivities(activitiesList: activitiesList ?? []),
+              BlocBuilder<HomeScreenCubit, HomeScreenState>(
+                  builder: (context, userState) {
+                if (userState is TeacherLoggedInState) {
+                  return Container(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 88, 158, 90),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddActivity(),
+                                ));
+                          },
+                          child: Text(
+                            'Add Activity',
+                            style: TextStyle(color: Colors.white),
+                          )));
+                }
+                return Container();
+              }),
             ],
           ),
         ),
-        floatingActionButton: BlocBuilder<HomeScreenCubit, HomeScreenState>(
-            builder: (context, userState) {
-          if (userState is TeacherLoggedInState) {
-            return FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddActivity(),
-                    ));
-              },
-              child: const Icon(Icons.add),
-            );
-          }
-          return Container();
-        }),
       );
     }));
   }

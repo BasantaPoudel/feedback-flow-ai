@@ -96,7 +96,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                               activity.rubrics.entries
                                       .elementAt(0)
                                       .value[index]
-                                      .name ??
+                                      .title ??
                                   "",
                               style: const TextStyle(
                                 color: Colors.white,

@@ -49,15 +49,15 @@ class ResultScreenCubit extends Cubit<ResultScreenState> {
     Map<String, double> rubricMap = {};
 
     tempRubricList.forEach((rubric) {
-      if (rubricMap.containsKey(rubric.name)) {
-        rubricMap[rubric.name] = rubricMap[rubric.name]! + rubric.score;
+      if (rubricMap.containsKey(rubric.title)) {
+        rubricMap[rubric.title] = rubricMap[rubric.title]! + rubric.score;
       } else {
-        rubricMap[rubric.name] = rubric.score;
+        rubricMap[rubric.title] = rubric.score;
       }
     });
 
     rubricMap.forEach((key, value) {
-      selectedRubricList.add(Rubric(name: key, score: value));
+      selectedRubricList.add(Rubric(title: key, score: value));
     });
 
     selectedRubricList.forEach((rubric) {

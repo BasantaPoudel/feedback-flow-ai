@@ -76,7 +76,7 @@ class _RubricScreenState extends State<RubricScreen> {
                                 color: const Color(0xFF6D7981),
                                 child: ListTile(
                                   title:
-                                      Text(currentRubric.elementAt(index).name,
+                                      Text(currentRubric.elementAt(index).title,
                                           style: const TextStyle(
                                             color: Colors.white,
                                           )),
@@ -181,7 +181,7 @@ class _RubricScreenState extends State<RubricScreen> {
                       activitiesScreenCubit.addRubric(
                           stateRubric.activity,
                           Rubric(
-                            name: 'New Rubric from Rubric Screen',
+                            title: 'New Rubric from Rubric Screen',
                             score: 0,
                           ));
                     },

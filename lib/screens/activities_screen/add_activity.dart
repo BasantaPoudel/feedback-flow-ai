@@ -65,11 +65,11 @@ class AddActivity extends StatelessWidget {
               rubrics: {
                 databaseScreenCubit.getUserId(): [
                   Rubric(
-                    name: _controllerRubric1.text,
+                    title: _controllerRubric1.text,
                     score: 0,
                   ),
                   Rubric(
-                    name: _controllerRubric2.text,
+                    title: _controllerRubric2.text,
                     score: 0,
                   ),
                 ],

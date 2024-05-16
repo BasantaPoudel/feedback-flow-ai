@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:feedback_flow/models/activity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ListBuilderUpcoming extends StatefulWidget {
   const ListBuilderUpcoming({super.key, required this.activitiesList});
@@ -60,30 +61,51 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
               itemCount: activitiesList.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 if (activitiesList[index].isDistributed == false) {
-                  return Card(
-                      color: activitiesList[index].isStarted
-                          ? Colors.green
-                          : const Color(0xFF6D7981),
-                      child: ListTile(
-                          title: Text(
-                            activitiesList[index].title,
-                            style: const TextStyle(
-                              color: Colors.black, // Change text color to white
-                            ),
-                          ),
-                          onTap: () {
-                            rubricScreenCubit.addActivityToRubricState(
-                                widget.activitiesList[index], presenter);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RubricScreen(
-                                    activity: activitiesList[index]),
+                  return Slidable(
+                      // startActionPane: const ActionPane(children: [
+                      //   SlidableAction(
+                      //     icon: Icons.delete,
+                      //     onPressed: null,
+                      //   )
+                      // ], motion: StretchMotion()),
+                      endActionPane: const ActionPane(children: [
+                        SlidableAction(
+                          icon: Icons.edit,
+                          backgroundColor: Colors.blue,
+                          onPressed: null,
+                        ),
+                        SlidableAction(
+                          icon: Icons.delete,
+                          backgroundColor: Colors.red,
+                          onPressed: null,
+                        )
+                      ], motion: ScrollMotion()),
+                      child: Card(
+                          color: activitiesList[index].isStarted
+                              ? Colors.green
+                              : const Color(0xFF6D7981),
+                          child: ListTile(
+                              title: Text(
+                                activitiesList[index].title,
+                                style: const TextStyle(
+                                  color: Colors
+                                      .black, // Change text color to white
+                                ),
                               ),
-                            );
-                          },
-                          trailing: UpcomingTrailing(
-                              activitiesList: activitiesList, index: index)));
+                              onTap: () {
+                                rubricScreenCubit.addActivityToRubricState(
+                                    widget.activitiesList[index], presenter);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RubricScreen(
+                                        activity: activitiesList[index]),
+                                  ),
+                                );
+                              },
+                              trailing: UpcomingTrailing(
+                                  activitiesList: activitiesList,
+                                  index: index))));
                 }
                 return const FittedBox();
               },

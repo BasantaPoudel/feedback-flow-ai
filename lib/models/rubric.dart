@@ -1,27 +1,27 @@
 class Rubric {
-  String name;
+  String title;
   // Add other properties as needed
   double score;
 
-  Rubric({required this.name, required this.score});
+  Rubric({required this.title, required this.score});
 
   factory Rubric.fromJson(Map<String, dynamic> json) {
     return Rubric(
-      name: json['name'],
+      title: json['name'],
       score: json['score'].toDouble(),
     );
   }
 
   factory Rubric.fromMap(Map<String, dynamic> map) {
     return Rubric(
-      name: map['name'],
+      title: map['name'],
       score: map['score'].toDouble(),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
+      'name': title,
       'score': score,
     };
   }

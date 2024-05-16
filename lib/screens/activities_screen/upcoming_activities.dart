@@ -28,7 +28,11 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
             margin: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
               color: Color.fromRGBO(106, 178, 189, 1),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

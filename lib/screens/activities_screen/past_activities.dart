@@ -20,7 +20,12 @@ class _PastActivitiesState extends State<PastActivities> {
         margin: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           color: Color.fromRGBO(167, 203, 209, 1),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          // borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         child: Column(
             mainAxisSize: MainAxisSize.min,

@@ -59,10 +59,14 @@ class _ActScreenState extends State<ActScreen> {
                   builder: (context, userState) {
                 if (userState is TeacherLoggedInState) {
                   return Container(
+                      padding: EdgeInsets.all(8),
                       width: double.infinity,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 88, 158, 90),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                            ),
                           ),
                           onPressed: () {
                             Navigator.push(

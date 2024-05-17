@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
+import 'package:feedback_flow/main.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/act_screen.dart';
 import 'package:feedback_flow/screens/presenters_screen.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import 'package:feedback_flow/screens/search_screen.dart';
 import 'package:feedback_flow/screens/stats_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {
   int _currentIndex = 0;
@@ -21,16 +23,11 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
       appBar: AppBar(
         title: const Text('Test Profile'),
       ),
-      // actions: [
-      //   SignedOutAction((context) {
-      //     Navigator.pushReplacement(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => const AuthGate(),
-      //       ),
-      //     );
-      //   })
-      // ],
+      actions: [
+        SignedOutAction((context) {
+          RestartWidget.restartApp(context);
+        })
+      ],
       children: const [
         Divider(),
       ],

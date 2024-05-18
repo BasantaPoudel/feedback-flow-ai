@@ -81,18 +81,30 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
               );
             } else if (stateActivity is ActivityEnded &&
                 widget.activitiesList[widget.index].isCompleted == true) {
-              return FittedBox(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          activitiesScreenCubit.distributeResults(
-                              widget.activitiesList, widget.index);
-                        },
-                        child: const Text('Distribute Results')),
-                  ],
-                ),
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                      child: ElevatedButton(
+                          onPressed: () {
+                            rubricScreenCubit.addActivityByProfessor(
+                                widget.activitiesList[widget.index], presenter);
+
+                            activitiesScreenCubit.startActivity(
+                                widget.activitiesList, widget.index);
+                          },
+                          child: const Text('Start Again'))),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                          onPressed: () {
+                            activitiesScreenCubit.distributeResults(
+                                widget.activitiesList, widget.index);
+                          },
+                          child: const Text('Distribute Results'))),
+                ],
               );
             } else {
               return const FittedBox();

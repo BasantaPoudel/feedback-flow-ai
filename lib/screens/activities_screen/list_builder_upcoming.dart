@@ -3,6 +3,7 @@ import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
+import 'package:feedback_flow/screens/activities_screen/edit_activity.dart';
 import 'package:feedback_flow/screens/activities_screen/upcoming_trailing.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
@@ -62,24 +63,46 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
               itemBuilder: (BuildContext context, int index) {
                 if (activitiesList[index].isDistributed == false) {
                   return Slidable(
-                      // startActionPane: const ActionPane(children: [
-                      //   SlidableAction(
-                      //     icon: Icons.delete,
-                      //     onPressed: null,
-                      //   )
-                      // ], motion: StretchMotion()),
-                      endActionPane: const ActionPane(children: [
+                      startActionPane:
+                          ActionPane(motion: const StretchMotion(), children: [
                         SlidableAction(
-                          icon: Icons.edit,
+                          borderRadius: BorderRadius.circular(10),
                           backgroundColor: Colors.blue,
-                          onPressed: null,
-                        ),
+                          icon: Icons.copy,
+                          onPressed: (context) => {
+                            BlocProvider.of<ActScreenCubit>(context)
+                                .duplicateActivity(activitiesList[index])
+                          },
+                        )
+                      ]),
+
+                      //TODO - Retry creating error message for the below code - moving motion at the end
+                      endActionPane:
+                          ActionPane(motion: const ScrollMotion(), children: [
                         SlidableAction(
+                            borderRadius: BorderRadius.circular(10),
+                            icon: Icons.edit,
+                            backgroundColor: Colors.blue,
+                            onPressed: (context) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditActivity.withActivity(
+                                          activitiesList[index]),
+                                ),
+                              );
+                            }),
+                        SlidableAction(
+                          borderRadius: BorderRadius.circular(10),
                           icon: Icons.delete,
                           backgroundColor: Colors.red,
-                          onPressed: null,
+                          onPressed: (context) => {
+                            BlocProvider.of<ActScreenCubit>(context)
+                                .deleteActivity(activitiesList[index])
+                          },
                         )
-                      ], motion: ScrollMotion()),
+                      ]),
                       child: Card(
                           color: activitiesList[index].isStarted
                               ? Colors.green

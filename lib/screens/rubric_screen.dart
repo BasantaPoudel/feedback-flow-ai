@@ -167,7 +167,7 @@ class _RubricScreenState extends State<RubricScreen> {
                                         .rubrics[
                                             "CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!
                                         .elementAt(index)
-                                        .name,
+                                        .title,
                                     style: const TextStyle(
                                       color: Colors.white,
                                     )),

@@ -8,9 +8,6 @@ class AppTheme {
       seedColor: const Color(0x00108EC5).toMaterialColor(),
       brightness: Brightness.light,
     ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: const Color(0x00049ee0).toMaterialColor(),
-    ),
   );
 
   static ThemeData themeData = ThemeData(
@@ -19,6 +16,40 @@ class AppTheme {
       buttonColor: Colors.blue, // Set the button color
       textTheme: ButtonTextTheme.primary, // Set the button text theme
     ),
+
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 72.0,
+        fontWeight: FontWeight.bold,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 36.0,
+        fontStyle: FontStyle.italic,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'Hind',
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'Hind',
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 12.0,
+        fontFamily: 'Hind',
+      ),
+      bodySmall: TextStyle(
+        fontSize: 10.0,
+        fontFamily: 'Hind',
+      ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      // backgroundColor: const Color(0x00049ee0).toMaterialColor(),
+      backgroundColor: Color.fromRGBO(174, 206, 209, 1),
+      selectedItemColor: Colors.black, // Set the selected item color
+    ),
+    backgroundColor: Color.fromRGBO(174, 206, 209, 1),
+
     cardTheme: CardTheme(
       color: Colors.white, // Set the card color
       elevation: 2, // Set the card elevation
@@ -26,6 +57,19 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8), // Set the card border radius
       ),
     ),
+    scaffoldBackgroundColor:
+        const Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
+
+    appBarTheme: const AppBarTheme(
+      backgroundColor:
+          Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
+      // color: Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
+      iconTheme: IconThemeData(
+        color: Colors.white, // Set the icon color
+      ),
+    ),
+    //
+    //
     // scaffoldBackgroundColor: Colors.grey[200],
   );
 
@@ -49,6 +93,6 @@ class AppTheme {
     ),
 
     scaffoldBackgroundColor:
-        Colors.grey[900], // Set the background color to a dark shade
+        Colors.black, // Set the background color to a dark shade
   );
 }

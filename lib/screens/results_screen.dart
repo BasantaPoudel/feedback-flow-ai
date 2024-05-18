@@ -42,24 +42,18 @@ class _ResultsScreenState extends State<ResultsScreen> {
           return Scaffold(
             appBar: AppBar(
               title: Row(children: <Widget>[
-                // First expanded widget with flex factor of 1
                 Expanded(
                   flex: 1,
                   child: Container(
-                    // height: 100,
-                    // color: Colors.red,
                     child: const Text("Results"),
                   ),
                 ),
-                // Second expanded widget with flex factor of 2
                 Expanded(
                   flex: 1,
                   child: Container(
-                      // height: 100,
-                      // color: Colors.green,
                       child: Row(
                     children: [
-                      Text('S'),
+                      const Text('S'),
                       Switch(
                           //Default value
                           value: defaultSwitchValue,
@@ -75,7 +69,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 : resultScreenCubit
                                     .loadResultFromStudents(activity);
                           }),
-                      Text('T'),
+                      const Text('T'),
                     ],
                   )),
                 )
@@ -94,10 +88,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         child: ListTile(
                           title: Text(
                               activity.rubrics.entries
-                                      .elementAt(0)
-                                      .value[index]
-                                      .name ??
-                                  "",
+                                  .elementAt(0)
+                                  .value[index]
+                                  .name,
                               style: const TextStyle(
                                 color: Colors.white,
                               )),

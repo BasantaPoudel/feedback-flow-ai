@@ -45,12 +45,12 @@ class _ListBuilderState extends State<ListBuilder> {
             itemBuilder: (BuildContext context, int index) {
               if (activitiesList![index].isDistributed == true) {
                 return Card(
-                    color: const Color.fromARGB(255, 231, 196, 191),
+                    color: const Color.fromRGBO(247, 215, 208, 1),
                     child: ListTile(
                       title: Text(
                         activitiesList[index].title,
                         style: const TextStyle(
-                          color: Colors.white, // Change text color to white
+                          color: Colors.black,
                         ),
                       ),
                       onTap: () {

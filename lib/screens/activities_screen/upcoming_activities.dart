@@ -27,7 +27,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-              color: Color.fromRGBO(106, 178, 189, 1),
+              color: Color.fromRGBO(255, 248, 238, 1),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -41,7 +41,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                 Text('Upcoming Activities',
                     style: TextStyle(
                       fontSize: 25,
-                      color: Colors.white,
+                      color: Colors.black,
                       // foreground: Paint()
                       //   ..shader = const LinearGradient(colors: <Color>[
                       //     Colors.white,
@@ -50,7 +50,11 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                       //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                     )),
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  const Icon(Icons.upcoming_outlined, size: 40),
+                  const Icon(
+                    Icons.upcoming_outlined,
+                    size: 40,
+                    color: Colors.black,
+                  ),
                   Container(
                       // height: MediaQuery.of(context).size.height * 0.2,
                       constraints: BoxConstraints(

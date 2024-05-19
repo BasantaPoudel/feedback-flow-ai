@@ -9,7 +9,7 @@ class WelcomeScreen extends StatelessWidget {
     final UserRepository userrepo = UserRepository();
     return Scaffold(
         backgroundColor:
-            Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
+            const Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
 
         appBar: AppBar(
           title: Column(

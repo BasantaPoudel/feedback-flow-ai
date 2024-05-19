@@ -76,7 +76,7 @@ class _ActScreenState extends State<ActScreen> {
                                   builder: (context) => AddActivity(),
                                 ));
                           },
-                          child: Text(
+                          child: const Text(
                             'Add Activity',
                             style: TextStyle(color: Colors.black),
                           )));

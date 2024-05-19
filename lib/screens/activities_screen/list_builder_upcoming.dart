@@ -57,7 +57,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
               controller: scrollController,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: activitiesList.length ?? 0,
+              itemCount: activitiesList.length,
               itemBuilder: (BuildContext context, int index) {
                 if (activitiesList[index].isDistributed == false) {
                   return Card(

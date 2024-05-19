@@ -1,149 +1,42 @@
+import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
+import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
+import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
+import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
+import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
+import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
+import 'package:feedback_flow/firebase_options.dart';
+import 'package:feedback_flow/theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'auth_gate.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(
+        create: (BuildContext context) =>
+            PresenterScreenCubit()..subscribeToData()),
+    BlocProvider(create: (BuildContext context) => ScoreCubit()),
+    BlocProvider(create: (BuildContext context) => ActScreenCubit()),
+    BlocProvider(create: (BuildContext context) => HomeScreenCubit()),
+    BlocProvider(create: (BuildContext context) => RubricScreenCubit()),
+    BlocProvider(create: (BuildContext context) => ResultScreenCubit())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Feedback Flow App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _children = [
-    Home(),
-    FeedBack(),
-    Search(),
-    Stats(),
-    Profile(),
-  ];
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.cloud),
-            label: 'Feedback',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Stats',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        ListTile(
-          title: Text('Past In Class Activities'),
-          subtitle: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: 3, // replace with your actual list length
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text('Past Item $index'),
-                onTap: () {
-                  // handle your item click here
-                },
-              );
-            },
-          ),
-        ),
-        ListTile(
-          title: Text('Upcoming In Class Activities'),
-          subtitle: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: 5, // replace with your actual list length
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text('Current Item $index'),
-                onTap: () {
-                  // handle your item click here
-                },
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class FeedBack extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('FeedBack'));
-  }
-}
-
-class Search extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Search'));
-  }
-}
-
-class Stats extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Stats'));
-  }
-}
-
-class Profile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Profile'));
+        theme: AppTheme.themeData,
+        darkTheme: AppTheme.darkTheme,
+        home: const AuthGate());
   }
 }

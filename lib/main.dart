@@ -5,10 +5,10 @@ import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
 import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
 import 'package:feedback_flow/firebase_options.dart';
+import 'package:feedback_flow/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_color_gen/material_color_gen.dart';
 
 import 'auth_gate.dart';
 
@@ -35,16 +35,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: const Color(0x00049ee0).toMaterialColor(),
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0x00108EC5).toMaterialColor(),
-            brightness: Brightness.light,
-          ),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: const Color(0x00049ee0).toMaterialColor(),
-          ),
-        ),
+        theme: AppTheme.themeData,
+        darkTheme: AppTheme.darkTheme,
         home: const AuthGate());
   }
 }

@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:feedback_flow/auth_gate.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/act_screen.dart';
-import 'package:feedback_flow/screens/database_screen.dart';
+import 'package:feedback_flow/screens/presenters_screen.dart';
 import 'package:feedback_flow/screens/welcome_screen.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,18 +19,18 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     const Stats(),
     ProfileScreen(
       appBar: AppBar(
-        title: const Text('User Profile'),
+        title: const Text('Test Profile'),
       ),
-      actions: [
-        SignedOutAction((context) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AuthGate(),
-            ),
-          );
-        })
-      ],
+      // actions: [
+      //   SignedOutAction((context) {
+      //     Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => const AuthGate(),
+      //       ),
+      //     );
+      //   })
+      // ],
       children: const [
         Divider(),
       ],

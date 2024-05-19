@@ -19,8 +19,13 @@ class _PastActivitiesState extends State<PastActivities> {
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
-          color: Color.fromRGBO(4, 149, 211, 1),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          color: Color.fromRGBO(255, 248, 238, 1),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          // borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -28,30 +33,32 @@ class _PastActivitiesState extends State<PastActivities> {
             children: [
               Text("Past Activities",
                   style: TextStyle(
-                    fontSize: 40,
-                    foreground: Paint()
-                      ..style = PaintingStyle.stroke
-                      ..strokeWidth = 2
-                      ..color = Colors.black!,
+                    fontSize: 25,
+                    color: Colors.black,
+                    // foreground: Paint()
+                    //   ..shader = const LinearGradient(colors: <Color>[
+                    //     Colors.white,
+                    //     Colors.yellow,
+                    //   ]).createShader(
+                    //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                   )),
               Container(
                   // padding: const EdgeInsets.all(10),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                    const Icon(
+                    Icon(
                       Icons.check_circle_outline,
                       size: 40,
-                      color: Colors.black,
+                      color: Colors.green.shade800,
                     ),
                     Container(
                       // height: MediaQuery.of(context).size.height * 0.2,
+                      constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.3),
                       width: MediaQuery.of(context).size.width * 0.8,
                       // padding: const EdgeInsets.all(10),
-                      child: ListTile(
-                        subtitle:
-                            ListBuilder(activitiesList: widget.activitiesList),
-                      ),
+                      child: ListBuilder(activitiesList: widget.activitiesList),
                     )
                   ]))
             ]));

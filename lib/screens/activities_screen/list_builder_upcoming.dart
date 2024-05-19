@@ -38,7 +38,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
     RubricScreenCubit? rubricScreenCubit =
         BlocProvider.of<RubricScreenCubit>(context);
 
-    // final ScrollController scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
     return BlocBuilder<ActScreenCubit, ActScreenState>(
         builder: (context, stateActivity) {
       List<Activity>? activitiesList = widget.activitiesList;
@@ -47,20 +47,23 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
         var presenter = databaseScreenCubit.state.props!
             .where((element) => element.isPresenter == true)
             .first;
-        return Container(
-            // height: MediaQuery.of(context).size.height * 0.2,
-            width: MediaQuery.of(context).size.width * 0.8,
-            padding: const EdgeInsets.all(2),
-            child: ListTile(
-                subtitle: ListView.builder(
+        return Scrollbar(
+            thumbVisibility: true,
+            controller: scrollController,
+            thickness: 5,
+            radius: const Radius.circular(50),
+            child: ListView.builder(
+              padding: const EdgeInsets.only(right: 10),
+              controller: scrollController,
+              scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: activitiesList.length ?? 0,
+              itemCount: activitiesList.length,
               itemBuilder: (BuildContext context, int index) {
                 if (activitiesList[index].isDistributed == false) {
                   return Card(
                       color: activitiesList[index].isStarted
-                          ? Colors.green
-                          : const Color(0xFF6D7981),
+                          ? const Color.fromRGBO(210, 236, 199, 1)
+                          : const Color.fromRGBO(146, 151, 196, 1),
                       child: ListTile(
                           title: Text(
                             activitiesList[index].title,
@@ -84,7 +87,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                 }
                 return const FittedBox();
               },
-            )));
+            ));
       }
       return const FittedBox();
     });

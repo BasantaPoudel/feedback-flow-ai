@@ -8,9 +8,6 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserRepository userrepo = UserRepository();
     return Scaffold(
-        backgroundColor:
-            const Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
-
         appBar: AppBar(
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

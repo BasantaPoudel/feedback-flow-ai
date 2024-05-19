@@ -47,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                           children: [
                         Text(
                           'Welcome to the FeedbackFlow!',
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                         Text(
                           'Please find the current activity and provide peer feedback',

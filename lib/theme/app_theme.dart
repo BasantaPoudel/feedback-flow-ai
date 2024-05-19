@@ -43,12 +43,11 @@ class AppTheme {
         fontFamily: 'Hind',
       ),
     ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       // backgroundColor: const Color(0x00049ee0).toMaterialColor(),
       backgroundColor: Color.fromRGBO(174, 206, 209, 1),
       selectedItemColor: Colors.black, // Set the selected item color
     ),
-    backgroundColor: Color.fromRGBO(174, 206, 209, 1),
 
     cardTheme: CardTheme(
       color: Colors.white, // Set the card color

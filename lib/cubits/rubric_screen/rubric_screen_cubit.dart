@@ -29,7 +29,7 @@ class RubricScreenCubit extends Cubit<RubricScreenState> {
       //Deep copy the rubrics
       for (var obj in rubrics) {
         copiedRubrics.add(Rubric(
-            name: obj.name,
+            title: obj.title,
             score: obj
                 .score)); // Assuming MyClass has a constructor that takes an ID
       }

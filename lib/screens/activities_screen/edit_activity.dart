@@ -5,12 +5,20 @@ import 'package:feedback_flow/models/rubric.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddActivity extends StatelessWidget {
+class EditActivity extends StatelessWidget {
   final _controllerTitle = TextEditingController();
   final _controllerRubric1 = TextEditingController();
   final _controllerRubric2 = TextEditingController();
 
-  AddActivity({super.key});
+  late Activity? activity;
+
+  EditActivity({super.key});
+  EditActivity.withActivity(Activity activity, {super.key}) {
+    this.activity = activity;
+    _controllerTitle.text = activity.title;
+    _controllerRubric1.text = activity.rubrics.values.first.first.title;
+    _controllerRubric2.text = activity.rubrics.values.first.last.title;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +29,7 @@ class AddActivity extends StatelessWidget {
         BlocProvider.of<PresenterScreenCubit>(context);
 
     return AlertDialog(
-      title: const Text('Add activity'),
+      title: const Text('Edit activity'),
       content: Column(
         children: [
           TextField(
@@ -60,7 +68,8 @@ class AddActivity extends StatelessWidget {
         TextButton(
           onPressed: () {
             if (_controllerRubric1.text.trim().isEmpty) return;
-            activitiesScreenCubit.addActivity(Activity(
+
+            activitiesScreenCubit.updateActivity(Activity(
               title: _controllerTitle.text,
               rubrics: {
                 databaseScreenCubit.getUserId(): [
@@ -80,7 +89,7 @@ class AddActivity extends StatelessWidget {
             ));
             Navigator.of(context).pop();
           },
-          child: const Text('Add activity'),
+          child: const Text('Edit activity'),
         ),
       ],
     );

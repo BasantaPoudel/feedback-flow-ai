@@ -1,5 +1,3 @@
-import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
-import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/result_screen/result_screen_cubit.dart';
 import 'package:feedback_flow/cubits/result_screen/result_screen_state.dart';
@@ -94,13 +92,13 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                   activity.rubrics.entries
                                       .elementAt(0)
                                       .value[index]
-                                      .name,
+                                      .title,
                                   style: const TextStyle(
                                     color: Colors.white,
                                   )),
                               trailing: BlocBuilder<ResultScreenCubit,
                                   ResultScreenState>(builder: (context, state) {
-                                var key;
+                                String key = "";
                                 if (state is ResultFromProfessor) {
                                   key = "professor";
                                 } else if (state is ResultFromStudents) {
@@ -114,8 +112,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                         .toString(),
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      //TODO - Remove hardcoded font size
-                                      fontSize: 18,
+                                      fontSize: 20,
                                     ));
                               }),
                             ));

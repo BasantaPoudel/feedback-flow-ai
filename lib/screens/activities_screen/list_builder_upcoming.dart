@@ -3,12 +3,14 @@ import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
+import 'package:feedback_flow/screens/activities_screen/edit_activity.dart';
 import 'package:feedback_flow/screens/activities_screen/upcoming_trailing.dart';
 import 'package:feedback_flow/screens/rubric_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:feedback_flow/models/activity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ListBuilderUpcoming extends StatefulWidget {
   const ListBuilderUpcoming({super.key, required this.activitiesList});
@@ -60,30 +62,73 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
               itemCount: activitiesList.length,
               itemBuilder: (BuildContext context, int index) {
                 if (activitiesList[index].isDistributed == false) {
-                  return Card(
-                      color: activitiesList[index].isStarted
-                          ? const Color.fromRGBO(210, 236, 199, 1)
-                          : const Color.fromRGBO(146, 151, 196, 1),
-                      child: ListTile(
-                          title: Text(
-                            activitiesList[index].title,
-                            style: const TextStyle(
-                              color: Colors.black, // Change text color to white
-                            ),
-                          ),
-                          onTap: () {
-                            rubricScreenCubit.addActivityToRubricState(
-                                widget.activitiesList[index], presenter);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RubricScreen(
-                                    activity: activitiesList[index]),
-                              ),
-                            );
+                  return Slidable(
+                      startActionPane:
+                          ActionPane(motion: const StretchMotion(), children: [
+                        SlidableAction(
+                          borderRadius: BorderRadius.circular(10),
+                          backgroundColor: Colors.blue,
+                          icon: Icons.copy,
+                          onPressed: (context) => {
+                            BlocProvider.of<ActScreenCubit>(context)
+                                .duplicateActivity(activitiesList[index])
                           },
-                          trailing: UpcomingTrailing(
-                              activitiesList: activitiesList, index: index)));
+                        )
+                      ]),
+
+                      //TODO - Retry creating error message for the below code - moving motion at the end
+                      endActionPane:
+                          ActionPane(motion: const ScrollMotion(), children: [
+                        SlidableAction(
+                            borderRadius: BorderRadius.circular(10),
+                            icon: Icons.edit,
+                            backgroundColor: Colors.blue,
+                            onPressed: (context) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditActivity.withActivity(
+                                          activitiesList[index]),
+                                ),
+                              );
+                            }),
+                        SlidableAction(
+                          borderRadius: BorderRadius.circular(10),
+                          icon: Icons.delete,
+                          backgroundColor: Colors.red,
+                          onPressed: (context) => {
+                            BlocProvider.of<ActScreenCubit>(context)
+                                .deleteActivity(activitiesList[index])
+                          },
+                        )
+                      ]),
+                      child: Card(
+                          color: activitiesList[index].isStarted
+                              ? const Color.fromRGBO(210, 236, 199, 1)
+                              : const Color.fromRGBO(146, 151, 196, 1),
+                          child: ListTile(
+                              title: Text(
+                                activitiesList[index].title,
+                                style: const TextStyle(
+                                  color: Colors
+                                      .black, // Change text color to white
+                                ),
+                              ),
+                              onTap: () {
+                                rubricScreenCubit.addActivityToRubricState(
+                                    widget.activitiesList[index], presenter);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RubricScreen(
+                                        activity: activitiesList[index]),
+                                  ),
+                                );
+                              },
+                              trailing: UpcomingTrailing(
+                                  activitiesList: activitiesList,
+                                  index: index))));
                 }
                 return const FittedBox();
               },

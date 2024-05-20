@@ -90,14 +90,14 @@ class _ResultsScreenState extends State<ResultsScreen> {
                               activity.rubrics.entries
                                   .elementAt(0)
                                   .value[index]
-                                  .name,
+                                  .title,
                               style: const TextStyle(
                                 color: Colors.white,
                               )),
                           trailing:
                               BlocBuilder<ResultScreenCubit, ResultScreenState>(
                                   builder: (context, state) {
-                            var key;
+                            String key = "";
                             if (state is ResultFromProfessor) {
                               key = "professor";
                             } else if (state is ResultFromStudents) {
@@ -111,8 +111,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                     .toString(),
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  //TODO - Remove hardcoded font size
-                                  fontSize: 18,
+                                  fontSize: 20,
                                 ));
                           }),
                         ));

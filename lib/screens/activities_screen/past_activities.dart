@@ -31,7 +31,7 @@ class _PastActivitiesState extends State<PastActivities> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text("Past Activities",
+              const Text("Past Activities",
                   style: TextStyle(
                     fontSize: 25,
                     color: Colors.black,
@@ -55,7 +55,7 @@ class _PastActivitiesState extends State<PastActivities> {
                     Container(
                       // height: MediaQuery.of(context).size.height * 0.2,
                       constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.3),
+                          maxHeight: MediaQuery.of(context).size.height * 0.28),
                       width: MediaQuery.of(context).size.width * 0.8,
                       // padding: const EdgeInsets.all(10),
                       child: ListBuilder(activitiesList: widget.activitiesList),

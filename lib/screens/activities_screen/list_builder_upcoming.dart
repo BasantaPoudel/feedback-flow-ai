@@ -53,13 +53,13 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
             thumbVisibility: true,
             controller: scrollController,
             thickness: 5,
-            radius: Radius.circular(50),
+            radius: const Radius.circular(50),
             child: ListView.builder(
               padding: const EdgeInsets.only(right: 10),
               controller: scrollController,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: activitiesList.length ?? 0,
+              itemCount: activitiesList.length,
               itemBuilder: (BuildContext context, int index) {
                 if (activitiesList[index].isDistributed == false) {
                   return Slidable(
@@ -105,8 +105,8 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                       ]),
                       child: Card(
                           color: activitiesList[index].isStarted
-                              ? Colors.green
-                              : const Color(0xFF6D7981),
+                              ? const Color.fromRGBO(210, 236, 199, 1)
+                              : const Color.fromRGBO(146, 151, 196, 1),
                           child: ListTile(
                               title: Text(
                                 activitiesList[index].title,

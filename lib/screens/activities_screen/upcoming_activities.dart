@@ -27,8 +27,12 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-              color: Color.fromRGBO(106, 178, 189, 1),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              color: Color.fromRGBO(255, 248, 238, 1),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -37,7 +41,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                 Text('Upcoming Activities',
                     style: TextStyle(
                       fontSize: 25,
-                      color: Colors.white,
+                      color: Colors.black,
                       // foreground: Paint()
                       //   ..shader = const LinearGradient(colors: <Color>[
                       //     Colors.white,
@@ -46,11 +50,15 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                       //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                     )),
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  const Icon(Icons.upcoming_outlined, size: 40),
+                  const Icon(
+                    Icons.upcoming_outlined,
+                    size: 40,
+                    color: Colors.black,
+                  ),
                   Container(
                       // height: MediaQuery.of(context).size.height * 0.2,
                       constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.3),
+                          maxHeight: MediaQuery.of(context).size.height * 0.28),
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ListBuilderUpcoming(
                           activitiesList: widget.activitiesList))

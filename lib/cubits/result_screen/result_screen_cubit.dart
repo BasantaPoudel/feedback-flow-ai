@@ -60,9 +60,9 @@ class ResultScreenCubit extends Cubit<ResultScreenState> {
       selectedRubricList.add(Rubric(title: key, score: value));
     });
 
-    selectedRubricList.forEach((rubric) {
+    for (var rubric in selectedRubricList) {
       rubric.score = rubric.score / length.toDouble();
-    });
+    }
 
     return selectedRubricList;
   }

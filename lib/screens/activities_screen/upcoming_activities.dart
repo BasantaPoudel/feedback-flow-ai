@@ -38,7 +38,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Upcoming Activities',
+                const Text('Upcoming Activities',
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.black,

@@ -36,9 +36,9 @@ class ActivityRepository extends MainRepository {
     try {
       final query = activitiesRef.where("title", isEqualTo: activity.title);
       query.get().then((querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           doc.reference.delete();
-        });
+        }
       });
     } catch (e) {
       print('Error: $e');

@@ -31,7 +31,7 @@ class _PastActivitiesState extends State<PastActivities> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text("Past Activities",
+              const Text("Past Activities",
                   style: TextStyle(
                     fontSize: 25,
                     color: Colors.black,

@@ -94,7 +94,7 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
                                 widget.activitiesList, widget.index);
                           },
                           child: const Text('Start Again'))),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Expanded(

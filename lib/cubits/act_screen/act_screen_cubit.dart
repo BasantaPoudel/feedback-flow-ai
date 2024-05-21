@@ -44,6 +44,18 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     _activityRepository.addActivity(activity);
   }
 
+  void updateActivity(Activity activity) {
+    _activityRepository.updateActivity(activity);
+  }
+
+  void deleteActivity(Activity activity) {
+    _activityRepository.deleteActivity(activity);
+  }
+
+  void duplicateActivity(Activity activity) {
+    _activityRepository.addActivity(activity);
+  }
+
   void addRubric(Activity activity, rubric) {
     activity.rubrics.addEntries(rubric);
     _activityRepository.updateActivity(activity);

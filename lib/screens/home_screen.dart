@@ -32,10 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
             final currentIndex = state.currentIndex;
             final children = state.children;
             return children[currentIndex];
-          } else
+          } else {
             return const Center(
               child: Text("Something went wrong Initial State"),
             );
+          }
         }), bottomNavigationBar: BlocBuilder<HomeScreenCubit, HomeScreenState>(
             builder: (context, state) {
           if (state is UserLoadingState) {
@@ -96,10 +97,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             );
-          } else
+          } else {
             return const Center(
               child: Text("Something went wrong UserErrorState"),
             );
+          }
         })));
   }
 }

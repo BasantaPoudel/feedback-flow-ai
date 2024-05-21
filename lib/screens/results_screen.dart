@@ -42,24 +42,18 @@ class _ResultsScreenState extends State<ResultsScreen> {
           return Scaffold(
             appBar: AppBar(
               title: Row(children: <Widget>[
-                // First expanded widget with flex factor of 1
                 Expanded(
                   flex: 1,
                   child: Container(
-                    // height: 100,
-                    // color: Colors.red,
                     child: const Text("Results"),
                   ),
                 ),
-                // Second expanded widget with flex factor of 2
                 Expanded(
                   flex: 1,
                   child: Container(
-                      // height: 100,
-                      // color: Colors.green,
                       child: Row(
                     children: [
-                      Text('S'),
+                      const Text('S'),
                       Switch(
                           //Default value
                           value: defaultSwitchValue,
@@ -75,7 +69,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 : resultScreenCubit
                                     .loadResultFromStudents(activity);
                           }),
-                      Text('T'),
+                      const Text('T'),
                     ],
                   )),
                 )
@@ -94,17 +88,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         child: ListTile(
                           title: Text(
                               activity.rubrics.entries
-                                      .elementAt(0)
-                                      .value[index]
-                                      .name ??
-                                  "",
+                                  .elementAt(0)
+                                  .value[index]
+                                  .title,
                               style: const TextStyle(
                                 color: Colors.white,
                               )),
                           trailing:
                               BlocBuilder<ResultScreenCubit, ResultScreenState>(
                                   builder: (context, state) {
-                            var key;
+                            String key = "";
                             if (state is ResultFromProfessor) {
                               key = "professor";
                             } else if (state is ResultFromStudents) {
@@ -118,8 +111,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                     .toString(),
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  //TODO - Remove hardcoded font size
-                                  fontSize: 18,
+                                  fontSize: 20,
                                 ));
                           }),
                         ));

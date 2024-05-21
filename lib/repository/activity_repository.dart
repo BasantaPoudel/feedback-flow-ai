@@ -31,4 +31,17 @@ class ActivityRepository extends MainRepository {
       print('Error: $e');
     }
   }
+
+  void deleteActivity(Activity activity) {
+    try {
+      final query = activitiesRef.where("title", isEqualTo: activity.title);
+      query.get().then((querySnapshot) {
+        for (var doc in querySnapshot.docs) {
+          doc.reference.delete();
+        }
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 }

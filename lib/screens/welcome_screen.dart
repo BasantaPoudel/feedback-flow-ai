@@ -8,33 +8,31 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserRepository userrepo = UserRepository();
     return Scaffold(
-        backgroundColor: Colors.blue,
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Hi, ',
-                style: TextStyle(color: Colors.white),
               ),
               Text(
                 userrepo.user?.displayName ?? 'User',
-                style: TextStyle(color: Colors.white),
               )
             ],
           ),
         ),
         body: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.grey.shade300, Colors.white],
-              ),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-            ),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.grey.shade200, Colors.white],
+                ),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30))),
             child: Center(
               child: Column(
                 children: [
@@ -46,7 +44,7 @@ class WelcomeScreen extends StatelessWidget {
                           children: [
                         Text(
                           'Welcome to the FeedbackFlow!',
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                         Text(
                           'Please find the current activity and provide peer feedback',

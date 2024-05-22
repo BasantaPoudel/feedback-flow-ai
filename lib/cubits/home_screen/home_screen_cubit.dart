@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
-import 'package:feedback_flow/main.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/act_screen.dart';
 import 'package:feedback_flow/screens/presenters_screen.dart';
+import 'package:feedback_flow/screens/profile_screen.dart';
 import 'package:feedback_flow/screens/welcome_screen.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:feedback_flow/screens/search_screen.dart';
@@ -19,19 +18,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     const WelcomeScreen(),
     const ActScreen(),
     const Stats(),
-    ProfileScreen(
-      appBar: AppBar(
-        title: const Text('Test Profile'),
-      ),
-      actions: [
-        SignedOutAction((context) {
-          RestartWidget.restartApp(context);
-        })
-      ],
-      children: const [
-        Divider(),
-      ],
-    ),
+    Profile(),
   ];
 
   late List<Widget> _childrenStudent;

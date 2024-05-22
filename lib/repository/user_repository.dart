@@ -25,6 +25,17 @@ class UserRepository extends MainRepository {
     return users;
   }
 
+  Future<void> addUserToFirestore(UserModel? user) async {
+    if (user == null) return;
+
+    final query = roleBasedUsersRef.where("email", isEqualTo: user.email);
+    var querySnapshot = await query.get();
+
+    if (querySnapshot.docs.isEmpty) {
+      roleBasedUsersRef.add(user.toMap());
+    }
+  }
+
   updateUser(UserModel user) async {
     try {
       final query = roleBasedUsersRef.where("email", isEqualTo: user.email);
@@ -66,6 +77,15 @@ class UserRepository extends MainRepository {
 
   Future<String> getLoggedInUserId() async {
     return user!.uid;
+  }
+
+  getLoggedInUserAsUserModel() {
+    return UserModel(
+      name: user!.displayName!,
+      email: user!.email!,
+      role: "student",
+      isPresenter: false,
+    );
   }
 
 //Method to be called when Teacher presses Start on the activity

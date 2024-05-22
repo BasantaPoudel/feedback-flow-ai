@@ -17,7 +17,9 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
         print("[Database-C - subscribeToData] Reached Here");
         var users =
             snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
-        if (users.any((user) => user.isPresenter == true)) {
+        //TODO - recheck this line
+        if (users.any((user) => user.isPresenter == true) &&
+            PresenterScreenState is! DatabaseScreenInitial) {
           emit(PresenterState(users));
         } else {
           emit(DatabaseScreenLoaded(users));
@@ -93,5 +95,11 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
 
   getUserActivities() {
     return _userRepo.getActivities();
+  }
+
+  void updateUserName(newName) {
+    UserModel loggedInUser = _userRepo.getLoggedInUserAsUserModel();
+    loggedInUser.setname(newName);
+    _userRepo.addUserToFirestore(loggedInUser);
   }
 }

@@ -1,11 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/screens/home_screen.dart';
+import 'package:feedback_flow/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
-class AuthGate extends StatelessWidget {
-  const AuthGate({super.key});
+class AuthGate extends StatefulWidget {
+  const AuthGate({Key? key}) : super(key: key);
 
+  @override
+  _AuthGateState createState() => _AuthGateState();
+}
+// const AuthGate({super.key});
+
+class _AuthGateState extends State<AuthGate> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
@@ -13,9 +21,20 @@ class AuthGate extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return SignInScreen(
+            // showAuthActionSwitch: false,
+            showPasswordVisibilityToggle: true,
             providers: [
               EmailAuthProvider(),
             ],
+            // actions: [],
+            actions: [
+              AuthStateChangeAction<UserCreated>((context, state) async {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => Profile(),
+                ));
+              }),
+            ],
+
             headerBuilder: (context, constraints, shrinkOffset) {
               return const Padding(
                 padding: EdgeInsets.all(20),
@@ -32,14 +51,16 @@ class AuthGate extends StatelessWidget {
                     : const Text('Welcome to FeedbackFlow, please sign up!'),
               );
             },
+
             footerBuilder: (context, action) {
               return const Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text(
-                  'By signing in, you agree to our terms and conditions.',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              );
+                  padding: EdgeInsets.only(top: 16),
+                  child: Column(children: [
+                    Text(
+                      'By signing in, you agree to our terms and conditions.',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ]));
             },
             sideBuilder: (context, shrinkOffset) {
               return const Padding(
@@ -50,8 +71,10 @@ class AuthGate extends StatelessWidget {
               );
             },
           );
+        } else if (snapshot.data?.displayName != null) {
+          return const HomeScreen();
         }
-        return const HomeScreen();
+        return Profile();
       },
     );
   }

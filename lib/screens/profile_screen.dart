@@ -29,11 +29,12 @@ class _ProfileState extends State<Profile> {
             SnackBar(
               backgroundColor: Colors.green,
               content: Text(
-                  'Display name changed to $newName, Please Sign Out and Sign In again!'),
-              duration: const Duration(seconds: 3),
+                  'Display name changed to $newName, Please Sign Out and Sign In again once you verify your email!'),
+              duration: const Duration(seconds: 5),
             ),
           );
 
+          //TODO - Look for alternatives as well
           context.read<PresenterScreenCubit>().updateUserName(newName);
           // RestartWidget.restartApp(context);
         }),

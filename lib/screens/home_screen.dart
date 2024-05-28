@@ -99,9 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           } else {
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   const SnackBar(content: Text('Failed to load items')),
-            // );
             //TODO - Temporary method to get out of blockade
             return ElevatedButton(
                 onPressed: () {

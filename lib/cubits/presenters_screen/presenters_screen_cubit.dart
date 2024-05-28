@@ -17,9 +17,7 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
         print("[Database-C - subscribeToData] Reached Here");
         var users =
             snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
-        //TODO - recheck this line
-        if (users.any((user) => user.isPresenter == true) &&
-            PresenterScreenState is! DatabaseScreenInitial) {
+        if (users.any((user) => user.isPresenter == true)) {
           emit(PresenterState(users));
         } else {
           emit(DatabaseScreenLoaded(users));

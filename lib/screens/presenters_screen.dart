@@ -18,11 +18,6 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     PresenterScreenCubit? databaseScreenCubit =
         BlocProvider.of<PresenterScreenCubit>(context);

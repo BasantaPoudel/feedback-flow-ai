@@ -1,3 +1,4 @@
+import 'package:feedback_flow/auth_gate.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:flutter/material.dart';
@@ -98,9 +99,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           } else {
-            return const Center(
-              child: Text("Something went wrong UserErrorState"),
-            );
+            //TODO - Temporary method to get out of blockade
+            return ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AuthGate(),
+                      ));
+                },
+                child: Text("Retry Logging In"));
           }
         })));
   }

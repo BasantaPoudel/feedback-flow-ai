@@ -18,7 +18,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MultiBlocProvider(providers: [
+  runApp(RestartWidget(
+      child: MultiBlocProvider(providers: [
     BlocProvider(
         create: (BuildContext context) =>
             PresenterScreenCubit()..subscribeToData()),
@@ -27,7 +28,7 @@ void main() async {
     BlocProvider(create: (BuildContext context) => HomeScreenCubit()),
     BlocProvider(create: (BuildContext context) => RubricScreenCubit()),
     BlocProvider(create: (BuildContext context) => ResultScreenCubit())
-  ], child: const MyApp()));
+  ], child: const MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -38,5 +39,36 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.themeData,
         darkTheme: AppTheme.darkTheme,
         home: const AuthGate());
+  }
+}
+
+class RestartWidget extends StatefulWidget {
+  final Widget child;
+
+  RestartWidget({Key? key, required this.child}) : super(key: key);
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+  }
+
+  @override
+  _RestartWidgetState createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
   }
 }

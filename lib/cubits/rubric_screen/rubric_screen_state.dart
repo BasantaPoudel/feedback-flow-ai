@@ -11,9 +11,7 @@ class RubricScreenInitial extends RubricScreenState {
 
 class RubricScoreUpdatedByProfessor extends RubricScreenState {
   Activity activity;
-
   RubricScoreUpdatedByProfessor(this.activity);
-
   @override
   Activity get props => activity;
 }

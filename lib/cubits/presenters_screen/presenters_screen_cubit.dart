@@ -94,4 +94,10 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
   getUserActivities() {
     return _userRepo.getActivities();
   }
+
+  void updateUserName(newName) {
+    UserModel loggedInUser = _userRepo.getLoggedInUserAsUserModel();
+    loggedInUser.setname(newName);
+    _userRepo.addUserToFirestore(loggedInUser);
+  }
 }

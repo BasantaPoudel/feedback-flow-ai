@@ -2,7 +2,7 @@ import 'package:feedback_flow/models/activity.dart';
 
 class UserModel {
   final String id = '';
-  final String name;
+  late String name;
   final String role;
   final String email;
   late bool? isPresenter;
@@ -74,5 +74,9 @@ class UserModel {
 
   setActivities(List<Activity> activities) {
     this.activities = activities;
+  }
+
+  setname(String name) {
+    this.name = name;
   }
 }

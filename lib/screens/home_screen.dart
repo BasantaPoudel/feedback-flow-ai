@@ -105,10 +105,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AuthGate(),
+                        builder: (context) => const AuthGate(),
                       ));
                 },
-                child: Text("Retry Logging In"));
+                child: const Text("Retry Logging In"));
           }
         })));
   }

@@ -1,5 +1,3 @@
-import 'package:feedback_flow/auth_gate.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   // test('AuthGate should return true if user is authenticated', () {

@@ -10,6 +10,7 @@ class RubricScreenInitial extends RubricScreenState {
 }
 
 class RubricScoreUpdatedByProfessor extends RubricScreenState {
+  @override
   Activity activity;
   RubricScoreUpdatedByProfessor(this.activity);
   @override
@@ -17,6 +18,7 @@ class RubricScoreUpdatedByProfessor extends RubricScreenState {
 }
 
 class RubricScoreUpdatedByUser extends RubricScreenState {
+  @override
   Activity activity;
 
   RubricScoreUpdatedByUser(this.activity);

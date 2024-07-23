@@ -29,7 +29,7 @@ class _AuthGateState extends State<AuthGate> {
             actions: [
               AuthStateChangeAction<UserCreated>((context, state) async {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => Profile(),
+                  builder: (context) => const Profile(),
                 ));
               }),
             ],
@@ -73,7 +73,7 @@ class _AuthGateState extends State<AuthGate> {
         } else if (snapshot.data?.displayName != null) {
           return const HomeScreen();
         }
-        return Profile();
+        return const Profile();
       },
     );
   }

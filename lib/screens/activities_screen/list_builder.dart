@@ -58,7 +58,7 @@ class _ListBuilderState extends State<ListBuilder> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ResultsScreen(),
+                            builder: (context) => const ResultsScreen(),
                           ),
                         );
                       },

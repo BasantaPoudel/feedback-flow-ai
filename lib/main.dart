@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
 class RestartWidget extends StatefulWidget {
   final Widget child;
 
-  RestartWidget({Key? key, required this.child}) : super(key: key);
+  const RestartWidget({Key? key, required this.child}) : super(key: key);
 
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();

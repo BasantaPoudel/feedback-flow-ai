@@ -1,5 +1,7 @@
 import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
 import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
+import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
+import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
@@ -40,6 +42,9 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
     RubricScreenCubit? rubricScreenCubit =
         BlocProvider.of<RubricScreenCubit>(context);
 
+    HomeScreenCubit? homeScreenCubit =
+        BlocProvider.of<HomeScreenCubit>(context);
+
     final ScrollController scrollController = ScrollController();
     return BlocBuilder<ActScreenCubit, ActScreenState>(
         builder: (context, stateActivity) {
@@ -63,46 +68,52 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
               itemBuilder: (BuildContext context, int index) {
                 if (activitiesList[index].isDistributed == false) {
                   return Slidable(
-                      startActionPane:
-                          ActionPane(motion: const StretchMotion(), children: [
-                        SlidableAction(
-                          borderRadius: BorderRadius.circular(10),
-                          backgroundColor: Colors.blue,
-                          icon: Icons.copy,
-                          onPressed: (context) => {
-                            BlocProvider.of<ActScreenCubit>(context)
-                                .duplicateActivity(activitiesList[index])
-                          },
-                        )
-                      ]),
+                      startActionPane: presenter.role == 'teacher'
+                          ? ActionPane(
+                              motion: const StretchMotion(),
+                              children: [
+                                  SlidableAction(
+                                    borderRadius: BorderRadius.circular(10),
+                                    backgroundColor: Colors.blue,
+                                    icon: Icons.copy,
+                                    onPressed: (context) => {
+                                      BlocProvider.of<ActScreenCubit>(context)
+                                          .duplicateActivity(
+                                              activitiesList[index])
+                                    },
+                                  )
+                                ])
+                          : null,
 
                       //TODO - Retry creating error message for the below code - moving motion at the end
-                      endActionPane:
-                          ActionPane(motion: const ScrollMotion(), children: [
-                        SlidableAction(
-                            borderRadius: BorderRadius.circular(10),
-                            icon: Icons.edit,
-                            backgroundColor: Colors.blue,
-                            onPressed: (context) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditActivity.withActivity(
-                                          activitiesList[index]),
-                                ),
-                              );
-                            }),
-                        SlidableAction(
-                          borderRadius: BorderRadius.circular(10),
-                          icon: Icons.delete,
-                          backgroundColor: Colors.red,
-                          onPressed: (context) => {
-                            BlocProvider.of<ActScreenCubit>(context)
-                                .deleteActivity(activitiesList[index])
-                          },
-                        )
-                      ]),
+                      endActionPane: homeScreenCubit.state
+                              is TeacherLoggedInState
+                          ? ActionPane(motion: const ScrollMotion(), children: [
+                              SlidableAction(
+                                  borderRadius: BorderRadius.circular(10),
+                                  icon: Icons.edit,
+                                  backgroundColor: Colors.blue,
+                                  onPressed: (context) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditActivity.withActivity(
+                                                activitiesList[index]),
+                                      ),
+                                    );
+                                  }),
+                              SlidableAction(
+                                borderRadius: BorderRadius.circular(10),
+                                icon: Icons.delete,
+                                backgroundColor: Colors.red,
+                                onPressed: (context) => {
+                                  BlocProvider.of<ActScreenCubit>(context)
+                                      .deleteActivity(activitiesList[index])
+                                },
+                              )
+                            ])
+                          : null,
                       child: Card(
                           color: activitiesList[index].isStarted
                               ? const Color.fromRGBO(210, 236, 199, 1)

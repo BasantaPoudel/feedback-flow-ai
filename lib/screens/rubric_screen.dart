@@ -1,5 +1,7 @@
 import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
 import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
+import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
+import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
@@ -33,6 +35,9 @@ class _RubricScreenState extends State<RubricScreen> {
 
     RubricScreenCubit? rubricScreenCubit =
         BlocProvider.of<RubricScreenCubit>(context);
+
+    HomeScreenCubit? homeScreenCubit =
+        BlocProvider.of<HomeScreenCubit>(context);
 
     return BlocBuilder<RubricScreenCubit, RubricScreenState>(
         builder: (context, stateRubric) {
@@ -137,6 +142,7 @@ class _RubricScreenState extends State<RubricScreen> {
                             content: Text('Score Submitted Successfully!'),
                             duration: Duration(seconds: 3),
                           ));
+                          Navigator.pop(context);
                         },
                         child: const Text("Submit"),
                       ),
@@ -176,17 +182,20 @@ class _RubricScreenState extends State<RubricScreen> {
                       ),
                     )
                   ]),
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: () {
-                      activitiesScreenCubit.addRubric(
-                          stateRubric.activity,
-                          Rubric(
-                            title: 'New Rubric from Rubric Screen',
-                            score: 0,
-                          ));
-                    },
-                    child: const Icon(Icons.add),
-                  ));
+                  floatingActionButton:
+                      homeScreenCubit.state is TeacherLoggedInState
+                          ? FloatingActionButton(
+                              onPressed: () {
+                                activitiesScreenCubit.addRubric(
+                                    stateRubric.activity,
+                                    Rubric(
+                                      title: 'New Rubric from Rubric Screen',
+                                      score: 0,
+                                    ));
+                              },
+                              child: const Icon(Icons.add),
+                            )
+                          : null);
             }
             return const FittedBox();
           }));

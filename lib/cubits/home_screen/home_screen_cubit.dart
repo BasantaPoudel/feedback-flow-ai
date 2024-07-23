@@ -18,7 +18,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     const WelcomeScreen(),
     const ActScreen(),
     const Stats(),
-    Profile(),
+    const Profile(),
   ];
 
   late List<Widget> _childrenStudent;

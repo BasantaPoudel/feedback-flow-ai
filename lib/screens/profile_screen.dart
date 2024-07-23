@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Profile extends StatefulWidget {
+  const Profile({super.key});
+
   // const Profile({required Key key}) : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class _ProfileState extends State<Profile> {
       actions: [
         EmailVerifiedAction(() {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Email verified')));
+              .showSnackBar(const SnackBar(content: Text('Email verified')));
           RestartWidget.restartApp(context);
         }),
         DisplayNameChangedAction((context, oldName, newName) {

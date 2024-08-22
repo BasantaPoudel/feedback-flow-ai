@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/repository/main_repository.dart';
+import 'package:logger/web.dart';
 
 class ActivityRepository extends MainRepository {
   final activitiesRef = FirebaseFirestore.instance.collection('act');
-
+  final Logger log = Logger();
   //Method to call when adding an activity by the professor
   void addActivity(activity) {
     try {
       activitiesRef.add(activity.toMap());
     } catch (e) {
-      print(e);
+      log.d(e);
     }
   }
 
@@ -28,7 +29,7 @@ class ActivityRepository extends MainRepository {
             .update(activity.toMap()); // <-- Document ID
       }
     } catch (e) {
-      print('Error: $e');
+      log.d('Error: $e');
     }
   }
 
@@ -41,7 +42,7 @@ class ActivityRepository extends MainRepository {
         }
       });
     } catch (e) {
-      print('Error: $e');
+      log.d('Error: $e');
     }
   }
 }

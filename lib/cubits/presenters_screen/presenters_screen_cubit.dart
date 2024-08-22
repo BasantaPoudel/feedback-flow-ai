@@ -3,6 +3,7 @@ import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 
 class PresenterScreenCubit extends Cubit<PresenterScreenState> {
   PresenterScreenCubit() : super(DatabaseScreenInitial()) {
@@ -11,10 +12,11 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
 
   final UserRepository _userRepo = UserRepository();
 
+  final Logger log = Logger();
   void subscribeToData() async {
     try {
       _userRepo.roleBasedUsersRef.snapshots().listen((snapshot) {
-        print("[Database-C - subscribeToData] Reached Here");
+        log.d("[Database-C - subscribeToData] Reached Here");
         var users =
             snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
         if (users.any((user) => user.isPresenter == true)) {
@@ -24,12 +26,12 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
         }
       });
     } catch (e) {
-      print(e);
+      log.d(e);
     }
   }
 
   selectPresenter(List<UserModel> users, index) {
-    print("[DatabaseScreenCubit] Reached selectPresenter");
+    log.d("[DatabaseScreenCubit] Reached selectPresenter");
     users[index].isPresenter = !(users[index].isPresenter!);
     _userRepo.updateUser(users[index]);
     users.any((element) => element.isPresenter == true)
@@ -70,7 +72,8 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
     } else {
       presenter.activities?.elementAt(index!).rubrics[uId] = rubricsFromUser;
     }
-    _userRepo.updateUser(presenter);
+    // _userRepo.updateUser(presenter);
+    _userRepo.updateRubrics(rubricsFromUser, presenter, activity.title);
   }
 
   String getUserId() {

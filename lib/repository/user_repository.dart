@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback_flow/models/activity.dart';
+import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/main_repository.dart';
 import 'package:logger/web.dart';
@@ -37,19 +38,30 @@ class UserRepository extends MainRepository {
   }
 
   updateUser(UserModel user) async {
-    try {
+    FirebaseFirestore.instance.runTransaction((transaction) async {
       final query = roleBasedUsersRef.where("email", isEqualTo: user.email);
       var querySnapshot = await query.get();
+      for (var snap in querySnapshot.docs) {
+        var documentID = snap.id;
 
-      for (var snapshot in querySnapshot.docs) {
-        var documentID = snapshot.id;
-        roleBasedUsersRef
-            .doc(documentID)
-            .update(user.toMap()); // <-- Document ID
+        DocumentReference docRef = roleBasedUsersRef.doc(documentID);
+
+        // Get the document snapshot
+        DocumentSnapshot snapshot = await transaction.get(docRef);
+
+        //Get the current value
+        var currentValue = snapshot.data();
+
+        // currentValue["rubrics"] = user.rubrics;
+        log.d("Current Value: $currentValue");
+        log.d("Current Value: ${user.toMap()}");
+
+        // Check if the document exists and then update it
+        transaction.update(docRef, user.toMap());
       }
-    } catch (e) {
-      print('Error: $e');
-    }
+    }).catchError((error) {
+      log.d("Transaction failed: $error");
+    });
   }
 
   Future<String> getUserRole() async {
@@ -57,19 +69,19 @@ class UserRepository extends MainRepository {
     //Step-2 [use get to retrieve the results]
     try {
       var querySnapshot = await query.get();
-      print("Query1 - Successfully completed");
+      log.d("Query1 - Successfully completed");
       for (var docSnapshot in querySnapshot.docs) {
-        print('${docSnapshot.id} => ${docSnapshot.data()}');
+        log.d('${docSnapshot.id} => ${docSnapshot.data()}');
         if (docSnapshot.data().containsValue("teacher")) {
-          print("[Reached Teacher If]");
+          log.d("[Reached Teacher If]");
           return "teacher";
         } else {
-          print("[Reached Student If]");
+          log.d("[Reached Student If]");
           return "student";
         }
       }
     } catch (e) {
-      print('Error: $e');
+      log.d('Error: $e');
       return "error";
     }
     return "error";
@@ -107,7 +119,7 @@ class UserRepository extends MainRepository {
         }
       });
     } catch (e) {
-      print(e.toString());
+      log.d(e.toString());
     }
   }
 
@@ -127,8 +139,63 @@ class UserRepository extends MainRepository {
         }
       });
     } catch (e) {
-      print(e.toString());
+      log.d(e.toString());
     }
     return activities;
+  }
+
+  void updateRubrics(List<Rubric> rubricsFromUser, presenter, title) async {
+    String uId = await getLoggedInUserId();
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      final query =
+          roleBasedUsersRef.where("email", isEqualTo: presenter.email);
+      var querySnapshot = await query.get();
+      for (var snap in querySnapshot.docs) {
+        var documentID = snap.id;
+
+        DocumentReference docRef = roleBasedUsersRef.doc(documentID);
+
+        // Get the document snapshot
+        DocumentSnapshot snapshot = await transaction.get(docRef);
+
+        //Get the current value
+        var currentValue = snapshot.data() as Map<String, dynamic>;
+
+        var index = currentValue['activities']
+            .indexWhere((element) => element['title'] == title);
+        var activities = currentValue['activities'];
+
+        var currentRubrics = activities[index]['rubrics'];
+        currentRubrics[uId] =
+            rubricsFromUser.map((rubric) => rubric.toMap()).toList();
+        activities[index]['rubrics'] = currentRubrics;
+
+        // Check if the document exists and then update it
+        log.d("UpdatedActivity: $activities");
+        transaction.update(docRef, {"activities": activities});
+      }
+    }).catchError((error) {
+      log.d("Transaction failed: $error");
+    });
+
+    // roleBasedUsersRef
+    //     .where("email", isEqualTo: presenter!.email)
+    //     .get()
+    //     .then((value) {
+    //   if (value.docs.isNotEmpty) {
+    //     var index = value.docs.first
+    //         .data()['activities']
+    //         .indexWhere((element) => element['title'] == title);
+
+    //     var activities = value.docs.first.data()['activities'];
+    //     var currentRubrics = activities[index]['rubrics'];
+    //     currentRubrics[uId] =
+    //         rubricsFromUser.map((rubric) => rubric.toMap()).toList();
+    //     activities[index]['rubrics'] = currentRubrics;
+    //     roleBasedUsersRef.doc(value.docs.first.id).update({
+    //       'activities': activities,
+    //     });
+    //   }
+    // });
   }
 }

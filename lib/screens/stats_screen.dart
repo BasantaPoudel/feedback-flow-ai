@@ -27,7 +27,7 @@ class _StatsState extends State<Stats> {
                 end: Alignment.bottomCenter,
                 colors: [Colors.grey.shade300, Colors.white],
               ),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
             ),
             child: Row(

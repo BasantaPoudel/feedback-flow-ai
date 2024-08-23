@@ -6,6 +6,7 @@ import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
 import 'package:feedback_flow/cubits/score_screen/score_cubit.dart';
 import 'package:feedback_flow/firebase_options.dart';
 import 'package:feedback_flow/theme/app_theme.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,10 +33,15 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        navigatorObservers: <NavigatorObserver>[observer],
         theme: AppTheme.themeData,
         darkTheme: AppTheme.darkTheme,
         home: const AuthGate());

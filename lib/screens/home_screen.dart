@@ -3,6 +3,7 @@ import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -43,58 +44,66 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is UserLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TeacherLoggedInState) {
-            return BottomNavigationBar(
-              onTap: context.read<HomeScreenCubit>().onTabTappedTeacher,
-              currentIndex: state.currentIndex,
-              type: BottomNavigationBarType.fixed,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.present_to_all),
-                  label: 'Activities',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.data_object_sharp),
-                  label: 'Presenters',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.bar_chart),
-                  label: 'Stats',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                ),
-              ],
+            return Container(
+              child: BottomNavigationBar(
+                onTap: context.read<HomeScreenCubit>().onTabTappedTeacher,
+                currentIndex: state.currentIndex,
+                type: BottomNavigationBarType.fixed,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/home.svg'),
+                    activeIcon: SvgPicture.asset('assets/icons/home_.svg'),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/feedback.svg'),
+                    activeIcon: SvgPicture.asset('assets/icons/feedback_.svg'),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/presenters.svg'),
+                    activeIcon:
+                        SvgPicture.asset('assets/icons/presenters_.svg'),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/stats.svg'),
+                    activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/profile.svg'),
+                    activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),
+                    label: '',
+                  ),
+                ],
+              ),
             );
           } else if (state is StudentLoggedInState) {
             return BottomNavigationBar(
               onTap: context.read<HomeScreenCubit>().onTabTappedStudent,
               currentIndex: state.currentIndex,
               type: BottomNavigationBarType.fixed,
-              items: const [
+              items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+                  icon: SvgPicture.asset('assets/icons/home.svg'),
+                  activeIcon: SvgPicture.asset('assets/icons/home_.svg'),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.present_to_all),
-                  label: 'Activities',
+                  icon: SvgPicture.asset('assets/icons/feedback.svg'),
+                  activeIcon: SvgPicture.asset('assets/icons/feedback_.svg'),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Search',
+                  icon: SvgPicture.asset('assets/icons/stats.svg'),
+                  activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.bar_chart),
-                  label: 'Stats',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
+                  icon: SvgPicture.asset('assets/icons/profile.svg'),
+                  activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),
+                  label: '',
                 ),
               ],
             );

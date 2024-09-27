@@ -4,6 +4,7 @@ import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/screens/activities_screen/list_builder_upcoming.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class UpcomingActivities extends StatefulWidget {
   const UpcomingActivities({Key? key, required this.activitiesList})
@@ -27,7 +28,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-              color: Color.fromRGBO(255, 248, 238, 1),
+              color: Color.fromRGBO(217, 217, 217, 1),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -49,20 +50,20 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                       //   ]).createShader(
                       //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                     )),
-                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  const Icon(
-                    Icons.upcoming_outlined,
-                    size: 40,
-                    color: Colors.black,
-                  ),
-                  Container(
-                      // height: MediaQuery.of(context).size.height * 0.2,
-                      constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.28),
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: ListBuilderUpcoming(
-                          activitiesList: widget.activitiesList))
-                ])
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SvgPicture.asset('assets/image/upcoming_activities.svg'),
+                      Container(
+                          // height: MediaQuery.of(context).size.height * 0.2,
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  MediaQuery.of(context).size.height * 0.28),
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: ListBuilderUpcoming(
+                              activitiesList: widget.activitiesList))
+                    ])
               ],
             )));
   }

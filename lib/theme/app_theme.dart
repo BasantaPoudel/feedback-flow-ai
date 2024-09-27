@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 
 class AppTheme {
@@ -11,6 +12,7 @@ class AppTheme {
   );
 
   static ThemeData themeData = ThemeData(
+    fontFamily: GoogleFonts.inter().fontFamily,
     brightness: Brightness.light,
     buttonTheme: const ButtonThemeData(
       buttonColor: Colors.blue, // Set the button color
@@ -28,24 +30,24 @@ class AppTheme {
       ),
       displaySmall: TextStyle(
         fontSize: 14.0,
-        fontFamily: 'Hind',
+        fontFamily: 'Inter',
       ),
       bodyLarge: TextStyle(
         fontSize: 14.0,
-        fontFamily: 'Hind',
+        fontFamily: 'Inter',
       ),
       bodyMedium: TextStyle(
         fontSize: 12.0,
-        fontFamily: 'Hind',
+        fontFamily: 'Inter',
       ),
       bodySmall: TextStyle(
         fontSize: 10.0,
-        fontFamily: 'Hind',
+        fontFamily: 'Inter',
       ),
     ),
 
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Color.fromRGBO(174, 206, 209, 1),
+        backgroundColor: Color.fromRGBO(245, 246, 247, 1),
         selectedItemColor: Colors.black,
         selectedIconTheme: IconThemeData(
             fill: BorderSide.strokeAlignCenter) // Set the selected item color
@@ -58,16 +60,15 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8), // Set the card border radius
       ),
     ),
-    scaffoldBackgroundColor:
-        const Color.fromRGBO(174, 206, 209, 1), // Set the background color
+    scaffoldBackgroundColor: const Color.fromRGBO(239, 249, 255, 1),
     // Set the app bar color
 
     appBarTheme: const AppBarTheme(
-      backgroundColor:
-          Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
+      /*  backgroundColor:
+          Color.fromRGBO(239, 249, 255, 1), */ // Set the background color
       // color: Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
       iconTheme: IconThemeData(
-        color: Colors.white, // Set the icon color
+        color: Colors.black, // Set the icon color
       ),
     ),
     //
@@ -93,7 +94,14 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8), // Set the card border radius
       ),
     ),
-
+    appBarTheme: const AppBarTheme(
+      /*  backgroundColor:
+          Color.fromRGBO(239, 249, 255, 1), */ // Set the background color
+      // color: Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
+      iconTheme: IconThemeData(
+        color: Colors.white, // Set the icon color
+      ),
+    ),
     scaffoldBackgroundColor:
         Colors.black, // Set the background color to a dark shade
   );

@@ -7,8 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
-  // const Profile({required Key key}) : super(key: key);
-
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -18,7 +16,8 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return ProfileScreen(
       appBar: AppBar(
-        title: const Text('User Profile'),
+        centerTitle: true,
+        title: const Text('My Profile'),
       ),
       actions: [
         EmailVerifiedAction(() {

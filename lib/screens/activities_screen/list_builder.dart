@@ -42,27 +42,28 @@ class _ListBuilderState extends State<ListBuilder> {
             itemBuilder: (BuildContext context, int index) {
               if (activitiesList![index].isDistributed == true) {
                 return Card(
-                    color: const Color.fromRGBO(247, 215, 208, 1),
-                    child: ListTile(
-                      title: Text(
-                        activitiesList[index].title,
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
+                  color: const Color.fromRGBO(215, 219, 222, 1),
+                  child: ListTile(
+                    title: Text(
+                      activitiesList[index].title,
+                      style: const TextStyle(
+                        color: Colors.black,
                       ),
-                      onTap: () {
-                        //TODO - Check if this is the right way to pass data
-                        context
-                            .read<ResultScreenCubit>()
-                            .calculateAndLoadActivity(activitiesList[index]);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResultsScreen(),
-                          ),
-                        );
-                      },
-                    ));
+                    ),
+                    onTap: () {
+                      //TODO - Check if this is the right way to pass data
+                      context
+                          .read<ResultScreenCubit>()
+                          .calculateAndLoadActivity(activitiesList[index]);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ResultsScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                );
               } else if (activitiesList[index].isDistributed == false) {}
               return const FittedBox();
             },

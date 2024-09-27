@@ -3,22 +3,25 @@ import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/home_screen/home_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
+import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:feedback_flow/screens/activities_screen/add_activity.dart';
 import 'package:feedback_flow/screens/activities_screen/past_activities.dart';
 import 'package:feedback_flow/screens/activities_screen/upcoming_activities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ActScreen extends StatefulWidget {
-  const ActScreen({Key? key}) : super(key: key);
+class ActivitiesScreen extends StatefulWidget {
+  const ActivitiesScreen({Key? key}) : super(key: key);
 
   @override
-  _ActScreenState createState() => _ActScreenState();
+  _ActivitiesScreenState createState() => _ActivitiesScreenState();
 }
 
-class _ActScreenState extends State<ActScreen> {
+class _ActivitiesScreenState extends State<ActivitiesScreen> {
   @override
   Widget build(BuildContext context) {
+    final UserRepository userrepo = UserRepository();
+
     return BlocListener<ActScreenCubit, ActScreenState>(
         listener: (context, state) {
       if (state is ActivityErrorLoading) {
@@ -31,16 +34,29 @@ class _ActScreenState extends State<ActScreen> {
       List<Activity>? activitiesList = stateActivity.getAllActivities;
 
       return Scaffold(
-        backgroundColor: const Color.fromRGBO(174, 206, 209, 1),
         appBar: AppBar(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Hello, ',
+              ),
+              Text(
+                userrepo.user?.displayName ?? 'User',
+              )
+            ],
+          ),
+        ),
+        // backgroundColor: const Color.fromRGBO(174, 206, 209, 1),
+        /* appBar: AppBar(
           backgroundColor: const Color.fromRGBO(174, 206, 209, 1),
           title: const Text(
             'Activities',
             style: TextStyle(color: Colors.black),
           ),
-        ),
+        ), */
         body: Container(
-          decoration: BoxDecoration(
+          /*  decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -50,7 +66,7 @@ class _ActScreenState extends State<ActScreen> {
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
                   bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30))),
+                  bottomRight: Radius.circular(30))), */
           child: Column(
             children: [
               PastActivities(activitiesList: activitiesList ?? []),

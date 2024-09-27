@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class NavigationHome extends StatefulWidget {
+  const NavigationHome({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _NavigationHomeState createState() => _NavigationHomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _NavigationHomeState extends State<NavigationHome> {
   // HomeScreenCubit homeScreenCubit = HomeScreenCubit.instance;
 
   @override

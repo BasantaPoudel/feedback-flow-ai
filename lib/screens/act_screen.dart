@@ -10,14 +10,14 @@ import 'package:feedback_flow/screens/activities_screen/upcoming_activities.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ActScreen extends StatefulWidget {
-  const ActScreen({Key? key}) : super(key: key);
+class ActivitiesScreen extends StatefulWidget {
+  const ActivitiesScreen({Key? key}) : super(key: key);
 
   @override
-  _ActScreenState createState() => _ActScreenState();
+  _ActivitiesScreenState createState() => _ActivitiesScreenState();
 }
 
-class _ActScreenState extends State<ActScreen> {
+class _ActivitiesScreenState extends State<ActivitiesScreen> {
   @override
   Widget build(BuildContext context) {
     final UserRepository userrepo = UserRepository();

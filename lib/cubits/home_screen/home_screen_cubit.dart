@@ -14,7 +14,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   int _currentIndex = 0;
   final UserRepository _userRepository = UserRepository();
   final List<Widget> _commonChildren = [
-    const ActScreen(),
+    const ActivitiesScreen(),
     const FeedbackScreen(),
     const Stats(),
     const Profile(),

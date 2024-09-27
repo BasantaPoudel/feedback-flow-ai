@@ -3,6 +3,7 @@ import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.d
 import 'package:feedback_flow/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/web.dart';
 
 class DatabaseScreen extends StatefulWidget {
   const DatabaseScreen({super.key});
@@ -12,6 +13,7 @@ class DatabaseScreen extends StatefulWidget {
 }
 
 class _DatabaseScreenState extends State<DatabaseScreen> {
+  final Logger log = Logger();
   @override
   void initState() {
     super.initState();
@@ -53,7 +55,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                           },
                         );
                       } else {
-                        print("Reached Else");
+                        log.d("Reached Else");
 
                         return Checkbox(
                             value: false,

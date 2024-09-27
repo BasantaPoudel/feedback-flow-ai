@@ -58,10 +58,12 @@ class _RubricScreenState extends State<RubricScreen> {
                     .where((element) => element.isPresenter == true)
                     .first;
                 String presenterName = presenter.name;
+
+                //TODO - Fix Professor ID in the proper way
                 List<Rubric> currentRubric = stateRubric
                         .activity.rubrics[databaseScreenCubit.getUserId()] ??
                     stateRubric
-                        .activity.rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"];
+                        .activity.rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"];
 
                 return Scaffold(
                   appBar: AppBar(
@@ -162,7 +164,7 @@ class _RubricScreenState extends State<RubricScreen> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: stateRubric.activity
-                            .rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!.length,
+                            .rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"]!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
                               color: const Color(0xFF6D7981),
@@ -171,7 +173,7 @@ class _RubricScreenState extends State<RubricScreen> {
                                     stateRubric
                                         .activity
                                         .rubrics[
-                                            "CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!
+                                            "7voEBXOmHybCnuJbIhDbk778Zvk2"]!
                                         .elementAt(index)
                                         .title,
                                     style: const TextStyle(

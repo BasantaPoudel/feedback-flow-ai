@@ -1,4 +1,4 @@
-import 'package:feedback_flow/screens/home_screen.dart';
+import 'package:feedback_flow/navigation_home.dart';
 import 'package:feedback_flow/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -71,7 +71,7 @@ class _AuthGateState extends State<AuthGate> {
             },
           );
         } else if (snapshot.data?.displayName != null) {
-          return const HomeScreen();
+          return const NavigationHome();
         }
         return const Profile();
       },

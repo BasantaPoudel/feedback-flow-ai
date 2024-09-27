@@ -22,8 +22,8 @@ class ResultScreenCubit extends Cubit<ResultScreenState> {
         userActivities.firstWhere((element) => element.title == activity.title);
 
     List<Rubric> rubricFromProfessor =
-        userActivity.rubrics["CN5Njs6mhGOtuGyxCAZlsm1Owhg1"]!;
-    userActivity.rubrics.remove("CN5Njs6mhGOtuGyxCAZlsm1Owhg1");
+        userActivity.rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"]!;
+    userActivity.rubrics.remove("7voEBXOmHybCnuJbIhDbk778Zvk2");
     List<Rubric> rubricWithAverageScore =
         calculateAverageScoresfromRubricsEntries(userActivity.rubrics);
 

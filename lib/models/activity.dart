@@ -36,7 +36,7 @@ class Activity {
         rubricList.add(Rubric.fromJson(value));
       }
       rubricsM[key] = rubricList;
-      print(value);
+      // log.d(value);
     });
 
     return Activity(

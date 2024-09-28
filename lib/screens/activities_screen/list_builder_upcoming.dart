@@ -18,7 +18,7 @@ class ListBuilderUpcoming extends StatefulWidget {
   const ListBuilderUpcoming({super.key, required this.activitiesList});
 
   @override
-  _ListBuilderUpcomingState createState() => _ListBuilderUpcomingState();
+  State<ListBuilderUpcoming> createState() => _ListBuilderUpcomingState();
   final List<Activity> activitiesList;
 }
 

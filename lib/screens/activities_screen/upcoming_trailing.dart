@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UpcomingTrailing extends StatefulWidget {
   @override
-  _UpcomingTrailingState createState() => _UpcomingTrailingState();
+  State<UpcomingTrailing> createState() => _UpcomingTrailingState();
   final List<Activity> activitiesList;
   final int index;
 

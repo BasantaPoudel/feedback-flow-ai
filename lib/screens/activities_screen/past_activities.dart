@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class PastActivities extends StatefulWidget {
   @override
-  _PastActivitiesState createState() => _PastActivitiesState();
+  State<PastActivities> createState() => _PastActivitiesState();
   final List<Activity> activitiesList;
   const PastActivities({Key? key, required this.activitiesList})
       : super(key: key);

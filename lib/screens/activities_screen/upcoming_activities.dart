@@ -10,7 +10,7 @@ class UpcomingActivities extends StatefulWidget {
   const UpcomingActivities({Key? key, required this.activitiesList})
       : super(key: key);
   @override
-  _UpcomingActivitiesState createState() => _UpcomingActivitiesState();
+  State<UpcomingActivities> createState() => _UpcomingActivitiesState();
   final List<Activity> activitiesList;
 }
 

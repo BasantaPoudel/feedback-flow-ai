@@ -13,7 +13,6 @@ class RubricScoreUpdatedByProfessor extends RubricScreenState {
   @override
   Activity activity;
   RubricScoreUpdatedByProfessor(this.activity);
-  @override
   Activity get props => activity;
 }
 
@@ -23,6 +22,5 @@ class RubricScoreUpdatedByUser extends RubricScreenState {
 
   RubricScoreUpdatedByUser(this.activity);
 
-  @override
   Activity get props => activity;
 }

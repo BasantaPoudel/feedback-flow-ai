@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListBuilder extends StatefulWidget {
   @override
-  _ListBuilderState createState() => _ListBuilderState();
+  State<ListBuilder> createState() => _ListBuilderState();
   final List<Activity> activitiesList;
   const ListBuilder({Key? key, required this.activitiesList}) : super(key: key);
 }
@@ -50,7 +50,6 @@ class _ListBuilderState extends State<ListBuilder> {
                       ),
                     ),
                     onTap: () {
-                      //TODO - Check if this is the right way to pass data
                       context
                           .read<ResultScreenCubit>()
                           .calculateAndLoadActivity(activitiesList[index]);

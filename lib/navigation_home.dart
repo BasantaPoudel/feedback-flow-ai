@@ -9,7 +9,7 @@ class NavigationHome extends StatefulWidget {
   const NavigationHome({Key? key}) : super(key: key);
 
   @override
-  _NavigationHomeState createState() => _NavigationHomeState();
+  State<NavigationHome> createState() => _NavigationHomeState();
 }
 
 class _NavigationHomeState extends State<NavigationHome> {
@@ -20,7 +20,6 @@ class _NavigationHomeState extends State<NavigationHome> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO - Fix the Cubit
     return Scaffold(body: BlocBuilder<HomeScreenCubit, HomeScreenState>(
         builder: (context, state) {
       if (state is UserLoadingState) {
@@ -40,39 +39,37 @@ class _NavigationHomeState extends State<NavigationHome> {
       if (state is UserLoadingState) {
         return const Center(child: CircularProgressIndicator());
       } else if (state is TeacherLoggedInState) {
-        return Container(
-          child: BottomNavigationBar(
-            onTap: context.read<HomeScreenCubit>().onTabTappedTeacher,
-            currentIndex: state.currentIndex,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/icons/home.svg'),
-                activeIcon: SvgPicture.asset('assets/icons/home_.svg'),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/icons/feedback.svg'),
-                activeIcon: SvgPicture.asset('assets/icons/feedback_.svg'),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/icons/presenters.svg'),
-                activeIcon: SvgPicture.asset('assets/icons/presenters_.svg'),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/icons/stats.svg'),
-                activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/icons/profile.svg'),
-                activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),
-                label: '',
-              ),
-            ],
-          ),
+        return BottomNavigationBar(
+          onTap: context.read<HomeScreenCubit>().onTabTappedTeacher,
+          currentIndex: state.currentIndex,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/home.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/home_.svg'),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/feedback.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/feedback_.svg'),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/presenters.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/presenters_.svg'),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/stats.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/profile.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),
+              label: '',
+            ),
+          ],
         );
       } else if (state is StudentLoggedInState) {
         return BottomNavigationBar(
@@ -103,7 +100,6 @@ class _NavigationHomeState extends State<NavigationHome> {
           ],
         );
       } else {
-        //TODO - Temporary method to get out of blockade
         return ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -112,7 +108,7 @@ class _NavigationHomeState extends State<NavigationHome> {
                     builder: (context) => const AuthGate(),
                   ));
             },
-            child: const Text("Retry Logging In"));
+            child: const Text("Retry Logging In with Valid Account"));
       }
     }));
   }

@@ -51,7 +51,7 @@ class RestartWidget extends StatefulWidget {
   }
 
   @override
-  _RestartWidgetState createState() => _RestartWidgetState();
+  State<RestartWidget> createState() => _RestartWidgetState();
 }
 
 class _RestartWidgetState extends State<RestartWidget> {

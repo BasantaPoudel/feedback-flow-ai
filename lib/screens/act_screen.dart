@@ -14,7 +14,7 @@ class ActivitiesScreen extends StatefulWidget {
   const ActivitiesScreen({Key? key}) : super(key: key);
 
   @override
-  _ActivitiesScreenState createState() => _ActivitiesScreenState();
+  State<ActivitiesScreen> createState() => _ActivitiesScreenState();
 }
 
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
@@ -47,41 +47,39 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             ],
           ),
         ),
-        body: Container(
-          child: Column(
-            children: [
-              PastActivities(activitiesList: activitiesList ?? []),
-              UpcomingActivities(activitiesList: activitiesList ?? []),
-              BlocBuilder<HomeScreenCubit, HomeScreenState>(
-                  builder: (context, userState) {
-                if (userState is TeacherLoggedInState) {
-                  return Container(
-                      padding: const EdgeInsets.all(8),
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromRGBO(174, 206, 209, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
+        body: Column(
+          children: [
+            PastActivities(activitiesList: activitiesList ?? []),
+            UpcomingActivities(activitiesList: activitiesList ?? []),
+            BlocBuilder<HomeScreenCubit, HomeScreenState>(
+                builder: (context, userState) {
+              if (userState is TeacherLoggedInState) {
+                return Container(
+                    padding: const EdgeInsets.all(8),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromRGBO(174, 206, 209, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6.0),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddActivity(),
-                                ));
-                          },
-                          child: const Text(
-                            'Add Activity',
-                            style: TextStyle(color: Colors.black),
-                          )));
-                }
-                return Container();
-              }),
-            ],
-          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddActivity(),
+                              ));
+                        },
+                        child: const Text(
+                          'Add Activity',
+                          style: TextStyle(color: Colors.black),
+                        )));
+              }
+              return Container();
+            }),
+          ],
         ),
       );
     }));

@@ -9,8 +9,7 @@ class EditActivity extends StatelessWidget {
   final _controllerTitle = TextEditingController();
   final _controllerRubric1 = TextEditingController();
   final _controllerRubric2 = TextEditingController();
-
-  late Activity? activity;
+  late final Activity? activity;
 
   EditActivity({super.key});
   EditActivity.withActivity(Activity activity, {super.key}) {

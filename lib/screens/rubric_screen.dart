@@ -12,11 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RubricScreen extends StatefulWidget {
+  final Activity activity;
   const RubricScreen({super.key, required this.activity});
 
   @override
-  _RubricScreenState createState() => _RubricScreenState();
-  final Activity activity;
+  State<RubricScreen> createState() => _RubricScreenState();
 }
 
 class _RubricScreenState extends State<RubricScreen> {
@@ -29,12 +29,6 @@ class _RubricScreenState extends State<RubricScreen> {
   Widget build(BuildContext context) {
     PresenterScreenCubit? databaseScreenCubit =
         BlocProvider.of<PresenterScreenCubit>(context);
-
-    ActScreenCubit? activitiesScreenCubit =
-        BlocProvider.of<ActScreenCubit>(context);
-
-    RubricScreenCubit? rubricScreenCubit =
-        BlocProvider.of<RubricScreenCubit>(context);
 
     HomeScreenCubit? homeScreenCubit =
         BlocProvider.of<HomeScreenCubit>(context);
@@ -52,7 +46,7 @@ class _RubricScreenState extends State<RubricScreen> {
               builder: (context, stateActivity) {
             if (stateActivity is ActivityStarted &&
                 stateRubric.activity.isStarted &&
-                databaseScreenCubit.state is PresenterState) {
+                context.read<PresenterScreenCubit>().state is PresenterState) {
               if (databaseScreenCubit.state.props!.isNotEmpty) {
                 var presenter = databaseScreenCubit.state.props!
                     .where((element) => element.isPresenter == true)
@@ -104,11 +98,13 @@ class _RubricScreenState extends State<RubricScreen> {
                                                   : Colors.grey,
                                               onPressed: () {
                                                 //ToDo: Add the logic to set the score individually
-                                                rubricScreenCubit.setScore(
-                                                    stateRubric.activity,
-                                                    index,
-                                                    i.toDouble(),
-                                                    presenter);
+                                                context
+                                                    .read<RubricScreenCubit>()
+                                                    .setScore(
+                                                        stateRubric.activity,
+                                                        index,
+                                                        i.toDouble(),
+                                                        presenter);
                                               },
                                             ),
                                         ],
@@ -136,8 +132,10 @@ class _RubricScreenState extends State<RubricScreen> {
                       ElevatedButton(
                         //TODO - Fix the logic
                         onPressed: () {
-                          databaseScreenCubit.updatePresenterActivityList(
-                              presenter, stateRubric.activity);
+                          context
+                              .read<PresenterScreenCubit>()
+                              .updatePresenterActivityList(
+                                  presenter, stateRubric.activity);
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
                             backgroundColor: Colors.green,
@@ -188,7 +186,8 @@ class _RubricScreenState extends State<RubricScreen> {
                       homeScreenCubit.state is TeacherLoggedInState
                           ? FloatingActionButton(
                               onPressed: () {
-                                activitiesScreenCubit.addRubric(
+                                //TODO - Recreate the error - The method 'addRubric' isn't defined for the type 'Function'. (Remove the ())
+                                context.read<ActScreenCubit>().addRubric(
                                     stateRubric.activity,
                                     Rubric(
                                       title: 'New Rubric from Rubric Screen',

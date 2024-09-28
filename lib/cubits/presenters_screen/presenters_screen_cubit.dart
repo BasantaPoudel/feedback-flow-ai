@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 
 class PresenterScreenCubit extends Cubit<PresenterScreenState> {
-  PresenterScreenCubit() : super(DatabaseScreenInitial()) {
+  PresenterScreenCubit() : super(PresenterScreenInitial()) {
     subscribeToData();
   }
 
@@ -22,7 +22,7 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
         if (users.any((user) => user.isPresenter == true)) {
           emit(PresenterState(users));
         } else {
-          emit(DatabaseScreenLoaded(users));
+          emit(PresenterScreenLoaded(users));
         }
       });
     } catch (e) {
@@ -36,7 +36,7 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
     _userRepo.updateUser(users[index]);
     users.any((element) => element.isPresenter == true)
         ? emit(PresenterState(users))
-        : emit(DatabaseScreenLoaded(users));
+        : emit(PresenterScreenLoaded(users));
   }
 
 //TODO - Use this method for more than one presenter

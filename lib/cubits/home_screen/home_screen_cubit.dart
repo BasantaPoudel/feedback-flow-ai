@@ -59,7 +59,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     return childrenTeacher
       ..insert(
         2,
-        const DatabaseScreen(),
+        const PresentersScreen(),
       );
   }
 

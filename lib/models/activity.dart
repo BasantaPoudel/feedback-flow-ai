@@ -63,6 +63,3 @@ class Activity {
     return Activity.fromMap(doc.data()!);
   }
 }
-
-// Usage
-

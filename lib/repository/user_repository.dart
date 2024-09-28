@@ -177,25 +177,5 @@ class UserRepository extends MainRepository {
     }).catchError((error) {
       log.d("Transaction failed: $error");
     });
-
-    // roleBasedUsersRef
-    //     .where("email", isEqualTo: presenter!.email)
-    //     .get()
-    //     .then((value) {
-    //   if (value.docs.isNotEmpty) {
-    //     var index = value.docs.first
-    //         .data()['activities']
-    //         .indexWhere((element) => element['title'] == title);
-
-    //     var activities = value.docs.first.data()['activities'];
-    //     var currentRubrics = activities[index]['rubrics'];
-    //     currentRubrics[uId] =
-    //         rubricsFromUser.map((rubric) => rubric.toMap()).toList();
-    //     activities[index]['rubrics'] = currentRubrics;
-    //     roleBasedUsersRef.doc(value.docs.first.id).update({
-    //       'activities': activities,
-    //     });
-    //   }
-    // });
   }
 }

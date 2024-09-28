@@ -1,7 +1,6 @@
 import 'package:feedback_flow/cubits/score_screen/score_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// Define the ScoreCubit
 class ScoreCubit extends Cubit<ScoreState> {
   ScoreCubit() : super(InitialState());
 

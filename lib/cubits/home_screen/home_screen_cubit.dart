@@ -29,7 +29,6 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     _childrenTeacher = createTeacherWidgets();
   }
 
-  // Consists all the business logic here
   Future<void> getUserRole() async {
     String userRole = await _userRepository.getUserRole();
     if (userRole == "teacher") {
@@ -67,11 +66,6 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   List<Widget> createStudentsWidgets() {
     List<Widget> childrenStudent = _commonChildren.toList();
 
-    /* return childrenStudent
-      ..insert(
-        2,
-        const Search(),
-      ); */
     return childrenStudent;
   }
 

@@ -47,26 +47,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             ],
           ),
         ),
-        // backgroundColor: const Color.fromRGBO(174, 206, 209, 1),
-        /* appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(174, 206, 209, 1),
-          title: const Text(
-            'Activities',
-            style: TextStyle(color: Colors.black),
-          ),
-        ), */
         body: Container(
-          /*  decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.grey.shade300, Colors.white],
-              ),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30))), */
           child: Column(
             children: [
               PastActivities(activitiesList: activitiesList ?? []),

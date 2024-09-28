@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_color_gen/material_color_gen.dart';
 
 class AppTheme {
-  static ThemeData currentTheme = ThemeData(
-    primarySwatch: const Color(0x00049ee0).toMaterialColor(),
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0x00108EC5).toMaterialColor(),
-      brightness: Brightness.light,
-    ),
-  );
-
-  static ThemeData themeData = ThemeData(
+  static ThemeData lightThemeData = ThemeData(
     fontFamily: GoogleFonts.inter().fontFamily,
     brightness: Brightness.light,
     buttonTheme: const ButtonThemeData(
@@ -76,7 +67,7 @@ class AppTheme {
     // scaffoldBackgroundColor: Colors.grey[200],
   );
 
-  static ThemeData darkTheme = ThemeData(
+  static ThemeData darkThemeData = ThemeData(
     brightness: Brightness.dark,
     buttonTheme: const ButtonThemeData(
       buttonColor: Colors.blue, // Set the button color

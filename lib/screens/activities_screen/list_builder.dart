@@ -37,7 +37,6 @@ class _ListBuilderState extends State<ListBuilder> {
             controller: scrollController,
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            // physics: const NeverScrollableScrollPhysics(),
             itemCount: activitiesList?.length ?? 0,
             itemBuilder: (BuildContext context, int index) {
               if (activitiesList![index].isDistributed == true) {

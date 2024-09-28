@@ -37,7 +37,6 @@ class _ProfileState extends State<Profile> {
 
           //TODO - Look for alternatives as well
           context.read<PresenterScreenCubit>().updateUserName(newName);
-          // RestartWidget.restartApp(context);
         }),
         SignedOutAction((context) {
           RestartWidget.restartApp(context);

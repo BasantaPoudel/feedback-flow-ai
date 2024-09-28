@@ -41,10 +41,9 @@ class FeedbackScreen extends StatelessWidget {
                     Image.asset('assets/image/welcome_transparent.png'),
                     Text(
                       'Please wait for the activity to start before you can provide peer feedback',
-                      style: Theme.of(context).textTheme.labelLarge,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ]),
-              // const SignOutButton(),
             )));
   }
 }

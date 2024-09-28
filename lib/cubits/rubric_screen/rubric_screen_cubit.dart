@@ -5,9 +5,6 @@ import 'package:feedback_flow/models/user.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// Define the state for the RubricScreenCubit
-
-// Define the cubit for the RubricScreen
 class RubricScreenCubit extends Cubit<RubricScreenState> {
   RubricScreenCubit() : super(RubricScreenInitial());
   final UserRepository _userRepository = UserRepository();

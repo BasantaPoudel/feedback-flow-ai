@@ -1,6 +1,5 @@
 import 'package:feedback_flow/models/activity.dart';
 
-// States
 abstract class ActScreenState {
   get getAllActivities => null;
   get getPastActivities => null;
@@ -49,7 +48,6 @@ class ActivityEnded extends ActScreenState {
 }
 
 class ResultsDistributed extends ActScreenState {
-  // final List<Activity> pastActivities;
   final List<Activity> allActivities;
 
   ResultsDistributed(this.allActivities);

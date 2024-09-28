@@ -61,11 +61,6 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     _activityRepository.updateActivity(activity);
   }
 
-//BM - temporary method to add activities
-  // void addActivities() {
-  //   _activityRepository.addActivities();
-  // }
-
   void endActivity(List<Activity> activities, index) {
     activities[index].isCompleted = true;
     _activityRepository.updateActivity(activities[index]);

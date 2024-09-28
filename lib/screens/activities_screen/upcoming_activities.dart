@@ -43,12 +43,6 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.black,
-                      // foreground: Paint()
-                      //   ..shader = const LinearGradient(colors: <Color>[
-                      //     Colors.white,
-                      //     Colors.yellow,
-                      //   ]).createShader(
-                      //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                     )),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -56,7 +50,6 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                     children: [
                       SvgPicture.asset('assets/image/upcoming_activities.svg'),
                       Container(
-                          // height: MediaQuery.of(context).size.height * 0.2,
                           constraints: BoxConstraints(
                               maxHeight:
                                   MediaQuery.of(context).size.height * 0.28),

@@ -20,7 +20,7 @@ class AppTheme {
         fontStyle: FontStyle.italic,
       ),
       displaySmall: TextStyle(
-        fontSize: 14.0,
+        fontSize: 16.0,
         fontFamily: 'Inter',
       ),
       bodyLarge: TextStyle(
@@ -76,6 +76,33 @@ class AppTheme {
 
     iconTheme: const IconThemeData(
       color: Colors.white, // Set the default color for icons
+    ),
+
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 72.0,
+        fontWeight: FontWeight.bold,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 36.0,
+        fontStyle: FontStyle.italic,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 16.0,
+        fontFamily: 'Inter',
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'Inter',
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 12.0,
+        fontFamily: 'Inter',
+      ),
+      bodySmall: TextStyle(
+        fontSize: 10.0,
+        fontFamily: 'Inter',
+      ),
     ),
 
     cardTheme: CardTheme(

@@ -56,8 +56,7 @@ class _RubricScreenState extends State<RubricScreen> {
                 //TODO - Fix Professor ID in the proper way
                 List<Rubric> currentRubric = stateRubric
                         .activity.rubrics[databaseScreenCubit.getUserId()] ??
-                    stateRubric
-                        .activity.rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"];
+                    stateRubric.activity.rubrics[0];
 
                 return Scaffold(
                   appBar: AppBar(
@@ -116,14 +115,14 @@ class _RubricScreenState extends State<RubricScreen> {
                         ),
                       ),
                       const TextField(
-                        enabled: false,
+                        enabled: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Open Feedback',
                         ),
                       ),
                       const TextField(
-                        enabled: false,
+                        enabled: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Open Feedforward',
@@ -161,17 +160,15 @@ class _RubricScreenState extends State<RubricScreen> {
                       subtitle: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: stateRubric.activity
-                            .rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"]!.length,
+                        itemCount: stateRubric
+                            .activity.rubrics.entries.first.value.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
                               color: const Color(0xFF6D7981),
                               child: ListTile(
                                 title: Text(
                                     stateRubric
-                                        .activity
-                                        .rubrics[
-                                            "7voEBXOmHybCnuJbIhDbk778Zvk2"]!
+                                        .activity.rubrics.entries.first.value
                                         .elementAt(index)
                                         .title,
                                     style: const TextStyle(
@@ -187,6 +184,7 @@ class _RubricScreenState extends State<RubricScreen> {
                           ? FloatingActionButton(
                               onPressed: () {
                                 //TODO - Recreate the error - The method 'addRubric' isn't defined for the type 'Function'. (Remove the ())
+                                //TODO - Manual Adding Dialogue box to input the rubrics
                                 context.read<ActScreenCubit>().addRubric(
                                     stateRubric.activity,
                                     Rubric(

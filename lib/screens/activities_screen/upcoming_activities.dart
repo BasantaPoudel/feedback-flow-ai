@@ -52,7 +52,7 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
                       Container(
                           constraints: BoxConstraints(
                               maxHeight:
-                                  MediaQuery.of(context).size.height * 0.28),
+                                  MediaQuery.of(context).size.height * 0.24),
                           width: MediaQuery.of(context).size.width * 0.7,
                           child: ListBuilderUpcoming(
                               activitiesList: widget.activitiesList))

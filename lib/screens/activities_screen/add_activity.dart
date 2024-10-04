@@ -77,6 +77,7 @@ class AddActivity extends StatelessWidget {
               isStarted: false,
               isCompleted: false,
               isDistributed: false,
+              isFeedbackByProfessor: false,
             ));
             Navigator.of(context).pop();
           },

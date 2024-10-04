@@ -42,7 +42,7 @@ class _PastActivitiesState extends State<PastActivities> {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.28),
+                          maxHeight: MediaQuery.of(context).size.height * 0.24),
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: ListBuilder(activitiesList: widget.activitiesList),
                     ),

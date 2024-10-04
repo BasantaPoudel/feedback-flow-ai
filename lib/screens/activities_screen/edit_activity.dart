@@ -15,11 +15,11 @@ class EditActivity extends StatelessWidget {
     this.activity = activity;
 
     _controllerTitle.text = activity.title;
-    activity.rubrics.values.first.forEach((rubric) {
+    for (var rubric in activity.rubrics.values.first) {
       final rubricController = TextEditingController();
       rubricController.text = rubric.title;
       _textControllers.add(rubricController);
-    });
+    }
   }
 
   @override
@@ -66,19 +66,19 @@ class EditActivity extends StatelessWidget {
             if (_controllerTitle.text.trim().isEmpty) return;
 
             activitiesScreenCubit.updateActivity(Activity(
-              title: _controllerTitle.text,
-              rubrics: {
-                databaseScreenCubit.getUserId(): _textControllers
-                    .map((controller) => Rubric(
-                          title: controller.text,
-                          score: 0,
-                        ))
-                    .toList(),
-              },
-              isStarted: false,
-              isCompleted: false,
-              isDistributed: false,
-            ));
+                title: _controllerTitle.text,
+                rubrics: {
+                  databaseScreenCubit.getUserId(): _textControllers
+                      .map((controller) => Rubric(
+                            title: controller.text,
+                            score: 0,
+                          ))
+                      .toList(),
+                },
+                isStarted: false,
+                isCompleted: false,
+                isDistributed: false,
+                isFeedbackByProfessor: false));
             Navigator.of(context).pop();
           },
           child: const Text('Edit activity'),

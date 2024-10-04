@@ -25,10 +25,7 @@ class RubricScreenCubit extends Cubit<RubricScreenState> {
 
       //Deep copy the rubrics
       for (var obj in rubrics) {
-        copiedRubrics.add(Rubric(
-            title: obj.title,
-            score: obj
-                .score)); // Assuming MyClass has a constructor that takes an ID
+        copiedRubrics.add(Rubric(title: obj.title, score: obj.score));
       }
       activity.rubrics[userId] = copiedRubrics;
     }
@@ -53,5 +50,9 @@ class RubricScreenCubit extends Cubit<RubricScreenState> {
 
   addActivityToRubricState(Activity activity, UserModel presenter) async {
     emit(RubricScoreUpdatedByProfessor(activity));
+  }
+
+  loadRubric(Activity activity) {
+    emit(RubricLoadedState(activity));
   }
 }

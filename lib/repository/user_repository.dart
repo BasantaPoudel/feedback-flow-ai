@@ -146,6 +146,8 @@ class UserRepository extends MainRepository {
 
   void updateRubrics(List<Rubric> rubricsFromUser, presenter, title) async {
     String uId = await getLoggedInUserId();
+    String userRole = await getUserRole();
+
     FirebaseFirestore.instance.runTransaction((transaction) async {
       final query =
           roleBasedUsersRef.where("email", isEqualTo: presenter.email);
@@ -170,6 +172,9 @@ class UserRepository extends MainRepository {
             rubricsFromUser.map((rubric) => rubric.toMap()).toList();
         activities[index]['rubrics'] = currentRubrics;
 
+        if (userRole == "teacher") {
+          activities[index]['isFeedbackByProfessor'] = true;
+        }
         // Check if the document exists and then update it
         log.d("UpdatedActivity: $activities");
         transaction.update(docRef, {"activities": activities});

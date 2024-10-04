@@ -6,6 +6,8 @@ class Activity {
   bool isDistributed;
   bool isStarted;
   Map<String, List<Rubric>> rubrics;
+
+  bool isFeedbackByProfessor;
   // Add other properties as needed
 
   Activity(
@@ -13,7 +15,8 @@ class Activity {
       required this.rubrics,
       required this.isStarted,
       required this.isCompleted,
-      required this.isDistributed});
+      required this.isDistributed,
+      required this.isFeedbackByProfessor});
 
   factory Activity.fromJson(Map<String, dynamic> json) {
     return Activity(
@@ -22,6 +25,7 @@ class Activity {
       isStarted: json['isStarted'],
       isCompleted: json['isCompleted'],
       isDistributed: json['isDistributed'],
+      isFeedbackByProfessor: json['isFeedbackByProfessor'],
     );
   }
 
@@ -45,6 +49,7 @@ class Activity {
       isStarted: map['isStarted'] as bool,
       isCompleted: map['isCompleted'] as bool,
       isDistributed: map['isDistributed'] as bool,
+      isFeedbackByProfessor: map['isFeedbackByProfessor'] as bool,
     );
   }
 
@@ -54,6 +59,7 @@ class Activity {
       'isCompleted': isCompleted,
       'isDistributed': isDistributed,
       'isStarted': isStarted,
+      'isFeedbackByProfessor': isFeedbackByProfessor,
       'rubrics': rubrics.map(
           (key, value) => MapEntry(key, value.map((e) => e.toMap()).toList())),
     };

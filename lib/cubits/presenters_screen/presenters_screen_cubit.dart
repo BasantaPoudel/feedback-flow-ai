@@ -21,6 +21,7 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
             snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
         if (users.any((user) => user.isPresenter == true)) {
           emit(PresenterState(users));
+          log.d("[Database-C - subscribeToData] PresenterState Emitted");
         } else {
           emit(PresenterScreenLoaded(users));
         }
@@ -58,6 +59,33 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
     }
   }
 
+  updatePresenterFeedbackByProfessor(UserModel presenter, activity) async {
+    String uId = await _userRepo.getLoggedInUserId();
+    List<Rubric> rubricsFromProfessor = activity.rubrics[uId];
+
+    var index = presenter.activities
+        ?.indexWhere((element) => element.title == activity.title);
+    presenter.activities?.elementAt(index!).isFeedbackByProfessor = true;
+
+    if (presenter.activities?.elementAt(index!).rubrics[uId] == null) {
+      presenter.activities?.elementAt(index!).rubrics[uId] = [];
+      presenter.activities?.elementAt(index!).rubrics[uId] =
+          rubricsFromProfessor;
+    } else {
+      presenter.activities?.elementAt(index!).rubrics[uId] =
+          rubricsFromProfessor;
+    }
+    // _userRepo.updateUser(presenter);
+    _userRepo.updateRubrics(rubricsFromProfessor, presenter, activity.title);
+  }
+
+  bool? checkIfFeedbackAlreadyProvidedByProfessor(
+      UserModel presenter, activity) {
+    var index = presenter.activities
+        ?.indexWhere((element) => element.title == activity.title);
+    return presenter.activities?.elementAt(index!).isFeedbackByProfessor;
+  }
+
   updatePresenterActivityList(UserModel presenter, activity) async {
     //Remove the old logic as there was no activity initially but now the activity is loaded right when going to the rubric screen
     String uId = await _userRepo.getLoggedInUserId();
@@ -78,6 +106,10 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
 
   String getUserId() {
     return _userRepo.user!.uid;
+  }
+
+  Future<String> getUserRole() {
+    return _userRepo.getUserRole();
   }
 
   String? getUserEmail() {

@@ -18,6 +18,7 @@ class ResultScreenCubit extends Cubit<ResultScreenState> {
     Activity userActivity =
         userActivities.firstWhere((element) => element.title == activity.title);
 
+//TODO - Remove this hardcoded value
     List<Rubric> rubricFromProfessor =
         userActivity.rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"]!;
     userActivity.rubrics.remove("7voEBXOmHybCnuJbIhDbk778Zvk2");

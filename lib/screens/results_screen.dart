@@ -61,6 +61,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 setState(() {
                                   defaultSwitchValue = value;
                                 });
+                                //TODO - Add the logic to display individual scores for each task
                                 resultScreenCubit.state is ResultFromStudents
                                     ? resultScreenCubit
                                         .loadResultFromProfessor(activity)

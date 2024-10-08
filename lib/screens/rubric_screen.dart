@@ -133,6 +133,15 @@ class _RubricScreenState extends State<RubricScreen> {
                         presentersScreenCubit
                             .updatePresenterFeedbackByProfessor(
                                 presenter, stateRubric.activity);
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text('Score Submitted Successfully!'),
+                            duration: Duration(seconds: 3),
+                          ));
+                          Navigator.of(context).pop();
+                        }
                       } else if (presentersScreenCubit
                               .checkIfFeedbackAlreadyProvidedByProfessor(
                                   presenter, stateRubric.activity) ==

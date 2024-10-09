@@ -66,6 +66,7 @@ class EditActivity extends StatelessWidget {
             if (_controllerTitle.text.trim().isEmpty) return;
 
             activitiesScreenCubit.updateActivity(Activity(
+                id: activity?.id,
                 title: _controllerTitle.text,
                 rubrics: {
                   databaseScreenCubit.getUserId(): _textControllers

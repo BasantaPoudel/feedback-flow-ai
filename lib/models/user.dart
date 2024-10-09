@@ -27,7 +27,8 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     var activities = map['activities'] != null
-        ? List<Activity>.from(map['activities'].map((x) => Activity.fromMap(x)))
+        ? List<Activity>.from(map['activities']
+            .map((x) => Activity.fromMap(x, ''))) // TODO - Fix the empty id
         : null;
     return UserModel(
       name: map['name'],
@@ -49,6 +50,7 @@ class UserModel {
     };
   }
 
+  //TODO - Remove the redundant method
   factory UserModel.fromSnapshot(doc) {
     return UserModel.fromMap(doc.data()!);
   }

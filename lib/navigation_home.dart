@@ -47,27 +47,27 @@ class _NavigationHomeState extends State<NavigationHome> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/home.svg'),
               activeIcon: SvgPicture.asset('assets/icons/home_.svg'),
-              label: '',
+              label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/feedback.svg'),
               activeIcon: SvgPicture.asset('assets/icons/feedback_.svg'),
-              label: '',
+              label: 'Feedback',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/presenters.svg'),
               activeIcon: SvgPicture.asset('assets/icons/presenters_.svg'),
-              label: '',
+              label: 'Presenters',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/stats.svg'),
               activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
-              label: '',
+              label: 'Stats',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/profile.svg'),
               activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),
-              label: '',
+              label: 'Profile',
             ),
           ],
         );
@@ -80,22 +80,22 @@ class _NavigationHomeState extends State<NavigationHome> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/home.svg'),
               activeIcon: SvgPicture.asset('assets/icons/home_.svg'),
-              label: '',
+              label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/feedback.svg'),
               activeIcon: SvgPicture.asset('assets/icons/feedback_.svg'),
-              label: '',
+              label: 'Feedback',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/stats.svg'),
               activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
-              label: '',
+              label: 'Stats',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/profile.svg'),
               activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),
-              label: '',
+              label: 'Profile',
             ),
           ],
         );

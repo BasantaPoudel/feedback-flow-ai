@@ -20,6 +20,7 @@ class RubricScreen extends StatefulWidget {
 }
 
 class _RubricScreenState extends State<RubricScreen> {
+  final _controllerNewRubric = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -208,15 +209,10 @@ class _RubricScreenState extends State<RubricScreen> {
               floatingActionButton:
                   homeScreenCubit.state is TeacherLoggedInState
                       ? FloatingActionButton(
-                          onPressed: () {
+                          onPressed: () async {
                             //TODO - Recreate the error - The method 'addRubric' isn't defined for the type 'Function'. (Remove the ())
                             //TODO - Manual Adding Dialogue box to input the rubrics
-                            context.read<ActScreenCubit>().addRubric(
-                                stateRubric.activity,
-                                Rubric(
-                                  title: 'New Rubric from Rubric Screen',
-                                  score: 0,
-                                ));
+                            await showAlertDialog(context, stateRubric);
                           },
                           child: const Icon(Icons.add),
                         )
@@ -225,5 +221,49 @@ class _RubricScreenState extends State<RubricScreen> {
         return const FittedBox();
       });
     });
+  }
+
+  //TODO - Check types of Dialog available
+  Future<void> showAlertDialog(BuildContext context, stateRubric) async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Add Rubric'),
+            content: Column(
+              children: [
+                TextField(
+                  controller: _controllerNewRubric,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter rubric',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: null,
+                )
+              ],
+            ),
+            actions: [
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_controllerNewRubric.text.trim().isEmpty) return;
+                  context.read<ActScreenCubit>().addRubric(
+                      stateRubric.activity,
+                      Rubric(
+                        title: _controllerNewRubric.text,
+                        score: 0,
+                      ));
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Add Rubric'),
+              ),
+            ],
+          );
+        });
   }
 }

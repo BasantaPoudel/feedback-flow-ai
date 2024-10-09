@@ -1,6 +1,7 @@
 import 'package:feedback_flow/models/rubric.dart';
 
 class Activity {
+  String? id;
   String title;
   bool isCompleted;
   bool isDistributed;
@@ -16,10 +17,12 @@ class Activity {
       required this.isStarted,
       required this.isCompleted,
       required this.isDistributed,
-      required this.isFeedbackByProfessor});
+      required this.isFeedbackByProfessor,
+      this.id});
 
   factory Activity.fromJson(Map<String, dynamic> json) {
     return Activity(
+      id: json['id'],
       title: json['title'],
       rubrics: json['rubrics'],
       isStarted: json['isStarted'],
@@ -29,7 +32,7 @@ class Activity {
     );
   }
 
-  factory Activity.fromMap(Map<String, dynamic> map) {
+  factory Activity.fromMap(Map<String, dynamic> map, id) {
     Map<String, List<Rubric>> rubricsM = {};
 
     var rubrics = map['rubrics'];
@@ -44,6 +47,7 @@ class Activity {
     });
 
     return Activity(
+      id: id as String,
       title: map['title'] as String,
       rubrics: rubricsM,
       isStarted: map['isStarted'] as bool,
@@ -66,6 +70,6 @@ class Activity {
   }
 
   factory Activity.fromSnapshot(doc) {
-    return Activity.fromMap(doc.data()!);
+    return Activity.fromMap(doc.data()!, doc.id);
   }
 }

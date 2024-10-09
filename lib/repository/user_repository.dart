@@ -134,7 +134,8 @@ class UserRepository extends MainRepository {
         if (value.docs.isNotEmpty) {
           activities = value.docs.first
               .data()['activities']
-              .map<Activity>((activity) => Activity.fromMap(activity))
+              .map<Activity>((activity) =>
+                  Activity.fromMap(activity, '')) //TODO - Fix the empty id
               .toList();
         }
       });
@@ -154,6 +155,8 @@ class UserRepository extends MainRepository {
       var querySnapshot = await query.get();
       for (var snap in querySnapshot.docs) {
         var documentID = snap.id;
+
+//TODO - CHeck here
 
         DocumentReference docRef = roleBasedUsersRef.doc(documentID);
 

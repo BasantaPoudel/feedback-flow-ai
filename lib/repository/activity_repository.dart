@@ -18,16 +18,7 @@ class ActivityRepository extends MainRepository {
   //Method to call when changing the status of an activity
   updateActivity(Activity activity) async {
     try {
-      // final currentUser = UserModel.fromSnapshot(user);
-      final query = activitiesRef.where("title", isEqualTo: activity.title);
-      var querySnapshot = await query.get();
-
-      for (var snapshot in querySnapshot.docs) {
-        var documentID = snapshot.id;
-        activitiesRef
-            .doc(documentID)
-            .update(activity.toMap()); // <-- Document ID
-      }
+      activitiesRef.doc(activity.id).update(activity.toMap());
     } catch (e) {
       log.d('Error: $e');
     }
@@ -35,12 +26,7 @@ class ActivityRepository extends MainRepository {
 
   void deleteActivity(Activity activity) {
     try {
-      final query = activitiesRef.where("title", isEqualTo: activity.title);
-      query.get().then((querySnapshot) {
-        for (var doc in querySnapshot.docs) {
-          doc.reference.delete();
-        }
-      });
+      activitiesRef.doc(activity.id).delete();
     } catch (e) {
       log.d('Error: $e');
     }

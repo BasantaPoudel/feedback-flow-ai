@@ -12,31 +12,66 @@ class AppTheme {
 
     textTheme: const TextTheme(
       displayLarge: TextStyle(
-        fontSize: 72.0,
-        fontWeight: FontWeight.bold,
+        fontSize: 57.0,
+        fontFamily: 'Inter',
       ),
       displayMedium: TextStyle(
-        fontSize: 36.0,
-        fontStyle: FontStyle.italic,
+        fontSize: 45.0,
+        fontFamily: 'Inter',
       ),
       displaySmall: TextStyle(
+        fontSize: 36.0,
+        fontFamily: 'Inter',
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 32.0,
+        fontFamily: 'Inter',
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 28.0,
+        fontFamily: 'Inter',
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 24.0,
+        fontFamily: 'Inter',
+      ),
+      titleLarge: TextStyle(
+        fontSize: 22.0,
+        fontFamily: 'Inter',
+      ),
+      titleMedium: TextStyle(
         fontSize: 16.0,
         fontFamily: 'Inter',
       ),
-      bodyLarge: TextStyle(
+      titleSmall: TextStyle(
         fontSize: 14.0,
         fontFamily: 'Inter',
       ),
+      bodyLarge: TextStyle(
+        fontSize: 16.0,
+        fontFamily: 'Inter',
+      ),
       bodyMedium: TextStyle(
-        fontSize: 12.0,
+        fontSize: 14.0,
         fontFamily: 'Inter',
       ),
       bodySmall: TextStyle(
-        fontSize: 10.0,
+        fontSize: 12.0,
+        fontFamily: 'Inter',
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'Inter',
+      ),
+      labelMedium: TextStyle(
+        fontSize: 12.0,
+        fontFamily: 'Inter',
+      ),
+      labelSmall: TextStyle(
+        fontSize: 11.0,
         fontFamily: 'Inter',
       ),
     ),
-
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Color.fromRGBO(245, 246, 247, 1),
         selectedItemColor: Colors.black,
@@ -80,31 +115,66 @@ class AppTheme {
 
     textTheme: const TextTheme(
       displayLarge: TextStyle(
-        fontSize: 72.0,
-        fontWeight: FontWeight.bold,
+        fontSize: 57.0,
+        fontFamily: 'Inter',
       ),
       displayMedium: TextStyle(
-        fontSize: 36.0,
-        fontStyle: FontStyle.italic,
+        fontSize: 45.0,
+        fontFamily: 'Inter',
       ),
       displaySmall: TextStyle(
+        fontSize: 36.0,
+        fontFamily: 'Inter',
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 32.0,
+        fontFamily: 'Inter',
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 28.0,
+        fontFamily: 'Inter',
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 24.0,
+        fontFamily: 'Inter',
+      ),
+      titleLarge: TextStyle(
+        fontSize: 22.0,
+        fontFamily: 'Inter',
+      ),
+      titleMedium: TextStyle(
         fontSize: 16.0,
         fontFamily: 'Inter',
       ),
-      bodyLarge: TextStyle(
+      titleSmall: TextStyle(
         fontSize: 14.0,
         fontFamily: 'Inter',
       ),
+      bodyLarge: TextStyle(
+        fontSize: 16.0,
+        fontFamily: 'Inter',
+      ),
       bodyMedium: TextStyle(
-        fontSize: 12.0,
+        fontSize: 14.0,
         fontFamily: 'Inter',
       ),
       bodySmall: TextStyle(
-        fontSize: 10.0,
+        fontSize: 12.0,
+        fontFamily: 'Inter',
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'Inter',
+      ),
+      labelMedium: TextStyle(
+        fontSize: 12.0,
+        fontFamily: 'Inter',
+      ),
+      labelSmall: TextStyle(
+        fontSize: 11.0,
         fontFamily: 'Inter',
       ),
     ),
-
     cardTheme: CardTheme(
       color: Colors.grey[800], // Set the card color to a dark shade
       elevation: 2, // Set the card elevation

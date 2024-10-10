@@ -39,11 +39,8 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text('Upcoming Activities',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.black,
-                    )),
+                Text('Upcoming Activities',
+                    style: Theme.of(context).textTheme.headlineSmall),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,

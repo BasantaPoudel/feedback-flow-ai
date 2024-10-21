@@ -46,71 +46,59 @@ class _RubricScreenState extends State<RubricScreen> {
       return BlocBuilder<ActScreenCubit, ActScreenState>(
           builder: (context, stateActivity) {
         return Scaffold(
-            appBar: AppBar(
-              title: const Text("Rubrics List"),
-            ),
-            body: ListView(children: <Widget>[
-              ListTile(
-                title: Text(stateRubric.activity.title),
-                subtitle: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount:
-                      stateRubric.activity.rubrics.entries.first.value.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(
-                        stateRubric.activity.rubrics.entries.first.value
-                            .elementAt(index)
-                            .title,
-                      ),
-                      subtitle: Text(
-                        stateRubric.activity.rubrics.entries.first.value
-                            .elementAt(index)
-                            .description,
-                      ),
-                      trailing:
-                          (homeScreenCubit.state is TeacherLoggedInState &&
-                                  stateActivity is! ActivityStarted)
-                              ? IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () {
-                                    context.read<ActScreenCubit>().deleteRubric(
-                                        stateRubric.activity,
-                                        stateRubric.activity.rubrics.entries
-                                            .first.value
-                                            .elementAt(index));
-                                  },
-                                )
-                              : null,
-                    );
-                  },
-                ),
+          appBar: AppBar(
+            title: const Text("Rubrics List"),
+          ),
+          body: ListView(children: <Widget>[
+            ListTile(
+              title: Text(stateRubric.activity.title),
+              subtitle: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount:
+                    stateRubric.activity.rubrics.entries.first.value.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(
+                      stateRubric.activity.rubrics.entries.first.value
+                          .elementAt(index)
+                          .title,
+                    ),
+                    subtitle: Text(
+                      stateRubric.activity.rubrics.entries.first.value
+                          .elementAt(index)
+                          .description,
+                    ),
+                    trailing: (homeScreenCubit.state is TeacherLoggedInState &&
+                            stateActivity is! ActivityStarted)
+                        ? IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              context.read<ActScreenCubit>().deleteRubric(
+                                  stateRubric.activity,
+                                  stateRubric
+                                      .activity.rubrics.entries.first.value
+                                      .elementAt(index));
+                            },
+                          )
+                        : null,
+                  );
+                },
               ),
-              if (stateActivity is ActivityStarted &&
-                  stateRubric.activity.isStarted &&
-                  presentersScreenCubit.state is PresenterState)
-                Container(
-                  padding: const EdgeInsets.all(30),
-                  child: Text(
-                      "Activity has started and you can provide feedback from the Feedback Menu",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge), //TODO - Check the theme
-                ),
-            ]),
-            floatingActionButton:
-                (homeScreenCubit.state is TeacherLoggedInState &&
-                        stateActivity is! ActivityStarted)
-                    ? FloatingActionButton(
-                        onPressed: () async {
-                          //TODO - Recreate the error - The method 'addRubric' isn't defined for the type 'Function'. (Remove the ())
-                          //TODO - Manual Adding Dialogue box to input the rubrics
-                          await showAlertDialog(context, stateRubric);
-                        },
-                        child: const Icon(Icons.add),
-                      )
-                    : null);
+            ),
+            if (stateActivity is ActivityStarted &&
+                stateRubric.activity.isStarted &&
+                presentersScreenCubit.state is PresenterState)
+              Container(
+                padding: const EdgeInsets.all(30),
+                child: Text(
+                    "Activity has started and you can provide feedback from the Feedback Menu",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge), //TODO - Check the theme
+              ),
+          ]),
+        );
       });
       // return const FittedBox();
     });

@@ -33,7 +33,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
             builder: (context, resultState) {
               Activity? activity = resultScreenCubit.state.props;
               if (activity == null || activity.rubrics.isEmpty) {
-                return const Scaffold(
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text("Results"),
+                  ),
                   body: Center(
                     child:
                         Text("Sorry, you didn't participate in this activity."),

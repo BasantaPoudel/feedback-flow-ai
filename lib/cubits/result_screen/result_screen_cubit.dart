@@ -15,13 +15,14 @@ class ResultScreenCubit extends Cubit<ResultScreenState> {
   calculateAndLoadActivity(Activity activity) async {
     List<Activity> userActivities = await _userRepository.getActivities();
 
+    //TODO - Add the failure case as well for the query below
     Activity userActivity =
         userActivities.firstWhere((element) => element.title == activity.title);
 
 //TODO - Remove this hardcoded value
     List<Rubric> rubricFromProfessor =
-        userActivity.rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"]!;
-    userActivity.rubrics.remove("7voEBXOmHybCnuJbIhDbk778Zvk2");
+        userActivity.rubrics["pLOzk091UuPrM6hsX1pHLlEQ1LU2"]!;
+    userActivity.rubrics.remove("pLOzk091UuPrM6hsX1pHLlEQ1LU2");
     List<Rubric> rubricWithAverageScore =
         calculateAverageScoresfromRubricsEntries(userActivity.rubrics);
 

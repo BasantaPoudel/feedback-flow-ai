@@ -209,9 +209,13 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset('assets/image/welcome_transparent.png'),
-                          Text(
-                            'Please wait for the activity to start before you can provide peer feedback',
-                            style: Theme.of(context).textTheme.displaySmall,
+                          Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              'Please wait for the activity to start before you can provide peer feedback',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
                           ),
                         ]),
                   )));

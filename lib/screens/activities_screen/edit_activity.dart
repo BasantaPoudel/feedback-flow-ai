@@ -52,12 +52,12 @@ class _EditActivityState extends State<EditActivity> {
                 (BuildContext context, AsyncSnapshot<List<Rubric>> snapshot) {
               if (snapshot.hasData) {
                 var children = <Widget>[
-                  const SizedBox(height: 40),
                   TextField(
                     controller: widget._controllerTitle,
+                    enabled: true,
                     decoration: const InputDecoration(
-                      hintText: 'Enter activity title',
                       border: OutlineInputBorder(),
+                      labelText: 'Enter activity title',
                     ),
                     maxLines: null,
                   ),
@@ -103,10 +103,21 @@ class _EditActivityState extends State<EditActivity> {
                       });
                     },
                   ),
-
-                  SizedBox(
+                  SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.1),
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 2,
+                      ),
+                    ),
                     width: double.infinity,
-                    child: OutlinedButton(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        alignment: Alignment.centerLeft,
+                      ),
                       onPressed: () {
                         showAlertDialog(context, activitiesScreenCubit.state);
                       },
@@ -123,6 +134,7 @@ class _EditActivityState extends State<EditActivity> {
                     height: 40,
                   ),
                   Wrap(
+                    alignment: WrapAlignment.start,
                     spacing: 8.0,
                     children: widget._selectedRubrics.map((item) {
                       return Chip(
@@ -139,22 +151,28 @@ class _EditActivityState extends State<EditActivity> {
                       );
                     }).toList(),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      if (widget._controllerTitle.text.trim().isEmpty) return;
-                      activitiesScreenCubit.updateActivity(Activity(
-                        id: widget.activity!.id,
-                        title: widget._controllerTitle.text,
-                        rubrics: {"professor": widget._selectedRubrics},
-                        isStarted: widget.activity!.isStarted,
-                        isCompleted: widget.activity!.isCompleted,
-                        isDistributed: widget.activity!.isDistributed,
-                        isFeedbackByProfessor:
-                            widget.activity!.isFeedbackByProfessor,
-                      ));
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Update activity'),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        alignment: Alignment.centerLeft,
+                      ),
+                      onPressed: () {
+                        if (widget._controllerTitle.text.trim().isEmpty) return;
+                        activitiesScreenCubit.updateActivity(Activity(
+                          id: widget.activity!.id,
+                          title: widget._controllerTitle.text,
+                          rubrics: {"professor": widget._selectedRubrics},
+                          isStarted: widget.activity!.isStarted,
+                          isCompleted: widget.activity!.isCompleted,
+                          isDistributed: widget.activity!.isDistributed,
+                          isFeedbackByProfessor:
+                              widget.activity!.isFeedbackByProfessor,
+                        ));
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Update activity'),
+                    ),
                   ),
                 ];
                 return SingleChildScrollView(
@@ -184,21 +202,24 @@ class _EditActivityState extends State<EditActivity> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            scrollable: true,
             title: const Text('Create New Rubric'),
             content: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _controllerNewRubric,
                   decoration: const InputDecoration(
-                    hintText: 'Enter rubric title',
+                    labelText: 'Enter rubric title',
                     border: OutlineInputBorder(),
                   ),
                   maxLines: null,
                 ),
+                SizedBox(height: 15),
                 TextField(
                   controller: _controllerDescription,
                   decoration: const InputDecoration(
-                    hintText: 'Enter rubric description',
+                    labelText: 'Enter rubric description',
                     border: OutlineInputBorder(),
                   ),
                   maxLines: null,

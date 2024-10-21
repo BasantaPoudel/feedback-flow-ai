@@ -55,14 +55,14 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                 builder: (context, userState) {
               if (userState is ProfessorLoggedInState) {
                 return Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(10),
                     width: double.infinity,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(174, 206, 209, 1),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6.0),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                         onPressed: () {

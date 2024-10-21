@@ -40,15 +40,16 @@ class _AddActivityState extends State<AddActivity> {
                 (BuildContext context, AsyncSnapshot<List<Rubric>> snapshot) {
               if (snapshot.hasData) {
                 var children = <Widget>[
-                  const SizedBox(height: 40),
                   TextField(
                     controller: _controllerTitle,
+                    enabled: true,
                     decoration: const InputDecoration(
-                      hintText: 'Enter activity title',
                       border: OutlineInputBorder(),
+                      labelText: 'Enter activity title',
                     ),
                     maxLines: null,
                   ),
+
                   const SizedBox(height: 10),
                   //################################################################################################
                   // Rounded blue MultiSelectDialogField -
@@ -91,16 +92,26 @@ class _AddActivityState extends State<AddActivity> {
                       });
                     },
                   ),
-
-                  SizedBox(
+                  SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.1),
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 2,
+                      ),
+                    ),
                     width: double.infinity,
-                    child: OutlinedButton(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        alignment: Alignment.centerLeft,
+                      ),
                       onPressed: () {
                         showAlertDialog(context, activitiesScreenCubit.state);
                       },
                       child: const Text(
                         'Create New Rubric',
-                        textAlign: TextAlign.left,
                       ),
                     ),
                   ),
@@ -127,20 +138,26 @@ class _AddActivityState extends State<AddActivity> {
                       );
                     }).toList(),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      if (_controllerTitle.text.trim().isEmpty) return;
-                      activitiesScreenCubit.addActivity(Activity(
-                        title: _controllerTitle.text,
-                        rubrics: {"professor": _selectedRubrics},
-                        isStarted: false,
-                        isCompleted: false,
-                        isDistributed: false,
-                        isFeedbackByProfessor: false,
-                      ));
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Add activity'),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        alignment: Alignment.centerLeft,
+                      ),
+                      onPressed: () {
+                        if (_controllerTitle.text.trim().isEmpty) return;
+                        activitiesScreenCubit.addActivity(Activity(
+                          title: _controllerTitle.text,
+                          rubrics: {"professor": _selectedRubrics},
+                          isStarted: false,
+                          isCompleted: false,
+                          isDistributed: false,
+                          isFeedbackByProfessor: false,
+                        ));
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Add activity'),
+                    ),
                   ),
                 ];
                 return SingleChildScrollView(
@@ -170,21 +187,24 @@ class _AddActivityState extends State<AddActivity> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            alignment: Alignment.center,
             title: const Text('Create New Rubric'),
             content: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _controllerNewRubric,
                   decoration: const InputDecoration(
-                    hintText: 'Enter rubric title',
+                    labelText: 'Enter rubric title',
                     border: OutlineInputBorder(),
                   ),
                   maxLines: null,
                 ),
+                SizedBox(height: 15),
                 TextField(
                   controller: _controllerDescription,
                   decoration: const InputDecoration(
-                    hintText: 'Enter rubric description',
+                    labelText: 'Enter rubric description',
                     border: OutlineInputBorder(),
                   ),
                   maxLines: null,

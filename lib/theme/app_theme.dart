@@ -5,6 +5,25 @@ class AppTheme {
   static ThemeData lightThemeData = ThemeData(
     fontFamily: GoogleFonts.inter().fontFamily,
     brightness: Brightness.light,
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.blue, // Text color
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+          // backgroundColor: Colors.blue, // Background color
+          // foregroundColor: Colors.white, // Text color
+          // padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+          ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: Colors.blue), // Border color
+        // foregroundColor: Colors.blue, // Text color
+        // padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+      ),
+    ),
     buttonTheme: const ButtonThemeData(
       buttonColor: Colors.blue, // Set the button color
       textTheme: ButtonTextTheme.primary, // Set the button text theme

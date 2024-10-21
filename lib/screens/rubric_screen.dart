@@ -158,6 +158,7 @@ class _RubricScreenState extends State<RubricScreen> {
                       Rubric(
                         title: _controllerNewRubric.text,
                         score: 0,
+                        description: _controllerDescription.text,
                       ));
                   Navigator.of(context).pop();
                 },

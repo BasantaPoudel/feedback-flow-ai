@@ -32,6 +32,35 @@ Activity mockInterviewActivity = Activity(
     'pLOzk091UuPrM6hsX1pHLlEQ1LU2': [
       Rubric(title: 'Body Language', description: "Empty"),
       Rubric(title: 'Eye Contact', description: "Empty"),
+      Rubric(title: 'Confidence', description: "Empty"),
+      Rubric(
+          title: "**Non-Verbal Communication**",
+          description:
+              "Effective non-verbal communication involves various aspects of body language and vocal elements:        **Posture :** Maintain a confident, open stance throughout the communication.    **Gestures :** Use purposeful and meaningful hand gestures to emphasize points.    **Eye Contact :** Maintain appropriate eye contact to engage with the audience.    **Facial Expression :** Match your facial expressions with the tone of your message.    **Tone :** Use variation in tone to maintain interest and reflect appropriate emotions.    **Proxemics :** Be aware of personal space and positioning in relation to the audience."),
+      Rubric(
+          title: "**Audience Engagement Techniques**",
+          description:
+              "Score based on the use of two audience engagement techniques from the following list:        **Rhetorical Questions:** Pose questions that don’t require an answer but encourage audience reflection.    **Comparison/Analogy/Contrast:** Use comparisons or contrasts to make abstract concepts relatable.    **Use of Figurative Language:** Employ metaphors, similes, or other figurative language for clarity or emphasis.    **Personal Narrative:** Share a personal story to make your message more relatable.    **Call to Action:** Conclude with a clear call for the audience to take specific steps.    **Humor:** Use humor appropriately to build rapport and lighten the mood."),
+      Rubric(
+          title: "**Verbal Communication**",
+          description:
+              "Assess verbal delivery based on these criteria:        **Structure and Coherence :** Organize speech in a logical, coherent flow that suits the professional context.    **Clarity of Message :** Ensure the message is clear, simplifying complex or technical terms when necessary."),
+      Rubric(
+          title: "**Time Management**",
+          description:
+              "Given the brief nature of the activity, strict time management is essential:        **Respected the time :** Finished within the allotted time.    **Did not respect the time (0 points):** Exceeded the time limit."),
+      Rubric(
+          title: "**Clarity**",
+          description:
+              "Focuses on the speaker's ability to deliver a message that is easy to understand:        **Message Precision :** Information is conveyed clearly without ambiguity or unnecessary complexity.    **Language Simplicity :** Uses simple and understandable language, avoiding jargon when addressing a general audience.    **Pronunciation and Articulation :** Words are spoken clearly, and speech is easy to follow."),
+      Rubric(
+          title: "**Structure**",
+          description:
+              "Evaluates how well the presentation or speech is organized:        **Introduction :** Begins with a clear and engaging introduction that sets the stage for the message.    **Logical Flow :** Ideas and sections are arranged logically, with smooth transitions between them.    **Conclusion :** Ends with a concise and effective conclusion that reinforces key points."),
+      Rubric(
+          title: "**Positive Verbal Communication**",
+          description:
+              "Measures the effectiveness of verbal delivery in terms of engaging the audience and maintaining a positive tone:        **Confidence :** The speaker demonstrates confidence in their voice and delivery.    **Enthusiasm :** Maintains a positive and enthusiastic tone that keeps the audience interested.    **Audience Adaptation :** Tailors language and tone based on the audience’s level of understanding and response.    **Tone and Volume :** Ensures that tone is appropriate for the message, and volume is loud enough to be heard clearly."),
     ],
   },
   isStarted: true,
@@ -81,7 +110,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  populateActivities();
+  // populateActivities();
   populateRubrics();
   /* deleteActivities();
   deleteActivitiesFromUser(); */
@@ -95,7 +124,8 @@ void populateRubrics() async {
           .collection('act')
           .doc(activity.id)
           .collection('rubrics')
-          .add(rubric.toMap());
+          .doc(rubric.title)
+          .set(rubric.toMap());
     }
   }
 }

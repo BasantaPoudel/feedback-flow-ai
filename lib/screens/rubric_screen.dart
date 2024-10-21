@@ -69,19 +69,20 @@ class _RubricScreenState extends State<RubricScreen> {
                           .elementAt(index)
                           .description,
                     ),
-                    trailing: (homeScreenCubit.state is TeacherLoggedInState &&
-                            stateActivity is! ActivityStarted)
-                        ? IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              context.read<ActScreenCubit>().deleteRubric(
-                                  stateRubric.activity,
-                                  stateRubric
-                                      .activity.rubrics.entries.first.value
-                                      .elementAt(index));
-                            },
-                          )
-                        : null,
+                    trailing:
+                        (homeScreenCubit.state is ProfessorLoggedInState &&
+                                stateActivity is! ActivityStarted)
+                            ? IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  context.read<ActScreenCubit>().deleteRubric(
+                                      stateRubric.activity,
+                                      stateRubric
+                                          .activity.rubrics.entries.first.value
+                                          .elementAt(index));
+                                },
+                              )
+                            : null,
                   );
                 },
               ),

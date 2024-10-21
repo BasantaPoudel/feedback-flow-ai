@@ -72,9 +72,9 @@ class UserRepository extends MainRepository {
       log.d("Query1 - Successfully completed");
       for (var docSnapshot in querySnapshot.docs) {
         log.d('${docSnapshot.id} => ${docSnapshot.data()}');
-        if (docSnapshot.data().containsValue("teacher")) {
-          log.d("[Reached Teacher If]");
-          return "teacher";
+        if (docSnapshot.data().containsValue("professor")) {
+          log.d("[Reached professor If]");
+          return "professor";
         } else {
           log.d("[Reached Student If]");
           return "student";
@@ -100,7 +100,7 @@ class UserRepository extends MainRepository {
     );
   }
 
-//Method to be called when Teacher presses Start on the activity
+//Method to be called when professor presses Start on the activity
   void addActivityWithDefaultRubricToPresenter(presenter, activity) async {
     try {
       roleBasedUsersRef
@@ -175,7 +175,7 @@ class UserRepository extends MainRepository {
             rubricsFromUser.map((rubric) => rubric.toMap()).toList();
         activities[index]['rubrics'] = currentRubrics;
 
-        if (userRole == "teacher") {
+        if (userRole == "professor") {
           activities[index]['isFeedbackByProfessor'] = true;
         }
         // Check if the document exists and then update it

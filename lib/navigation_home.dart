@@ -24,7 +24,7 @@ class _NavigationHomeState extends State<NavigationHome> {
         builder: (context, state) {
       if (state is UserLoadingState) {
         return const Center(child: CircularProgressIndicator());
-      } else if (state is TeacherLoggedInState ||
+      } else if (state is ProfessorLoggedInState ||
           state is StudentLoggedInState) {
         final currentIndex = state.currentIndex;
         final children = state.children;
@@ -38,9 +38,9 @@ class _NavigationHomeState extends State<NavigationHome> {
         builder: (context, state) {
       if (state is UserLoadingState) {
         return const Center(child: CircularProgressIndicator());
-      } else if (state is TeacherLoggedInState) {
+      } else if (state is ProfessorLoggedInState) {
         return BottomNavigationBar(
-          onTap: context.read<HomeScreenCubit>().onTabTappedTeacher,
+          onTap: context.read<HomeScreenCubit>().onTabTappedProfessor,
           currentIndex: state.currentIndex,
           type: BottomNavigationBarType.fixed,
           items: [

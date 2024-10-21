@@ -53,7 +53,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             UpcomingActivities(activitiesList: activitiesList ?? []),
             BlocBuilder<HomeScreenCubit, HomeScreenState>(
                 builder: (context, userState) {
-              if (userState is TeacherLoggedInState) {
+              if (userState is ProfessorLoggedInState) {
                 return Container(
                     padding: const EdgeInsets.all(8),
                     width: double.infinity,

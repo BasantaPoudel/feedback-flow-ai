@@ -131,7 +131,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     //TODO - Fix the logic
                     onPressed: () async {
                       var userRole = await presentersScreenCubit.getUserRole();
-                      if (userRole == 'teacher') {
+                      if (userRole == 'professor') {
                         presentersScreenCubit
                             .updatePresenterFeedbackByProfessor(
                                 presenter, stateRubric.activity);

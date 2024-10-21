@@ -142,9 +142,7 @@ class _AddActivityState extends State<AddActivity> {
                       if (_controllerTitle.text.trim().isEmpty) return;
                       activitiesScreenCubit.addActivity(Activity(
                         title: _controllerTitle.text,
-                        rubrics: {
-                          databaseScreenCubit.getUserId(): _selectedRubrics
-                        },
+                        rubrics: {"professor": _selectedRubrics},
                         isStarted: false,
                         isCompleted: false,
                         isDistributed: false,
@@ -219,6 +217,8 @@ class _AddActivityState extends State<AddActivity> {
                       _controllerNewRubric.text, _controllerDescription.text);
 
                   setState(() {
+
+                    //TODO - What's up with this id?
                     _selectedRubrics.add(Rubric(
                         id: 'id6',
                         title: _controllerNewRubric.text,

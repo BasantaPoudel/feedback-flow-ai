@@ -38,7 +38,7 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
     return BlocBuilder<PresenterScreenCubit, PresenterScreenState>(
         builder: (context, state) {
       if (state is PresenterState &&
-          homeScreenCubit.state is TeacherLoggedInState) {
+          homeScreenCubit.state is ProfessorLoggedInState) {
         if (databaseScreenCubit.state.props!.isNotEmpty) {
           var presenter = databaseScreenCubit.state.props!
               .where((element) => element.isPresenter == true)

@@ -159,10 +159,7 @@ class _EditActivityState extends State<EditActivity> {
                       activitiesScreenCubit.updateActivity(Activity(
                         id: widget.activity!.id,
                         title: widget._controllerTitle.text,
-                        rubrics: {
-                          databaseScreenCubit.getUserId():
-                              widget._selectedRubrics
-                        },
+                        rubrics: {"professor": widget._selectedRubrics},
                         isStarted: widget.activity!.isStarted,
                         isCompleted: widget.activity!.isCompleted,
                         isDistributed: widget.activity!.isDistributed,

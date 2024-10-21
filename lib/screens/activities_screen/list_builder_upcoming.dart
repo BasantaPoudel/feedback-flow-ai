@@ -114,7 +114,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                 if (activitiesList[index].isDistributed == false) {
                   return Slidable(
                       startActionPane: homeScreenCubit.state
-                              is TeacherLoggedInState
+                              is ProfessorLoggedInState
                           ? ActionPane(
                               motion: const StretchMotion(),
                               children: [
@@ -133,7 +133,7 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
 
                       //TODO - Retry creating error message for the below code - moving motion at the end
                       endActionPane: homeScreenCubit.state
-                              is TeacherLoggedInState
+                              is ProfessorLoggedInState
                           ? ActionPane(motion: const ScrollMotion(), children: [
                               SlidableAction(
                                   borderRadius: BorderRadius.circular(10),

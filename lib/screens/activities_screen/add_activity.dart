@@ -1,5 +1,4 @@
 import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
-import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/repository/rubric_repository.dart';
@@ -11,13 +10,11 @@ class AddActivity extends StatefulWidget {
   const AddActivity({super.key});
 
   @override
-  _AddActivityState createState() => _AddActivityState();
+  State<AddActivity> createState() => _AddActivityState();
 }
 
 class _AddActivityState extends State<AddActivity> {
   List<Rubric> _selectedRubrics = [];
-
-  final _multiSelectKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
@@ -26,16 +23,12 @@ class _AddActivityState extends State<AddActivity> {
 
   final _controllerTitle = TextEditingController();
   final _controllerDescription = TextEditingController();
-  final _controllerRubric2 = TextEditingController();
   final _controllerNewRubric = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     ActScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActScreenCubit>(context);
-
-    PresenterScreenCubit? databaseScreenCubit =
-        BlocProvider.of<PresenterScreenCubit>(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -100,10 +93,7 @@ class _AddActivityState extends State<AddActivity> {
                   ),
 
                   SizedBox(
-                    // padding: const EdgeInsets.all(8),
                     width: double.infinity,
-
-                    // width: MediaQuery.of(context).size.width,
                     child: OutlinedButton(
                       onPressed: () {
                         showAlertDialog(context, activitiesScreenCubit.state);

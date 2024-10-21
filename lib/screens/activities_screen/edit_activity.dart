@@ -1,5 +1,4 @@
 import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
-import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/repository/rubric_repository.dart';
@@ -8,12 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class EditActivity extends StatefulWidget {
+  EditActivity({super.key});
   final _controllerTitle = TextEditingController();
 
   final List<TextEditingController> _textControllers = [];
   List<Rubric> _selectedRubrics = [];
   late final Activity? activity;
-  EditActivity({super.key});
   EditActivity.withActivity(Activity activity, {super.key}) {
     this.activity = activity;
 
@@ -31,28 +30,18 @@ class EditActivity extends StatefulWidget {
 }
 
 class _EditActivityState extends State<EditActivity> {
-  // List<Rubric> widget._selectedRubrics = [];
-
-  final _multiSelectKey = GlobalKey<FormFieldState>();
-
   @override
   void initState() {
     super.initState();
   }
 
-  // final _controllerTitle = TextEditingController();
   final _controllerDescription = TextEditingController();
-  final _controllerRubric2 = TextEditingController();
   final _controllerNewRubric = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     ActScreenCubit? activitiesScreenCubit =
         BlocProvider.of<ActScreenCubit>(context);
-
-    PresenterScreenCubit? databaseScreenCubit =
-        BlocProvider.of<PresenterScreenCubit>(context);
-
     return Scaffold(
         appBar: AppBar(
           title: const Text('Edit activity'),
@@ -116,10 +105,7 @@ class _EditActivityState extends State<EditActivity> {
                   ),
 
                   SizedBox(
-                    // padding: const EdgeInsets.all(8),
                     width: double.infinity,
-
-                    // width: MediaQuery.of(context).size.width,
                     child: OutlinedButton(
                       onPressed: () {
                         showAlertDialog(context, activitiesScreenCubit.state);

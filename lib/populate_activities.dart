@@ -133,10 +133,10 @@ void populateRubrics() async {
 void populateActivities() async {
   for (var activity in activitiesList) {
     await addActivityToFirestore(activity);
-    print('${activity.title} uploaded to Firestore');
+    log.d('${activity.title} uploaded to Firestore');
   }
 
-  print('All activities uploaded successfully!');
+  log.d('All activities uploaded successfully!');
 }
 
 void deleteActivities() {

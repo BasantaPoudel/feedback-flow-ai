@@ -1,6 +1,5 @@
 import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
 import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
-import 'package:feedback_flow/cubits/home_screen/home_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_state.dart';
@@ -13,7 +12,7 @@ class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
 
   @override
-  _FeedbackScreenState createState() => _FeedbackScreenState();
+  State<FeedbackScreen> createState() => _FeedbackScreenState();
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
@@ -29,10 +28,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     PresenterScreenCubit? presentersScreenCubit =
         BlocProvider.of<PresenterScreenCubit>(context);
-
-    HomeScreenCubit? homeScreenCubit =
-        BlocProvider.of<HomeScreenCubit>(context);
-
     return BlocBuilder<RubricScreenCubit, RubricScreenState>(
         builder: (context, stateRubric) {
       return BlocBuilder<ActScreenCubit, ActScreenState>(

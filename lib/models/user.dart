@@ -35,7 +35,6 @@ class UserModel {
       email: map['email'],
       role: map['role'],
       isPresenter: map['isPresenter'] ?? false,
-      //TODO: Verify if this fixed the issue
       activities: activities ?? [],
     );
   }

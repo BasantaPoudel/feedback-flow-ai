@@ -37,7 +37,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         builder: (context, stateRubric) {
       return BlocBuilder<ActScreenCubit, ActScreenState>(
           builder: (context, stateActivity) {
-        if (stateActivity is ActivityStarted) {
+        if (stateActivity is ActivityStarted && stateRubric.activity != null) {
           if (presentersScreenCubit.state.props!.isNotEmpty) {
             var presenter = presentersScreenCubit.state.props!
                 .where((element) => element.isPresenter == true)
@@ -104,18 +104,27 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       },
                     ),
                   ),
-                  const TextField(
-                    enabled: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Open Feedback',
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: const TextField(
+                      enabled: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Open Feedback',
+                      ),
                     ),
                   ),
-                  const TextField(
-                    enabled: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Open Feedforward',
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: const TextField(
+                      enabled: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Open Feedforward',
+                      ),
                     ),
                   ),
                   ElevatedButton(
@@ -133,7 +142,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             content: Text('Score Submitted Successfully!'),
                             duration: Duration(seconds: 3),
                           ));
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
                         }
                       } else if (presentersScreenCubit
                               .checkIfFeedbackAlreadyProvidedByProfessor(
@@ -146,10 +155,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               padding: const EdgeInsets.all(10),
                               child: Text(
                                 'Please Wait for the Activity to complete before submitting the feedback!',
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: const Duration(seconds: 3),
                           ));
                         }
                       } else {
@@ -163,7 +172,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             content: Text('Score Submitted Successfully!'),
                             duration: Duration(seconds: 3),
                           ));
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
                         }
                       }
                     },

@@ -69,7 +69,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddActivity(),
+                                builder: (context) => const AddActivity(),
                               ));
                         },
                         child: const Text(

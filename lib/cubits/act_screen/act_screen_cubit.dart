@@ -73,4 +73,9 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     _activityRepository.updateActivity(activities[index]);
     emit(ResultsDistributed(activities));
   }
+
+  void deleteRubric(activity, elementAt) {
+    activity.rubrics.entries.first.value.remove(elementAt);
+    _activityRepository.updateActivity(activity);
+  }
 }

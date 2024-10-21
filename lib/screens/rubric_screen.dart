@@ -21,6 +21,8 @@ class RubricScreen extends StatefulWidget {
 
 class _RubricScreenState extends State<RubricScreen> {
   final _controllerNewRubric = TextEditingController();
+  final _controllerDescription = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -56,17 +58,32 @@ class _RubricScreenState extends State<RubricScreen> {
                   itemCount:
                       stateRubric.activity.rubrics.entries.first.value.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        color: const Color(0xFF6D7981),
-                        child: ListTile(
-                          title: Text(
-                              stateRubric.activity.rubrics.entries.first.value
-                                  .elementAt(index)
-                                  .title,
-                              style: const TextStyle(
-                                color: Colors.white,
-                              )),
-                        ));
+                    return ListTile(
+                      title: Text(
+                        stateRubric.activity.rubrics.entries.first.value
+                            .elementAt(index)
+                            .title,
+                      ),
+                      subtitle: Text(
+                        stateRubric.activity.rubrics.entries.first.value
+                            .elementAt(index)
+                            .description,
+                      ),
+                      trailing:
+                          (homeScreenCubit.state is TeacherLoggedInState &&
+                                  stateActivity is! ActivityStarted)
+                              ? IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    context.read<ActScreenCubit>().deleteRubric(
+                                        stateRubric.activity,
+                                        stateRubric.activity.rubrics.entries
+                                            .first.value
+                                            .elementAt(index));
+                                  },
+                                )
+                              : null,
+                    );
                   },
                 ),
               ),
@@ -111,7 +128,15 @@ class _RubricScreenState extends State<RubricScreen> {
                 TextField(
                   controller: _controllerNewRubric,
                   decoration: const InputDecoration(
-                    hintText: 'Enter rubric',
+                    hintText: 'Enter rubric title',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: null,
+                ),
+                TextField(
+                  controller: _controllerDescription,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter rubric description',
                     border: OutlineInputBorder(),
                   ),
                   maxLines: null,

@@ -146,9 +146,13 @@ class UserRepository extends MainRepository {
   }
 
   void updateRubrics(List<Rubric> rubricsFromUser, presenter, title) async {
-    String uId = await getLoggedInUserId();
+    String uId;
     String userRole = await getUserRole();
-
+    if (userRole == "professor") {
+      uId = "professor";
+    } else {
+      uId = await getLoggedInUserId();
+    }
     FirebaseFirestore.instance.runTransaction((transaction) async {
       final query =
           roleBasedUsersRef.where("email", isEqualTo: presenter.email);

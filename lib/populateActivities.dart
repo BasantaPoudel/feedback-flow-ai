@@ -9,7 +9,7 @@ import 'package:logger/logger.dart';
 Activity debatePracticeActivity = Activity(
   title: 'Debate Practice',
   rubrics: {
-    'pLOzk091UuPrM6hsX1pHLlEQ1LU2': [
+    'professor': [
       Rubric(
         title: 'Logical Flow',
         description: 'How well the points are connected',
@@ -29,7 +29,7 @@ Activity debatePracticeActivity = Activity(
 Activity mockInterviewActivity = Activity(
   title: 'Mock Interview Feedback',
   rubrics: {
-    'pLOzk091UuPrM6hsX1pHLlEQ1LU2': [
+    'professor': [
       Rubric(title: 'Body Language', description: "Empty"),
       Rubric(title: 'Eye Contact', description: "Empty"),
       Rubric(title: 'Confidence', description: "Empty"),
@@ -72,7 +72,7 @@ Activity mockInterviewActivity = Activity(
 Activity teamPresentationActivity = Activity(
   title: 'Team Presentation Feedback',
   rubrics: {
-    'pLOzk091UuPrM6hsX1pHLlEQ1LU2': [
+    'professor': [
       Rubric(title: 'Collaboration', description: "Empty"),
       Rubric(title: 'Task Distribution', description: "Empty"),
     ],
@@ -85,7 +85,7 @@ Activity teamPresentationActivity = Activity(
 Activity publicSpeakingFinalActivity = Activity(
   title: 'Public Speaking Final Assessment',
   rubrics: {
-    'pLOzk091UuPrM6hsX1pHLlEQ1LU2': [
+    'professor': [
       Rubric(title: 'Articulation', description: "Empty"),
       Rubric(title: 'Confidence', description: "Empty"),
     ]

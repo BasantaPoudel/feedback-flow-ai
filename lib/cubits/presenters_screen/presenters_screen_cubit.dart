@@ -60,19 +60,19 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
   }
 
   updatePresenterFeedbackByProfessor(UserModel presenter, activity) async {
-    String uId = await _userRepo.getLoggedInUserId();
-    List<Rubric> rubricsFromProfessor = activity.rubrics[uId];
+    // String uId = await _userRepo.getLoggedInUserId();
+    List<Rubric> rubricsFromProfessor = activity.rubrics["professor"];
 
     var index = presenter.activities
         ?.indexWhere((element) => element.title == activity.title);
     presenter.activities?.elementAt(index!).isFeedbackByProfessor = true;
 
-    if (presenter.activities?.elementAt(index!).rubrics[uId] == null) {
-      presenter.activities?.elementAt(index!).rubrics[uId] = [];
-      presenter.activities?.elementAt(index!).rubrics[uId] =
+    if (presenter.activities?.elementAt(index!).rubrics["professor"] == null) {
+      presenter.activities?.elementAt(index!).rubrics["professor"] = [];
+      presenter.activities?.elementAt(index!).rubrics["professor"] =
           rubricsFromProfessor;
     } else {
-      presenter.activities?.elementAt(index!).rubrics[uId] =
+      presenter.activities?.elementAt(index!).rubrics["professor"] =
           rubricsFromProfessor;
     }
     // _userRepo.updateUser(presenter);

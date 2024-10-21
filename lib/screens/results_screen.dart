@@ -35,9 +35,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
               if (activity == null || activity.rubrics.isEmpty) {
                 return Scaffold(
                   appBar: AppBar(
-                    title: Text("Results"),
+                    title: const Text("Results"),
                   ),
-                  body: Center(
+                  body: const Center(
                     child:
                         Text("Sorry, you didn't participate in this activity."),
                   ),

@@ -142,7 +142,7 @@ class _EditActivityState extends State<EditActivity> {
                       return Chip(
                         label: Text(item.title),
                         backgroundColor: Colors.blue[100],
-                        deleteIcon: Icon(Icons.cancel,
+                        deleteIcon: const Icon(Icons.cancel,
                             color: Colors.red), // Custom delete icon
                         onDeleted: () {
                           setState(() {

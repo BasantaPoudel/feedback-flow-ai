@@ -18,7 +18,7 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
       _userRepo.roleBasedUsersRef.snapshots().listen((snapshot) {
         log.d("[Database-C - subscribeToData] Reached Here");
         var users =
-            snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
+            snapshot.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
         if (users.any((user) => user.isPresenter == true)) {
           emit(PresenterState(users));
           log.d("[Database-C - subscribeToData] PresenterState Emitted");

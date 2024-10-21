@@ -130,8 +130,6 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                                   )
                                 ])
                           : null,
-
-                      //TODO - Retry creating error message for the below code - moving motion at the end
                       endActionPane: homeScreenCubit.state
                               is ProfessorLoggedInState
                           ? ActionPane(motion: const ScrollMotion(), children: [

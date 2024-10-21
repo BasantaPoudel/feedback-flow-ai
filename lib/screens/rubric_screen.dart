@@ -94,9 +94,7 @@ class _RubricScreenState extends State<RubricScreen> {
                 padding: const EdgeInsets.all(30),
                 child: Text(
                     "Activity has started and you can provide feedback from the Feedback Menu",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge), //TODO - Check the theme
+                    style: Theme.of(context).textTheme.titleLarge),
               ),
           ]),
         );
@@ -105,7 +103,6 @@ class _RubricScreenState extends State<RubricScreen> {
     });
   }
 
-  //TODO - Check types of Dialog available
   Future<void> showAlertDialog(BuildContext context, stateRubric) async {
     showDialog(
         context: context,

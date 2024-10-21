@@ -160,14 +160,8 @@ class UserRepository extends MainRepository {
       for (var snap in querySnapshot.docs) {
         var documentID = snap.id;
 
-//TODO - CHeck here
-
         DocumentReference docRef = roleBasedUsersRef.doc(documentID);
-
-        // Get the document snapshot
         DocumentSnapshot snapshot = await transaction.get(docRef);
-
-        //Get the current value
         var currentValue = snapshot.data() as Map<String, dynamic>;
 
         var index = currentValue['activities']

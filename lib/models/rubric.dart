@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Rubric {
   // Add other properties as needed
-  //TODO - For now added default values to avoid null error
   String? id = '';
   String title;
   String? description;

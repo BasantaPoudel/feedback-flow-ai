@@ -217,10 +217,7 @@ class _AddActivityState extends State<AddActivity> {
                       _controllerNewRubric.text, _controllerDescription.text);
 
                   setState(() {
-
-                    //TODO - What's up with this id?
                     _selectedRubrics.add(Rubric(
-                        id: 'id6',
                         title: _controllerNewRubric.text,
                         description: _controllerDescription.text));
 

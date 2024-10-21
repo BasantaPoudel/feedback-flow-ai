@@ -9,7 +9,6 @@ class AppTheme {
       buttonColor: Colors.blue, // Set the button color
       textTheme: ButtonTextTheme.primary, // Set the button text theme
     ),
-    //TODO - ElevatedButtonThemeData
     textTheme: const TextTheme(
       displayLarge: TextStyle(
         fontSize: 57.0,

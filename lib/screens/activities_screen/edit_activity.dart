@@ -103,7 +103,7 @@ class _EditActivityState extends State<EditActivity> {
                       });
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.blue.withOpacity(0.1),
@@ -215,7 +215,7 @@ class _EditActivityState extends State<EditActivity> {
                   ),
                   maxLines: null,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextField(
                   controller: _controllerDescription,
                   decoration: const InputDecoration(

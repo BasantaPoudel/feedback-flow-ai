@@ -7,7 +7,6 @@ import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.d
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/models/rubric.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,9 +19,6 @@ class RubricScreen extends StatefulWidget {
 }
 
 class _RubricScreenState extends State<RubricScreen> {
-  final _controllerNewRubric = TextEditingController();
-  final _controllerDescription = TextEditingController();
-
   @override
   void initState() {
     super.initState();

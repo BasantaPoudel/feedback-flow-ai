@@ -92,7 +92,7 @@ class _AddActivityState extends State<AddActivity> {
                       });
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.blue.withOpacity(0.1),
@@ -200,7 +200,7 @@ class _AddActivityState extends State<AddActivity> {
                   ),
                   maxLines: null,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextField(
                   controller: _controllerDescription,
                   decoration: const InputDecoration(

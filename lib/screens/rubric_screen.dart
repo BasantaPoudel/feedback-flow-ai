@@ -71,11 +71,20 @@ class _RubricScreenState extends State<RubricScreen> {
                             ? IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () {
-                                  context.read<ActScreenCubit>().deleteRubric(
-                                      stateRubric.activity,
-                                      stateRubric
-                                          .activity.rubrics.entries.first.value
-                                          .elementAt(index));
+                                  try {
+                                    context.read<ActScreenCubit>().deleteRubric(
+                                        stateRubric.activity,
+                                        stateRubric.activity.rubrics.entries
+                                            .first.value
+                                            .elementAt(index));
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          backgroundColor: Colors.red,
+                                          content: Text(
+                                              'Error removing the rubric from the activity')),
+                                    );
+                                  }
                                 },
                               )
                             : null,

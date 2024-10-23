@@ -243,10 +243,9 @@ class _AddActivityState extends State<AddActivity> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                           backgroundColor: Colors.red,
-                          content: Text('Error adding activities')),
+                          content: Text('Error creating new rubric')),
                     );
                   }
-
                   setState(() {
                     _selectedRubrics.add(Rubric(
                         title: _controllerNewRubric.text,

@@ -124,8 +124,9 @@ class ActScreenCubit extends Cubit<ActScreenState> {
       activity.rubrics.entries.first.value.remove(elementAt);
       _activityRepository.updateActivity(activity);
     } catch (e) {
-      emit(ActivityErrorLoading(upcomingActivities!,
-          error: "Error deleting rubric"));
+      throw Exception('Error deleting rubric: $e');
+      // emit(ActivityErrorLoading(upcomingActivities!,
+      //     error: "Error deleting rubric"));
     }
   }
 }

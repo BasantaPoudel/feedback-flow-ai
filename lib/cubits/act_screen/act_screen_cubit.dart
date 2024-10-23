@@ -46,9 +46,11 @@ class ActScreenCubit extends Cubit<ActScreenState> {
   }
 
   void addActivity(Activity activity) {
+    //TODO - Cleanup the concepts of upcoming, past and all activities
     try {
       _activityRepository.addActivity(activity);
-      emit(ActivityAddedState(upcomingActivities!));
+      state.getAllActivities!.add(activity);
+      emit(ActivityAddedState(state.getAllActivities!));
     } catch (e) {
       emit(ActivityErrorLoading(upcomingActivities!,
           error: "Error adding activity"));
@@ -58,7 +60,9 @@ class ActScreenCubit extends Cubit<ActScreenState> {
   void updateActivity(Activity activity) {
     try {
       _activityRepository.updateActivity(activity);
-      emit(ActivityAddedState(upcomingActivities!));
+      state.getAllActivities!.add(activity);
+
+      emit(ActivityAddedState(state.getAllActivities!));
     } catch (e) {
       emit(ActivityErrorLoading(upcomingActivities!,
           error: "Error updating activity"));

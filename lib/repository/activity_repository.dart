@@ -11,7 +11,7 @@ class ActivityRepository extends MainRepository {
     try {
       activitiesRef.add(activity.toMap());
     } catch (e) {
-      log.d(e);
+      throw Exception('Error adding activity: $e');
     }
   }
 
@@ -20,7 +20,8 @@ class ActivityRepository extends MainRepository {
     try {
       activitiesRef.doc(activity.id).update(activity.toMap());
     } catch (e) {
-      log.d('Error: $e');
+      throw Exception('Error updating activity: $e');
+      // log.d('Error: $e');
     }
   }
 
@@ -28,7 +29,7 @@ class ActivityRepository extends MainRepository {
     try {
       activitiesRef.doc(activity.id).delete();
     } catch (e) {
-      log.d('Error: $e');
+      throw Exception('Error deleting activity: $e');
     }
   }
 }

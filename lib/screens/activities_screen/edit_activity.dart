@@ -44,7 +44,7 @@ class _EditActivityState extends State<EditActivity> {
         BlocProvider.of<ActScreenCubit>(context);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Edit activity'),
+          title: const Text('Update activity'),
         ),
         body: FutureBuilder<List<Rubric>>(
             future: fetchDataFromDatabase(),
@@ -159,17 +159,26 @@ class _EditActivityState extends State<EditActivity> {
                       ),
                       onPressed: () {
                         if (widget._controllerTitle.text.trim().isEmpty) return;
-                        activitiesScreenCubit.updateActivity(Activity(
-                          id: widget.activity!.id,
-                          title: widget._controllerTitle.text,
-                          rubrics: {"professor": widget._selectedRubrics},
-                          isStarted: widget.activity!.isStarted,
-                          isCompleted: widget.activity!.isCompleted,
-                          isDistributed: widget.activity!.isDistributed,
-                          isFeedbackByProfessor:
-                              widget.activity!.isFeedbackByProfessor,
-                        ));
-                        Navigator.of(context).pop();
+
+                        try {
+                          activitiesScreenCubit.updateActivity(Activity(
+                            id: widget.activity!.id,
+                            title: widget._controllerTitle.text,
+                            rubrics: {"professor": widget._selectedRubrics},
+                            isStarted: widget.activity!.isStarted,
+                            isCompleted: widget.activity!.isCompleted,
+                            isDistributed: widget.activity!.isDistributed,
+                            isFeedbackByProfessor:
+                                widget.activity!.isFeedbackByProfessor,
+                          ));
+                          Navigator.of(context).pop();
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text('Error updating activities')),
+                          );
+                        }
                       },
                       child: const Text('Update activity'),
                     ),
@@ -194,7 +203,11 @@ class _EditActivityState extends State<EditActivity> {
 
   Future<List<Rubric>> fetchDataFromDatabase() async {
     RubricsRepository rubricsRepository = RubricsRepository();
-    return rubricsRepository.fetchRubrics();
+    try {
+      return await rubricsRepository.fetchRubrics();
+    } catch (e) {
+      throw Exception('Error fetching rubrics: $e');
+    }
   }
 
   Future<void> showAlertDialog(BuildContext context, stateRubric) async {
@@ -238,8 +251,16 @@ class _EditActivityState extends State<EditActivity> {
                   if (_controllerNewRubric.text.trim().isEmpty) return;
                   RubricsRepository rubricsRepository = RubricsRepository();
 
-                  rubricsRepository.addRubrics(
-                      _controllerNewRubric.text, _controllerDescription.text);
+                  try {
+                    rubricsRepository.addRubrics(
+                        _controllerNewRubric.text, _controllerDescription.text);
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Error adding activities')),
+                    );
+                  }
 
                   setState(() {
                     widget._selectedRubrics.add(Rubric(

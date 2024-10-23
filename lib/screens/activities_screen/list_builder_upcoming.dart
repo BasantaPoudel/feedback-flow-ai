@@ -122,10 +122,18 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                                     borderRadius: BorderRadius.circular(10),
                                     backgroundColor: Colors.blue,
                                     icon: Icons.copy,
-                                    onPressed: (context) => {
-                                      BlocProvider.of<ActScreenCubit>(context)
-                                          .duplicateActivity(
-                                              activitiesList[index])
+                                    onPressed: (context) {
+                                      try {
+                                        BlocProvider.of<ActScreenCubit>(context)
+                                            .duplicateActivity(
+                                                activitiesList[index]);
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                backgroundColor: Colors.red,
+                                                content: Text(
+                                                    'Failed to duplicate activity')));
+                                      }
                                     },
                                   )
                                 ])
@@ -151,9 +159,17 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                                 borderRadius: BorderRadius.circular(10),
                                 icon: Icons.delete,
                                 backgroundColor: Colors.red,
-                                onPressed: (context) => {
-                                  BlocProvider.of<ActScreenCubit>(context)
-                                      .deleteActivity(activitiesList[index])
+                                onPressed: (context) {
+                                  try {
+                                    BlocProvider.of<ActScreenCubit>(context)
+                                        .deleteActivity(activitiesList[index]);
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(
+                                                'Failed to delete activity')));
+                                  }
                                 },
                               )
                             ])

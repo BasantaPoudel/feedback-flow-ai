@@ -4,9 +4,6 @@ import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// Define the state for the ResultScreenCubit
-
-// Define the cubit for the ResultScreen
 class ResultScreenCubit extends Cubit<ResultScreenState> {
   ResultScreenCubit() : super(ResultScreenInitial());
   final UserRepository _userRepository = UserRepository();
@@ -18,12 +15,12 @@ class ResultScreenCubit extends Cubit<ResultScreenState> {
   calculateAndLoadActivity(Activity activity) async {
     List<Activity> userActivities = await _userRepository.getActivities();
 
+    //TODO - Add the failure case as well for the query below
     Activity userActivity =
         userActivities.firstWhere((element) => element.title == activity.title);
 
-    List<Rubric> rubricFromProfessor =
-        userActivity.rubrics["7voEBXOmHybCnuJbIhDbk778Zvk2"]!;
-    userActivity.rubrics.remove("7voEBXOmHybCnuJbIhDbk778Zvk2");
+    List<Rubric> rubricFromProfessor = userActivity.rubrics["professor"]!;
+    userActivity.rubrics.remove("professor");
     List<Rubric> rubricWithAverageScore =
         calculateAverageScoresfromRubricsEntries(userActivity.rubrics);
 

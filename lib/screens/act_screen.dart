@@ -14,7 +14,7 @@ class ActivitiesScreen extends StatefulWidget {
   const ActivitiesScreen({Key? key}) : super(key: key);
 
   @override
-  _ActivitiesScreenState createState() => _ActivitiesScreenState();
+  State<ActivitiesScreen> createState() => _ActivitiesScreenState();
 }
 
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
@@ -26,7 +26,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
         listener: (context, state) {
       if (state is ActivityErrorLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to load items')),
+          SnackBar(content: Text(state.error ?? 'Error loading activities')),
         );
       }
     }, child: BlocBuilder<ActScreenCubit, ActScreenState>(
@@ -47,60 +47,39 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             ],
           ),
         ),
-        // backgroundColor: const Color.fromRGBO(174, 206, 209, 1),
-        /* appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(174, 206, 209, 1),
-          title: const Text(
-            'Activities',
-            style: TextStyle(color: Colors.black),
-          ),
-        ), */
-        body: Container(
-          /*  decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.grey.shade300, Colors.white],
-              ),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30))), */
-          child: Column(
-            children: [
-              PastActivities(activitiesList: activitiesList ?? []),
-              UpcomingActivities(activitiesList: activitiesList ?? []),
-              BlocBuilder<HomeScreenCubit, HomeScreenState>(
-                  builder: (context, userState) {
-                if (userState is TeacherLoggedInState) {
-                  return Container(
-                      padding: const EdgeInsets.all(8),
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromRGBO(174, 206, 209, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
+        body: Column(
+          children: [
+            PastActivities(activitiesList: activitiesList ?? []),
+            UpcomingActivities(activitiesList: activitiesList ?? []),
+            BlocBuilder<HomeScreenCubit, HomeScreenState>(
+                builder: (context, userState) {
+              if (userState is ProfessorLoggedInState) {
+                return Container(
+                    padding: const EdgeInsets.all(10),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromRGBO(174, 206, 209, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddActivity(),
-                                ));
-                          },
-                          child: const Text(
-                            'Add Activity',
-                            style: TextStyle(color: Colors.black),
-                          )));
-                }
-                return Container();
-              }),
-            ],
-          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AddActivity(),
+                              ));
+                        },
+                        child: const Text(
+                          'Add Activity',
+                          style: TextStyle(color: Colors.black),
+                        )));
+              }
+              return Container();
+            }),
+          ],
         ),
       );
     }));

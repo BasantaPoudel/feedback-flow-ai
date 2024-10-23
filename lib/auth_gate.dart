@@ -8,9 +8,8 @@ class AuthGate extends StatefulWidget {
   const AuthGate({Key? key}) : super(key: key);
 
   @override
-  _AuthGateState createState() => _AuthGateState();
+  State<AuthGate> createState() => _AuthGateState();
 }
-// const AuthGate({super.key});
 
 class _AuthGateState extends State<AuthGate> {
   @override
@@ -25,7 +24,6 @@ class _AuthGateState extends State<AuthGate> {
             providers: [
               EmailAuthProvider(),
             ],
-            // actions: [],
             actions: [
               AuthStateChangeAction<UserCreated>((context, state) async {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(

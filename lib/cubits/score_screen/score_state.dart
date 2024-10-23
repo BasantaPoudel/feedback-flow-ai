@@ -1,4 +1,3 @@
-// Define the state for the ScoreCubit
 abstract class ScoreState {
   final int score;
 

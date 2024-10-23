@@ -21,19 +21,18 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   ];
 
   late List<Widget> _childrenStudent;
-  late List<Widget> _childrenTeacher;
+  late List<Widget> _childrenProfessor;
 
   HomeScreenCubit() : super(UserLoadingState()) {
     getUserRole();
     _childrenStudent = createStudentsWidgets();
-    _childrenTeacher = createTeacherWidgets();
+    _childrenProfessor = createProfessorWidgets();
   }
 
-  // Consists all the business logic here
   Future<void> getUserRole() async {
     String userRole = await _userRepository.getUserRole();
-    if (userRole == "teacher") {
-      emit(TeacherLoggedInState(_currentIndex, _childrenTeacher));
+    if (userRole == "professor") {
+      emit(ProfessorLoggedInState(_currentIndex, _childrenProfessor));
     } else if (userRole == "student") {
       emit(StudentLoggedInState(_currentIndex, _childrenStudent));
     } else {
@@ -55,29 +54,24 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     _currentIndex = index;
   }
 
-  List<Widget> createTeacherWidgets() {
-    List<Widget> childrenTeacher = _commonChildren.toList();
-    return childrenTeacher
+  List<Widget> createProfessorWidgets() {
+    List<Widget> childrenProfessor = _commonChildren.toList();
+    return childrenProfessor
       ..insert(
         2,
-        const DatabaseScreen(),
+        const PresentersScreen(),
       );
   }
 
   List<Widget> createStudentsWidgets() {
     List<Widget> childrenStudent = _commonChildren.toList();
 
-    /* return childrenStudent
-      ..insert(
-        2,
-        const Search(),
-      ); */
     return childrenStudent;
   }
 
-  void onTabTappedTeacher(int index) {
+  void onTabTappedProfessor(int index) {
     _currentIndex = index;
-    emit(TeacherLoggedInState(_currentIndex, _childrenTeacher));
+    emit(ProfessorLoggedInState(_currentIndex, _childrenProfessor));
   }
 
   void onTabTappedStudent(int index) {

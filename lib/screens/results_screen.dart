@@ -9,8 +9,7 @@ class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});
 
   @override
-  _ResultsScreenState createState() => _ResultsScreenState();
-  // final Activity activity;
+  State<ResultsScreen> createState() => _ResultsScreenState();
 }
 
 class _ResultsScreenState extends State<ResultsScreen> {
@@ -34,8 +33,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
             builder: (context, resultState) {
               Activity? activity = resultScreenCubit.state.props;
               if (activity == null || activity.rubrics.isEmpty) {
-                return const Scaffold(
-                  body: Center(
+                return Scaffold(
+                  appBar: AppBar(
+                    title: const Text("Results"),
+                  ),
+                  body: const Center(
                     child:
                         Text("Sorry, you didn't participate in this activity."),
                   ),
@@ -45,20 +47,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
               return Scaffold(
                 appBar: AppBar(
                   title: Row(children: <Widget>[
-                    Expanded(
+                    const Expanded(
                       flex: 1,
-                      child: Container(
-                        child: const Text("Results"),
-                      ),
+                      child: Text("Results"),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(
-                          child: Row(
+                      child: Row(
                         children: [
                           const Text('S'),
                           Switch(
-                              //Default value
                               value: defaultSwitchValue,
                               activeColor: Colors.green,
                               inactiveThumbColor: Colors.blue,
@@ -66,6 +64,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 setState(() {
                                   defaultSwitchValue = value;
                                 });
+                                //TODO - Add the logic to display individual scores for each task - since there is some issue with the state management
                                 resultScreenCubit.state is ResultFromStudents
                                     ? resultScreenCubit
                                         .loadResultFromProfessor(activity)
@@ -74,7 +73,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                               }),
                           const Text('T'),
                         ],
-                      )),
+                      ),
                     )
                   ]),
                 ),

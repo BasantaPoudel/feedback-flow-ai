@@ -9,7 +9,6 @@ import 'package:feedback_flow/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'auth_gate.dart';
 
 void main() async {
@@ -36,8 +35,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: AppTheme.themeData,
-        darkTheme: AppTheme.darkTheme,
+        theme: AppTheme.lightThemeData,
+        darkTheme: AppTheme.darkThemeData,
         home: const AuthGate());
   }
 }
@@ -52,7 +51,7 @@ class RestartWidget extends StatefulWidget {
   }
 
   @override
-  _RestartWidgetState createState() => _RestartWidgetState();
+  State<RestartWidget> createState() => _RestartWidgetState();
 }
 
 class _RestartWidgetState extends State<RestartWidget> {

@@ -9,10 +9,10 @@ class UserLoadingState extends HomeScreenState {}
 
 class InitState extends HomeScreenState {}
 
-class TeacherLoggedInState extends HomeScreenState {
+class ProfessorLoggedInState extends HomeScreenState {
   final int _currentIndex;
   final List<Widget> _children;
-  TeacherLoggedInState(this._currentIndex, this._children);
+  ProfessorLoggedInState(this._currentIndex, this._children);
 
   @override
   get children => _children;

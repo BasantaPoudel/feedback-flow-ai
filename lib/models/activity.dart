@@ -1,11 +1,14 @@
 import 'package:feedback_flow/models/rubric.dart';
 
 class Activity {
+  String? id;
   String title;
   bool isCompleted;
   bool isDistributed;
   bool isStarted;
   Map<String, List<Rubric>> rubrics;
+
+  bool isFeedbackByProfessor;
   // Add other properties as needed
 
   Activity(
@@ -13,19 +16,23 @@ class Activity {
       required this.rubrics,
       required this.isStarted,
       required this.isCompleted,
-      required this.isDistributed});
+      required this.isDistributed,
+      required this.isFeedbackByProfessor,
+      this.id});
 
   factory Activity.fromJson(Map<String, dynamic> json) {
     return Activity(
+      id: json['id'],
       title: json['title'],
       rubrics: json['rubrics'],
       isStarted: json['isStarted'],
       isCompleted: json['isCompleted'],
       isDistributed: json['isDistributed'],
+      isFeedbackByProfessor: json['isFeedbackByProfessor'],
     );
   }
 
-  factory Activity.fromMap(Map<String, dynamic> map) {
+  factory Activity.fromMap(Map<String, dynamic> map, id) {
     Map<String, List<Rubric>> rubricsM = {};
 
     var rubrics = map['rubrics'];
@@ -40,11 +47,13 @@ class Activity {
     });
 
     return Activity(
+      id: id as String,
       title: map['title'] as String,
       rubrics: rubricsM,
       isStarted: map['isStarted'] as bool,
       isCompleted: map['isCompleted'] as bool,
       isDistributed: map['isDistributed'] as bool,
+      isFeedbackByProfessor: map['isFeedbackByProfessor'] as bool,
     );
   }
 
@@ -54,15 +63,13 @@ class Activity {
       'isCompleted': isCompleted,
       'isDistributed': isDistributed,
       'isStarted': isStarted,
+      'isFeedbackByProfessor': isFeedbackByProfessor,
       'rubrics': rubrics.map(
           (key, value) => MapEntry(key, value.map((e) => e.toMap()).toList())),
     };
   }
 
   factory Activity.fromSnapshot(doc) {
-    return Activity.fromMap(doc.data()!);
+    return Activity.fromMap(doc.data()!, doc.id);
   }
 }
-
-// Usage
-

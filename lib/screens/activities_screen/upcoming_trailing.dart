@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UpcomingTrailing extends StatefulWidget {
   @override
-  _UpcomingTrailingState createState() => _UpcomingTrailingState();
+  State<UpcomingTrailing> createState() => _UpcomingTrailingState();
   final List<Activity> activitiesList;
   final int index;
 
@@ -38,7 +38,7 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
     return BlocBuilder<PresenterScreenCubit, PresenterScreenState>(
         builder: (context, state) {
       if (state is PresenterState &&
-          homeScreenCubit.state is TeacherLoggedInState) {
+          homeScreenCubit.state is ProfessorLoggedInState) {
         if (databaseScreenCubit.state.props!.isNotEmpty) {
           var presenter = databaseScreenCubit.state.props!
               .where((element) => element.isPresenter == true)
@@ -71,8 +71,15 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        activitiesScreenCubit.endActivity(
-                            widget.activitiesList, widget.index);
+                        try {
+                          activitiesScreenCubit.endActivity(
+                              widget.activitiesList, widget.index);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text('Failed to end activity')));
+                        }
                       },
                       child: const Text('End'),
                     )
@@ -87,11 +94,23 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
                   Expanded(
                       child: ElevatedButton(
                           onPressed: () {
-                            rubricScreenCubit.addActivityByProfessor(
-                                widget.activitiesList[widget.index], presenter);
-
-                            activitiesScreenCubit.startActivity(
-                                widget.activitiesList, widget.index);
+                            try {
+                              rubricScreenCubit.addActivityByProfessor(
+                                  widget.activitiesList[widget.index],
+                                  presenter);
+                            } catch (e) {
+                              print(e);
+                            }
+                            try {
+                              activitiesScreenCubit.startActivity(
+                                  widget.activitiesList, widget.index);
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content:
+                                          Text('Failed to start activity')));
+                            }
                           },
                           child: const Text('Start Again'))),
                   const SizedBox(
@@ -100,8 +119,16 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
                   Expanded(
                       child: ElevatedButton(
                           onPressed: () {
-                            activitiesScreenCubit.distributeResults(
-                                widget.activitiesList, widget.index);
+                            try {
+                              activitiesScreenCubit.distributeResults(
+                                  widget.activitiesList, widget.index);
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                          'Failed to distribute Results')));
+                            }
                           },
                           child: const Text('Distribute Results'))),
                 ],

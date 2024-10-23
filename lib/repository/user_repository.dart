@@ -72,9 +72,9 @@ class UserRepository extends MainRepository {
       log.d("Query1 - Successfully completed");
       for (var docSnapshot in querySnapshot.docs) {
         log.d('${docSnapshot.id} => ${docSnapshot.data()}');
-        if (docSnapshot.data().containsValue("teacher")) {
-          log.d("[Reached Teacher If]");
-          return "teacher";
+        if (docSnapshot.data().containsValue("professor")) {
+          log.d("[Reached professor If]");
+          return "professor";
         } else {
           log.d("[Reached Student If]");
           return "student";
@@ -100,7 +100,7 @@ class UserRepository extends MainRepository {
     );
   }
 
-//Method to be called when Teacher presses Start on the activity
+//Method to be called when professor presses Start on the activity
   void addActivityWithDefaultRubricToPresenter(presenter, activity) async {
     try {
       roleBasedUsersRef
@@ -134,7 +134,8 @@ class UserRepository extends MainRepository {
         if (value.docs.isNotEmpty) {
           activities = value.docs.first
               .data()['activities']
-              .map<Activity>((activity) => Activity.fromMap(activity))
+              .map<Activity>((activity) =>
+                  Activity.fromMap(activity, '')) //TODO - Fix the empty id
               .toList();
         }
       });
@@ -145,7 +146,13 @@ class UserRepository extends MainRepository {
   }
 
   void updateRubrics(List<Rubric> rubricsFromUser, presenter, title) async {
-    String uId = await getLoggedInUserId();
+    String uId;
+    String userRole = await getUserRole();
+    if (userRole == "professor") {
+      uId = "professor";
+    } else {
+      uId = await getLoggedInUserId();
+    }
     FirebaseFirestore.instance.runTransaction((transaction) async {
       final query =
           roleBasedUsersRef.where("email", isEqualTo: presenter.email);
@@ -154,11 +161,7 @@ class UserRepository extends MainRepository {
         var documentID = snap.id;
 
         DocumentReference docRef = roleBasedUsersRef.doc(documentID);
-
-        // Get the document snapshot
         DocumentSnapshot snapshot = await transaction.get(docRef);
-
-        //Get the current value
         var currentValue = snapshot.data() as Map<String, dynamic>;
 
         var index = currentValue['activities']
@@ -170,6 +173,9 @@ class UserRepository extends MainRepository {
             rubricsFromUser.map((rubric) => rubric.toMap()).toList();
         activities[index]['rubrics'] = currentRubrics;
 
+        if (userRole == "professor") {
+          activities[index]['isFeedbackByProfessor'] = true;
+        }
         // Check if the document exists and then update it
         log.d("UpdatedActivity: $activities");
         transaction.update(docRef, {"activities": activities});
@@ -177,25 +183,5 @@ class UserRepository extends MainRepository {
     }).catchError((error) {
       log.d("Transaction failed: $error");
     });
-
-    // roleBasedUsersRef
-    //     .where("email", isEqualTo: presenter!.email)
-    //     .get()
-    //     .then((value) {
-    //   if (value.docs.isNotEmpty) {
-    //     var index = value.docs.first
-    //         .data()['activities']
-    //         .indexWhere((element) => element['title'] == title);
-
-    //     var activities = value.docs.first.data()['activities'];
-    //     var currentRubrics = activities[index]['rubrics'];
-    //     currentRubrics[uId] =
-    //         rubricsFromUser.map((rubric) => rubric.toMap()).toList();
-    //     activities[index]['rubrics'] = currentRubrics;
-    //     roleBasedUsersRef.doc(value.docs.first.id).update({
-    //       'activities': activities,
-    //     });
-    //   }
-    // });
   }
 }

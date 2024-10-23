@@ -27,14 +27,14 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     var activities = map['activities'] != null
-        ? List<Activity>.from(map['activities'].map((x) => Activity.fromMap(x)))
+        ? List<Activity>.from(map['activities']
+            .map((x) => Activity.fromMap(x, ''))) // TODO - Fix the empty id
         : null;
     return UserModel(
       name: map['name'],
       email: map['email'],
       role: map['role'],
       isPresenter: map['isPresenter'] ?? false,
-      //TODO: Verify if this fixed the issue
       activities: activities ?? [],
     );
   }
@@ -47,10 +47,6 @@ class UserModel {
       'isPresenter': isPresenter,
       'activities': activities?.map((activity) => activity.toMap()).toList(),
     };
-  }
-
-  factory UserModel.fromSnapshot(doc) {
-    return UserModel.fromMap(doc.data()!);
   }
 
   setPresenter(bool isPresenter) {

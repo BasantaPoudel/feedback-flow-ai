@@ -10,7 +10,7 @@ class UpcomingActivities extends StatefulWidget {
   const UpcomingActivities({Key? key, required this.activitiesList})
       : super(key: key);
   @override
-  _UpcomingActivitiesState createState() => _UpcomingActivitiesState();
+  State<UpcomingActivities> createState() => _UpcomingActivitiesState();
   final List<Activity> activitiesList;
 }
 
@@ -39,27 +39,17 @@ class _UpcomingActivitiesState extends State<UpcomingActivities> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text('Upcoming Activities',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.black,
-                      // foreground: Paint()
-                      //   ..shader = const LinearGradient(colors: <Color>[
-                      //     Colors.white,
-                      //     Colors.yellow,
-                      //   ]).createShader(
-                      //       const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
-                    )),
+                Text('Upcoming Activities',
+                    style: Theme.of(context).textTheme.headlineSmall),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       SvgPicture.asset('assets/image/upcoming_activities.svg'),
                       Container(
-                          // height: MediaQuery.of(context).size.height * 0.2,
                           constraints: BoxConstraints(
                               maxHeight:
-                                  MediaQuery.of(context).size.height * 0.28),
+                                  MediaQuery.of(context).size.height * 0.24),
                           width: MediaQuery.of(context).size.width * 0.7,
                           child: ListBuilderUpcoming(
                               activitiesList: widget.activitiesList))

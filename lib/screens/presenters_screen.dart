@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
 
-class DatabaseScreen extends StatefulWidget {
-  const DatabaseScreen({super.key});
+class PresentersScreen extends StatefulWidget {
+  const PresentersScreen({super.key});
 
   @override
-  _DatabaseScreenState createState() => _DatabaseScreenState();
+  State<PresentersScreen> createState() => _PresentersScreenState();
 }
 
-class _DatabaseScreenState extends State<DatabaseScreen> {
+class _PresentersScreenState extends State<PresentersScreen> {
   final Logger log = Logger();
   @override
   void initState() {
@@ -21,17 +21,14 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PresenterScreenCubit? databaseScreenCubit =
-        BlocProvider.of<PresenterScreenCubit>(context);
-
     return BlocBuilder<PresenterScreenCubit, PresenterScreenState>(
         builder: (context, state) {
-      if (state is DatabaseScreenInitial || state is DatabaseScreenLoading) {
+      if (state is PresenterScreenInitial || state is PresenterScreenLoading) {
         return const Center(
           child: CircularProgressIndicator(),
         );
       }
-      var users = databaseScreenCubit.state.props;
+      var users = context.read<PresenterScreenCubit>().state.props;
       List<UserModel>? students =
           users?.where((element) => element.role == "student").toList();
       return ListView.builder(
@@ -50,8 +47,9 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                           value: students[index].isPresenter,
                           checkColor: Colors.white,
                           onChanged: (bool? value) {
-                            databaseScreenCubit.selectPresenter(
-                                students, index);
+                            context
+                                .read<PresenterScreenCubit>()
+                                .selectPresenter(students, index);
                           },
                         );
                       } else {
@@ -59,7 +57,8 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
 
                         return Checkbox(
                             value: false,
-                            onChanged: (bool? value) => databaseScreenCubit
+                            onChanged: (bool? value) => context
+                                .read<PresenterScreenCubit>()
                                 .selectPresenter(students, index));
                       }
                     })));

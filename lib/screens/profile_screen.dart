@@ -8,7 +8,7 @@ class Profile extends StatefulWidget {
   const Profile({super.key});
 
   @override
-  _ProfileState createState() => _ProfileState();
+  State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
@@ -34,14 +34,14 @@ class _ProfileState extends State<Profile> {
               duration: const Duration(seconds: 5),
             ),
           );
-
-          //TODO - Look for alternatives as well
           context.read<PresenterScreenCubit>().updateUserName(newName);
-          // RestartWidget.restartApp(context);
         }),
         SignedOutAction((context) {
           RestartWidget.restartApp(context);
         })
+      ],
+      children: const [
+        Center(child: Text("App Version: 0.1.0+8")),
       ],
     );
   }

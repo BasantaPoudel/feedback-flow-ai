@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 
 class PresenterScreenCubit extends Cubit<PresenterScreenState> {
-  PresenterScreenCubit() : super(DatabaseScreenInitial()) {
+  PresenterScreenCubit() : super(PresenterScreenInitial()) {
     subscribeToData();
   }
 
@@ -18,11 +18,12 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
       _userRepo.roleBasedUsersRef.snapshots().listen((snapshot) {
         log.d("[Database-C - subscribeToData] Reached Here");
         var users =
-            snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
+            snapshot.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
         if (users.any((user) => user.isPresenter == true)) {
           emit(PresenterState(users));
+          log.d("[Database-C - subscribeToData] PresenterState Emitted");
         } else {
-          emit(DatabaseScreenLoaded(users));
+          emit(PresenterScreenLoaded(users));
         }
       });
     } catch (e) {
@@ -36,7 +37,7 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
     _userRepo.updateUser(users[index]);
     users.any((element) => element.isPresenter == true)
         ? emit(PresenterState(users))
-        : emit(DatabaseScreenLoaded(users));
+        : emit(PresenterScreenLoaded(users));
   }
 
 //TODO - Use this method for more than one presenter
@@ -56,6 +57,33 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
         _userRepo.updateUser(user);
       }
     }
+  }
+
+  updatePresenterFeedbackByProfessor(UserModel presenter, activity) async {
+    // String uId = await _userRepo.getLoggedInUserId();
+    List<Rubric> rubricsFromProfessor = activity.rubrics["professor"];
+
+    var index = presenter.activities
+        ?.indexWhere((element) => element.title == activity.title);
+    presenter.activities?.elementAt(index!).isFeedbackByProfessor = true;
+
+    if (presenter.activities?.elementAt(index!).rubrics["professor"] == null) {
+      presenter.activities?.elementAt(index!).rubrics["professor"] = [];
+      presenter.activities?.elementAt(index!).rubrics["professor"] =
+          rubricsFromProfessor;
+    } else {
+      presenter.activities?.elementAt(index!).rubrics["professor"] =
+          rubricsFromProfessor;
+    }
+    // _userRepo.updateUser(presenter);
+    _userRepo.updateRubrics(rubricsFromProfessor, presenter, activity.title);
+  }
+
+  bool? checkIfFeedbackAlreadyProvidedByProfessor(
+      UserModel presenter, activity) {
+    var index = presenter.activities
+        ?.indexWhere((element) => element.title == activity.title);
+    return presenter.activities?.elementAt(index!).isFeedbackByProfessor;
   }
 
   updatePresenterActivityList(UserModel presenter, activity) async {
@@ -78,6 +106,10 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
 
   String getUserId() {
     return _userRepo.user!.uid;
+  }
+
+  Future<String> getUserRole() {
+    return _userRepo.getUserRole();
   }
 
   String? getUserEmail() {

@@ -9,7 +9,7 @@ class InitialState extends ActScreenState {}
 
 class ActivityLoadedState extends ActScreenState {
   final List<Activity> allActivities;
-
+  String? error;
   ActivityLoadedState(this.allActivities);
   @override
   get getAllActivities => allActivities;
@@ -17,10 +17,12 @@ class ActivityLoadedState extends ActScreenState {
 
 class ActivityErrorLoading extends ActScreenState {
   final List<Activity> allActivities;
-
-  ActivityErrorLoading(this.allActivities);
+  String? error;
+  ActivityErrorLoading(this.allActivities, {required String error});
   @override
   get getAllActivities => allActivities;
+
+  get getError => error;
 }
 
 class ActivityAddedState extends ActScreenState {

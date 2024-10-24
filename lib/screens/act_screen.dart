@@ -26,7 +26,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
         listener: (context, state) {
       if (state is ActivityErrorLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to load items')),
+          SnackBar(content: Text(state.error ?? 'Error loading activities')),
         );
       }
     }, child: BlocBuilder<ActScreenCubit, ActScreenState>(

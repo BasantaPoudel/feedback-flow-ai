@@ -110,10 +110,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  // deleteActivities();
+  // deleteActivitiesFromUser();
   // populateActivities();
-  populateRubrics();
-  /* deleteActivities();
-  deleteActivitiesFromUser(); */
+  // populateRubrics();
 }
 
 void populateRubrics() async {
@@ -121,8 +121,6 @@ void populateRubrics() async {
   for (var activity in activitiesList) {
     for (var rubric in activity.rubrics.values.first) {
       await firestore
-          .collection('act')
-          .doc(activity.id)
           .collection('rubrics')
           .doc(rubric.title)
           .set(rubric.toMap());

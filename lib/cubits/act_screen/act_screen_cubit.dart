@@ -23,7 +23,12 @@ class ActScreenCubit extends Cubit<ActScreenState> {
           activity.isStarted == true &&
           activity.isDistributed == false &&
           activity.isCompleted == false)) {
-        emit(ActivityStarted(activities));
+        emit(ActivityStarted(
+            activities,
+            activities.firstWhere((activity) =>
+                activity.isStarted == true &&
+                activity.isDistributed == false &&
+                activity.isCompleted == false)));
       } else if (activities.any((activity) =>
           activity.isCompleted == true && activity.isDistributed == false)) {
         emit(ActivityEnded(activities));
@@ -38,7 +43,7 @@ class ActScreenCubit extends Cubit<ActScreenState> {
       activities[index].isStarted = true;
 
       _activityRepository.updateActivity(activities[index]);
-      emit(ActivityStarted(activities));
+      emit(ActivityStarted(activities, activities[index]));
     } catch (e) {
       throw Exception('Error starting activity: $e');
       // emit(ActivityErrorLoading(activities, error: "Error starting activity"));

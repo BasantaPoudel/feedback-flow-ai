@@ -1,5 +1,5 @@
 import 'package:feedback_flow/models/activity.dart';
-import 'package:feedback_flow/screens/activities_screen/list_builder.dart';
+import 'package:feedback_flow/screens/activities_screen/list_builder_past.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

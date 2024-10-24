@@ -9,6 +9,11 @@ class ResultScreenInitial extends ResultScreenState {
   ResultScreenInitial();
 }
 
+class ResultScreenError extends ResultScreenState {
+  String message;
+  ResultScreenError(this.message);
+}
+
 class ResultScreenLoadedWithActivity extends ResultScreenState {
   Activity activity;
 

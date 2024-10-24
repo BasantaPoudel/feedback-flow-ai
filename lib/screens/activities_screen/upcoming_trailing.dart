@@ -102,6 +102,9 @@ class _UpcomingTrailingState extends State<UpcomingTrailing> {
                               print(e);
                             }
                             try {
+                              widget.activitiesList[widget.index].isCompleted =
+                                  false;
+
                               activitiesScreenCubit.startActivity(
                                   widget.activitiesList, widget.index);
                             } catch (e) {

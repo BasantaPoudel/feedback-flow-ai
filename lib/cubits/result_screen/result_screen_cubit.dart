@@ -12,12 +12,21 @@ class ResultScreenCubit extends Cubit<ResultScreenState> {
     emit(ResultFromProfessor(activity));
   }
 
+  clearState() {
+    emit(ResultScreenInitial());
+  }
+
   calculateAndLoadActivity(Activity activity) async {
     List<Activity> userActivities = await _userRepository.getActivities();
 
-    //TODO - Add the failure case as well for the query below
-    Activity userActivity =
-        userActivities.firstWhere((element) => element.title == activity.title);
+    Activity userActivity;
+    try {
+      userActivity = userActivities
+          .firstWhere((element) => element.title == activity.title);
+    } catch (e) {
+      emit(ResultScreenError("Activity not found"));
+      return;
+    }
 
     List<Rubric> rubricFromProfessor = userActivity.rubrics["professor"]!;
     userActivity.rubrics.remove("professor");

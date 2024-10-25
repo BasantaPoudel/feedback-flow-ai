@@ -35,8 +35,8 @@ class ActivityAddedState extends ActScreenState {
 
 class ActivityStarted extends ActScreenState {
   final List<Activity> allActivities;
-
-  ActivityStarted(this.allActivities);
+  final Activity activity;
+  ActivityStarted(this.allActivities, this.activity);
   @override
   get getAllActivities => allActivities;
 }

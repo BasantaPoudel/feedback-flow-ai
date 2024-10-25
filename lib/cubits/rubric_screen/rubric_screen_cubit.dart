@@ -15,7 +15,13 @@ class RubricScreenCubit extends Cubit<RubricScreenState> {
 
   void setScore(
       Activity activity, rubricIndex, score, UserModel presenter) async {
-    String userId = await _userRepository.getLoggedInUserId();
+    String userId;
+    String userRole = await _userRepository.getUserRole();
+    if (userRole == "professor") {
+      userId = "professor";
+    } else {
+      userId = await _userRepository.getLoggedInUserId();
+    }
     if (activity.rubrics[userId] == null) {
       activity.rubrics[userId] = [];
       List<Rubric> rubrics =
@@ -25,7 +31,8 @@ class RubricScreenCubit extends Cubit<RubricScreenState> {
 
       //Deep copy the rubrics
       for (var obj in rubrics) {
-        copiedRubrics.add(Rubric(title: obj.title, score: obj.score));
+        copiedRubrics.add(Rubric(
+            title: obj.title, description: obj.description, score: obj.score));
       }
       activity.rubrics[userId] = copiedRubrics;
     }
@@ -39,6 +46,7 @@ class RubricScreenCubit extends Cubit<RubricScreenState> {
     }
     activity.rubrics[userId]?.elementAt(rubricIndex).score = score;
     // presenter.activities?.add(activity);
+    //TODO - Find why RubricScoreUpdatedByProfessor here
     emit(RubricScoreUpdatedByProfessor(activity));
   }
 

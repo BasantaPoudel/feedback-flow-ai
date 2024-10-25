@@ -60,8 +60,15 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
   }
 
   updatePresenterFeedbackByProfessor(UserModel presenter, activity) async {
-    // String uId = await _userRepo.getLoggedInUserId();
-    List<Rubric> rubricsFromProfessor = activity.rubrics["professor"];
+    String uId;
+    String userRole = await _userRepo.getUserRole();
+    if (userRole == "professor") {
+      uId = "professor";
+    } else {
+      uId = await _userRepo.getLoggedInUserId();
+    }
+
+    List<Rubric> rubricsFromProfessor = activity.rubrics[uId];
 
     var index = presenter.activities
         ?.indexWhere((element) => element.title == activity.title);
@@ -88,7 +95,14 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
 
   updatePresenterActivityList(UserModel presenter, activity) async {
     //Remove the old logic as there was no activity initially but now the activity is loaded right when going to the rubric screen
-    String uId = await _userRepo.getLoggedInUserId();
+
+    String uId;
+    String userRole = await _userRepo.getUserRole();
+    if (userRole == "professor") {
+      uId = "professor";
+    } else {
+      uId = await _userRepo.getLoggedInUserId();
+    }
     List<Rubric> rubricsFromUser = activity.rubrics[uId];
 
     var index = presenter.activities
@@ -100,7 +114,6 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
     } else {
       presenter.activities?.elementAt(index!).rubrics[uId] = rubricsFromUser;
     }
-    // _userRepo.updateUser(presenter);
     _userRepo.updateRubrics(rubricsFromUser, presenter, activity.title);
   }
 

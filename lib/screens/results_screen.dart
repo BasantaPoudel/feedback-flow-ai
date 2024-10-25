@@ -4,6 +4,7 @@ import 'package:feedback_flow/cubits/result_screen/result_screen_state.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 
 class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});
@@ -14,10 +15,25 @@ class ResultsScreen extends StatefulWidget {
 
 class _ResultsScreenState extends State<ResultsScreen> {
   bool defaultSwitchValue = true;
-
+  final Logger log = Logger();
+  ResultScreenCubit? r;
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Save a reference to the Cubit when the widget is still active
+    r = context.read<ResultScreenCubit>();
+    log.d(context.read<ResultScreenCubit>().isClosed);
+  }
+
+  @override
+  void dispose() {
+    r?.clearState();
+    super.dispose();
   }
 
   @override

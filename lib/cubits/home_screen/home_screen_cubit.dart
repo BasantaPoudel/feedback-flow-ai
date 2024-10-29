@@ -7,7 +7,6 @@ import 'package:feedback_flow/screens/presenters_screen.dart';
 import 'package:feedback_flow/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'package:feedback_flow/screens/stats_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {
@@ -16,7 +15,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   final List<Widget> _commonChildren = [
     const ActivitiesScreen(),
     const FeedbackScreen(),
-    const Stats(),
+    // const Stats(),
     const Profile(),
   ];
 

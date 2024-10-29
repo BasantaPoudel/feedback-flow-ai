@@ -9,6 +9,10 @@ class RubricScreenCubit extends Cubit<RubricScreenState> {
   RubricScreenCubit() : super(RubricScreenInitial());
   final UserRepository _userRepository = UserRepository();
 
+  void clearRubricState() {
+    emit(RubricScreenInitial());
+  }
+
   void updateRubricScore(Activity activity, UserModel presenter) {
     emit(RubricScoreUpdatedByProfessor(activity));
   }

@@ -122,11 +122,17 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                                     borderRadius: BorderRadius.circular(10),
                                     backgroundColor: Colors.blue,
                                     icon: Icons.copy,
-                                    onPressed: (context) {
+                                    onPressed: (context) async {
                                       try {
-                                        BlocProvider.of<ActScreenCubit>(context)
+                                        await BlocProvider.of<ActScreenCubit>(
+                                                context)
                                             .duplicateActivity(
                                                 activitiesList[index]);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                backgroundColor: Colors.green,
+                                                content: Text(
+                                                    'Activity Duplicated Successfully')));
                                       } catch (e) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
@@ -159,10 +165,16 @@ class _ListBuilderUpcomingState extends State<ListBuilderUpcoming> {
                                 borderRadius: BorderRadius.circular(10),
                                 icon: Icons.delete,
                                 backgroundColor: Colors.red,
-                                onPressed: (context) {
+                                onPressed: (context) async {
                                   try {
-                                    BlocProvider.of<ActScreenCubit>(context)
+                                    await BlocProvider.of<ActScreenCubit>(
+                                            context)
                                         .deleteActivity(activitiesList[index]);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            backgroundColor: Colors.green,
+                                            content: Text(
+                                                'Activity Deleted Successfully')));
                                   } catch (e) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(

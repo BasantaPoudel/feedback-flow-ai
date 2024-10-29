@@ -20,6 +20,8 @@ class FeedbackScreen extends StatefulWidget {
 class _FeedbackScreenState extends State<FeedbackScreen> {
   late UserRepository userrepo;
 
+  final _controllerFeedback = TextEditingController();
+  final _controllerFeedForward = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -28,6 +30,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   void dispose() {
+    _controllerFeedback.dispose();
+    _controllerFeedForward.dispose();
     super.dispose();
   }
 
@@ -121,9 +125,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     ),
                     Container(
                       padding: const EdgeInsets.all(10),
-                      child: const TextField(
+                      child: TextField(
+                        controller: _controllerFeedback,
                         enabled: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Open Feedback',
                         ),
@@ -134,9 +139,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     ),
                     Container(
                       padding: const EdgeInsets.all(10),
-                      child: const TextField(
+                      child: TextField(
+                        controller: _controllerFeedForward,
                         enabled: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Open Feedforward',
                         ),
@@ -273,7 +279,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 20),
+                              margin:
+                                  const EdgeInsets.only(top: 20, bottom: 30),
                               padding: const EdgeInsets.all(10),
                               child: Text(
                                 'You can provide peer feedback only when the in-class activity is started by the professor. Please wait ...',

@@ -157,11 +157,11 @@ class _EditActivityState extends State<EditActivity> {
                       style: OutlinedButton.styleFrom(
                         alignment: Alignment.centerLeft,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (widget._controllerTitle.text.trim().isEmpty) return;
 
                         try {
-                          activitiesScreenCubit.updateActivity(Activity(
+                          await activitiesScreenCubit.updateActivity(Activity(
                             id: widget.activity!.id,
                             title: widget._controllerTitle.text,
                             rubrics: {"professor": widget._selectedRubrics},
@@ -171,6 +171,11 @@ class _EditActivityState extends State<EditActivity> {
                             isFeedbackByProfessor:
                                 widget.activity!.isFeedbackByProfessor,
                           ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content:
+                                      Text('Activity Updated Successfully')));
                           Navigator.of(context).pop();
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(

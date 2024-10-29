@@ -14,6 +14,10 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     subscribeToData();
   }
 
+  clearActivity() {
+    emit(InitialState());
+  }
+
   void subscribeToData() {
     _activityRepository.activitiesRef.snapshots().listen((snapshot) {
       var activities =
@@ -62,7 +66,7 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     }
   }
 
-  void updateActivity(Activity activity) {
+  Future<void> updateActivity(Activity activity) async {
     try {
       _activityRepository.updateActivity(activity);
       state.getAllActivities!.add(activity);
@@ -74,7 +78,7 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     }
   }
 
-  void deleteActivity(Activity activity) {
+  Future<void> deleteActivity(Activity activity) async {
     try {
       _activityRepository.deleteActivity(activity);
     } catch (e) {
@@ -85,7 +89,7 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     }
   }
 
-  void duplicateActivity(Activity activity) {
+  Future<void> duplicateActivity(Activity activity) async {
     try {
       _activityRepository.addActivity(activity);
     } catch (e) {

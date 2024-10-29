@@ -59,11 +59,11 @@ class _NavigationHomeState extends State<NavigationHome> {
               activeIcon: SvgPicture.asset('assets/icons/presenters_.svg'),
               label: 'Presenters',
             ),
-            BottomNavigationBarItem(
+            /*  BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/stats.svg'),
               activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
               label: 'Stats',
-            ),
+            ), */
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/profile.svg'),
               activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),
@@ -87,11 +87,11 @@ class _NavigationHomeState extends State<NavigationHome> {
               activeIcon: SvgPicture.asset('assets/icons/feedback_.svg'),
               label: 'Feedback',
             ),
-            BottomNavigationBarItem(
+            /*  BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/stats.svg'),
               activeIcon: SvgPicture.asset('assets/icons/stats_.svg'),
               label: 'Stats',
-            ),
+            ), */
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/profile.svg'),
               activeIcon: SvgPicture.asset('assets/icons/profile_.svg'),

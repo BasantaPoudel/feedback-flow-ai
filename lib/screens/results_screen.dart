@@ -53,9 +53,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   appBar: AppBar(
                     title: const Text("Results"),
                   ),
-                  body: const Center(
-                    child:
-                        Text("Sorry, you didn't participate in this activity."),
+                  body: Center(
+                    child: Text(
+                      "Sorry, you didn't participate or receive any feedback in this activity.",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                   ),
                 );
               }

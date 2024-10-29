@@ -31,38 +31,41 @@ class _PresentersScreenState extends State<PresentersScreen> {
       var users = context.read<PresenterScreenCubit>().state.props;
       List<UserModel>? students =
           users?.where((element) => element.role == "student").toList();
-      return ListView.builder(
-          itemCount: students?.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-                color: const Color(0xFF6D7981),
-                child: ListTile(
-                    title: Text(students![index].name),
-                    textColor: Colors.white,
-                    trailing:
-                        BlocBuilder<PresenterScreenCubit, PresenterScreenState>(
-                            builder: (context, state) {
-                      if (state is PresenterState) {
-                        return Checkbox(
-                          value: students[index].isPresenter,
-                          checkColor: Colors.white,
-                          onChanged: (bool? value) {
-                            context
-                                .read<PresenterScreenCubit>()
-                                .selectPresenter(students, index);
-                          },
-                        );
-                      } else {
-                        log.d("Reached Else");
-
-                        return Checkbox(
-                            value: false,
-                            onChanged: (bool? value) => context
-                                .read<PresenterScreenCubit>()
-                                .selectPresenter(students, index));
-                      }
-                    })));
-          });
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Enrolled Students"),
+        ),
+        body: ListView.builder(
+            itemCount: students?.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                  color: const Color(0xFF6D7981),
+                  child: ListTile(
+                      title: Text(students![index].name),
+                      textColor: Colors.white,
+                      trailing: BlocBuilder<PresenterScreenCubit,
+                          PresenterScreenState>(builder: (context, state) {
+                        if (state is PresenterState) {
+                          return Checkbox(
+                            value: students[index].isPresenter,
+                            checkColor: Colors.white,
+                            onChanged: (bool? value) {
+                              context
+                                  .read<PresenterScreenCubit>()
+                                  .selectPresenter(students, index);
+                            },
+                          );
+                        } else {
+                          log.d("Reached Else");
+                          return Checkbox(
+                              value: false,
+                              onChanged: (bool? value) => context
+                                  .read<PresenterScreenCubit>()
+                                  .selectPresenter(students, index));
+                        }
+                      })));
+            }),
+      );
     });
   }
 }

@@ -19,7 +19,7 @@ class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        side: BorderSide(color: Colors.blue), // Border color
+        side: const BorderSide(color: Colors.blue), // Border color
         // foregroundColor: Colors.blue, // Text color
         // padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
       ),
@@ -111,6 +111,7 @@ class AppTheme {
       /*  backgroundColor:
           Color.fromRGBO(239, 249, 255, 1), */ // Set the background color
       // color: Color.fromRGBO(174, 206, 209, 1), // Set the app bar color
+      centerTitle: false,
       iconTheme: IconThemeData(
         color: Colors.black, // Set the icon color
       ),

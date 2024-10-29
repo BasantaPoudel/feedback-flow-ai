@@ -69,6 +69,8 @@ class _AuthGateState extends State<AuthGate> {
             },
           );
         } else if (snapshot.data?.displayName != null) {
+          //   else if (snapshot.data?.displayName != null &&
+          // snapshot.data?.emailVerified == true) {
           return const NavigationHome();
         }
         return const Profile();

@@ -15,26 +15,45 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return ProfileScreen(
+      showDeleteConfirmationDialog: true,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('My Profile'),
       ),
+      // avatar: const CircleAvatar(
+      //   child: Icon(Icons.),
+      // ),
+      // showMFATile: true,
       actions: [
-        EmailVerifiedAction(() {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Email verified')));
-          RestartWidget.restartApp(context);
-        }),
-        DisplayNameChangedAction((context, oldName, newName) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.green,
-              content: Text(
-                  'Display name changed to $newName, Please Sign Out and Sign In again once you verify your email!'),
-              duration: const Duration(seconds: 5),
-            ),
+        DisplayNameChangedAction((context, oldName, newName) async {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Name Changed'),
+                content: Text('Display name changed to $newName'),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                      RestartWidget.restartApp(context);
+                    },
+                  ),
+                ],
+              );
+            },
           );
-          context.read<PresenterScreenCubit>().updateUserName(newName);
+          try {
+            await context.read<PresenterScreenCubit>().updateUserName(newName);
+          } catch (e) {
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   SnackBar(
+            //     content: Text('Failed to update display name in the database: $e'),
+            //   ),
+            // );
+            print(e);
+          }
         }),
         SignedOutAction((context) {
           RestartWidget.restartApp(context);

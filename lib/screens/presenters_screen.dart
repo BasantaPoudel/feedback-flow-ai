@@ -1,3 +1,5 @@
+import 'package:feedback_flow/cubits/act_screen/act_screen_cubit.dart';
+import 'package:feedback_flow/cubits/act_screen/act_screen_state.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.dart';
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/models/user.dart';
@@ -35,36 +37,36 @@ class _PresentersScreenState extends State<PresentersScreen> {
         appBar: AppBar(
           title: const Text("Enrolled Students"),
         ),
-        body: ListView.builder(
-            itemCount: students?.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  color: const Color(0xFF6D7981),
-                  child: ListTile(
-                      title: Text(students![index].name),
-                      textColor: Colors.white,
-                      trailing: BlocBuilder<PresenterScreenCubit,
-                          PresenterScreenState>(builder: (context, state) {
-                        if (state is PresenterState) {
-                          return Checkbox(
-                            value: students[index].isPresenter,
-                            checkColor: Colors.white,
-                            onChanged: (bool? value) {
-                              context
-                                  .read<PresenterScreenCubit>()
-                                  .selectPresenter(students, index);
-                            },
-                          );
-                        } else {
-                          log.d("Reached Else");
-                          return Checkbox(
-                              value: false,
-                              onChanged: (bool? value) => context
-                                  .read<PresenterScreenCubit>()
-                                  .selectPresenter(students, index));
-                        }
-                      })));
-            }),
+        body: BlocBuilder<ActScreenCubit, ActScreenState>(
+            builder: (context, stateActivity) {
+          return ListView.builder(
+              itemCount: students?.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                    color: const Color(0xFF6D7981),
+                    child: ListTile(
+                        title: Text(students![index].name),
+                        textColor: Colors.white,
+                        trailing: BlocBuilder<PresenterScreenCubit,
+                            PresenterScreenState>(builder: (context, state) {
+                          if (state is PresenterState &&
+                              stateActivity is ActivityStarted) {
+                            return Checkbox(
+                              value: students[index].isPresenter,
+                              checkColor: Colors.white,
+                              onChanged: null,
+                            );
+                          } else {
+                            log.d("Reached False");
+                            return Checkbox(
+                                value: students[index].isPresenter,
+                                onChanged: (bool? value) => context
+                                    .read<PresenterScreenCubit>()
+                                    .selectPresenter(students, index));
+                          }
+                        })));
+              });
+        }),
       );
     });
   }

@@ -18,7 +18,7 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     emit(InitialState());
   }
 
-  void subscribeToData() {
+  Future<void> subscribeToData() async {
     _activityRepository.activitiesRef.snapshots().listen((snapshot) {
       var activities =
           snapshot.docs.map((doc) => Activity.fromSnapshot(doc)).toList();
@@ -46,11 +46,12 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     try {
       activities[index].isStarted = true;
 
-      _activityRepository.updateActivity(activities[index]);
-      emit(ActivityStarted(activities, activities[index]));
+      _activityRepository.updateActivityStatus(activities[index]);
+
+      // emit(ActivityStarted(activities, activities[index]));
     } catch (e) {
       throw Exception('Error starting activity: $e');
-      // emit(ActivityErrorLoading(activities, error: "Error starting activity"));
+      // emit(ActivityErrorLoading(activities, error: "Error starting activity"));\
     }
   }
 
@@ -112,8 +113,10 @@ class ActScreenCubit extends Cubit<ActScreenState> {
   void endActivity(List<Activity> activities, index) {
     try {
       activities[index].isCompleted = true;
-      _activityRepository.updateActivity(activities[index]);
-      emit(ActivityEnded(activities));
+      // _activityRepository.updateActivity(activities[index]);
+      _activityRepository.updateActivityStatus(activities[index]);
+      subscribeToData();
+      // emit(ActivityEnded(activities));
     } catch (e) {
       throw Exception('Error ending activity: $e');
       // emit(ActivityErrorLoading(activities, error: "Error ending activity"));
@@ -124,8 +127,9 @@ class ActScreenCubit extends Cubit<ActScreenState> {
     try {
       activities[index].isDistributed = true;
       pastActivities.add(activities[index]);
-      _activityRepository.updateActivity(activities[index]);
-      emit(ResultsDistributed(activities));
+      // _activityRepository.updateActivity(activities[index]);
+      _activityRepository.updateActivityStatus(activities[index]);
+      // emit(ResultsDistributed(activities));
     } catch (e) {
       emit(ActivityErrorLoading(activities,
           error: "Error distributing results"));

@@ -32,4 +32,17 @@ class ActivityRepository extends MainRepository {
       throw Exception('Error deleting activity: $e');
     }
   }
+
+  updateActivityStatus(Activity activity) async {
+    try {
+      activitiesRef.doc(activity.id).update({
+        'isStarted': activity.isStarted,
+        'isDistributed': activity.isDistributed,
+        'isCompleted': activity.isCompleted,
+      });
+    } catch (e) {
+      throw Exception('Error updating activity status: $e');
+      // log.d('Error: $e');
+    }
+  }
 }

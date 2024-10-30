@@ -4,6 +4,7 @@ import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_cubit.d
 import 'package:feedback_flow/cubits/presenters_screen/presenters_screen_state.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_cubit.dart';
 import 'package:feedback_flow/cubits/rubric_screen/rubric_screen_state.dart';
+import 'package:feedback_flow/main.dart';
 import 'package:feedback_flow/models/activity.dart';
 import 'package:feedback_flow/models/rubric.dart';
 import 'package:feedback_flow/repository/user_repository.dart';
@@ -162,13 +163,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('Feedback'),
-                                  content:
-                                      Text('Score Submitted Successfully!'),
+                                  title: const Text('Feedback'),
+                                  content: const Text(
+                                      'Score Submitted Successfully! You can resubmit the feedback if you wish to change anything.'),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Text('OK'),
+                                      child: const Text('OK'),
                                       onPressed: () {
+                                        _controllerFeedback.clear();
+                                        _controllerFeedForward.clear();
                                         Navigator.of(context)
                                             .pop(); // Close the dialog
                                       },
@@ -221,6 +224,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                       onPressed: () {
                                         Navigator.of(context)
                                             .pop(); // Close the dialog
+                                        RestartWidget.restartApp(context);
                                       },
                                     ),
                                   ],
@@ -230,7 +234,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               backgroundColor: Colors.green,
-                              content: Text('Score Submitted Successfully!'),
+                              content: Text(
+                                  'Score Submitted Successfully! You can resubmit the feedback if you wish to change anything.'),
                               duration: Duration(seconds: 3),
                             ));
                           }

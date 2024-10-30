@@ -200,7 +200,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
                               // Navigator.of(context).pop();
                             }
-                            RestartWidget.restartApp(context);
+                            // RestartWidget.restartApp(context);
                           } catch (e) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(

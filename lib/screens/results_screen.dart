@@ -131,7 +131,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                     activity.rubrics[key]!
                                         .elementAt(index)
                                         .score
-                                        .toString(),
+                                        .toStringAsFixed(3),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,

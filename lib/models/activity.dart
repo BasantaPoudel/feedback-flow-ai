@@ -7,8 +7,9 @@ class Activity {
   bool isDistributed;
   bool isStarted;
   Map<String, List<Rubric>> rubrics;
-
   bool isFeedbackByProfessor;
+  Map<String, dynamic> openFeedback;
+  Map<String, dynamic> openFeedForward;
   // Add other properties as needed
 
   Activity(
@@ -18,6 +19,8 @@ class Activity {
       required this.isCompleted,
       required this.isDistributed,
       required this.isFeedbackByProfessor,
+      this.openFeedback = const {},
+      this.openFeedForward = const {},
       this.id});
 
   factory Activity.fromJson(Map<String, dynamic> json) {
@@ -29,6 +32,8 @@ class Activity {
       isCompleted: json['isCompleted'],
       isDistributed: json['isDistributed'],
       isFeedbackByProfessor: json['isFeedbackByProfessor'],
+      openFeedForward: json['openFeedForward'],
+      openFeedback: json['openFeedback'],
     );
   }
 
@@ -46,6 +51,9 @@ class Activity {
       // log.d(value);
     });
 
+    Map<String, dynamic> openFeedbackFromMap = map['openFeedback'] ?? {};
+    Map<String, dynamic> openFeedForwardFromMap = map['openFeedForward'] ?? {};
+
     return Activity(
       id: id as String,
       title: map['title'] as String,
@@ -54,6 +62,8 @@ class Activity {
       isCompleted: map['isCompleted'] as bool,
       isDistributed: map['isDistributed'] as bool,
       isFeedbackByProfessor: map['isFeedbackByProfessor'] as bool,
+      openFeedback: openFeedbackFromMap,
+      openFeedForward: openFeedForwardFromMap,
     );
   }
 
@@ -64,6 +74,8 @@ class Activity {
       'isDistributed': isDistributed,
       'isStarted': isStarted,
       'isFeedbackByProfessor': isFeedbackByProfessor,
+      'openFeedback': openFeedback,
+      'openFeedForward': openFeedForward,
       'rubrics': rubrics.map(
           (key, value) => MapEntry(key, value.map((e) => e.toMap()).toList())),
     };

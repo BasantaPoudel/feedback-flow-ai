@@ -155,39 +155,59 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         var userRole =
                             await presentersScreenCubit.getUserRole();
                         if (userRole == 'professor') {
-                          presentersScreenCubit
-                              .updatePresenterFeedbackByProfessor(
-                                  presenter, stateRubric.activity);
-                          if (context.mounted) {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Feedback'),
-                                  content: const Text(
-                                      'Score Submitted Successfully! You can resubmit the feedback if you wish to change anything.'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        _controllerFeedback.clear();
-                                        _controllerFeedForward.clear();
-                                        Navigator.of(context)
-                                            .pop(); // Close the dialog
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                            // ScaffoldMessenger.of(context)
-                            //     .showSnackBar(const SnackBar(
-                            //   backgroundColor: Colors.green,
-                            //   content: Text('Score Submitted Successfully!'),
-                            //   duration: Duration(seconds: 3),
-                            // ));
+                          stateRubric.activity.openFeedback = {
+                            "professor": _controllerFeedback.text
+                          };
+                          stateRubric.activity.openFeedForward = {
+                            "professor": _controllerFeedForward.text
+                          };
 
-                            // Navigator.of(context).pop();
+                          try {
+                            await presentersScreenCubit
+                                .updatePresenterFeedbackByProfessor(
+                                    presenter, stateRubric.activity);
+                            // context
+                            //     .read<RubricScreenCubit>()
+                            //     .clearRubricState();
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Feedback'),
+                                    content: const Text(
+                                        'Score Submitted Successfully! You can resubmit the feedback if you wish to change anything.'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('OK'),
+                                        onPressed: () {
+                                          _controllerFeedback.clear();
+                                          _controllerFeedForward.clear();
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              // ScaffoldMessenger.of(context)
+                              //     .showSnackBar(const SnackBar(
+                              //   backgroundColor: Colors.green,
+                              //   content: Text('Score Submitted Successfully!'),
+                              //   duration: Duration(seconds: 3),
+                              // ));
+
+                              // Navigator.of(context).pop();
+                            }
+                            RestartWidget.restartApp(context);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('Score Submission Failed!'),
+                              duration: Duration(seconds: 3),
+                            ));
                           }
                         } else if (presentersScreenCubit
                                 .checkIfFeedbackAlreadyProvidedByProfessor(
@@ -207,20 +227,44 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             ));
                           }
                         } else {
-                          presentersScreenCubit.updatePresenterActivityList(
-                              presenter, stateRubric.activity);
+                          stateRubric.activity.openFeedback = {
+                            presentersScreenCubit.getUserId():
+                                _controllerFeedback.text
+                          };
+
+                          stateRubric.activity.openFeedForward = {
+                            presentersScreenCubit.getUserId():
+                                _controllerFeedForward.text
+                          };
+
+                          try {
+                            await presentersScreenCubit
+                                .updatePresenterActivityList(
+                                    presenter, stateRubric.activity);
+                            // context
+                            //     .read<RubricScreenCubit>()
+                            //     .clearRubricState();
+                            // RestartWidget.restartApp(context);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('Score Submission Failed!'),
+                              duration: Duration(seconds: 3),
+                            ));
+                          }
 
                           if (context.mounted) {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('Feedback'),
-                                  content:
-                                      Text('Score Submitted Successfully!'),
+                                  title: const Text('Feedback'),
+                                  content: const Text(
+                                      'Score Submitted Successfully! You can resubmit the feedback if you wish to change anything.'),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Text('OK'),
+                                      child: const Text('OK'),
                                       onPressed: () {
                                         Navigator.of(context)
                                             .pop(); // Close the dialog
@@ -231,13 +275,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                 );
                               },
                             );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.green,
-                              content: Text(
-                                  'Score Submitted Successfully! You can resubmit the feedback if you wish to change anything.'),
-                              duration: Duration(seconds: 3),
-                            ));
                           }
                         }
                       },
@@ -288,7 +325,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   const EdgeInsets.only(top: 20, bottom: 30),
                               padding: const EdgeInsets.all(10),
                               child: Text(
-                                'You can provide peer feedback only when the in-class activity is started by the professor. Please wait ...',
+                                'You can provide peer feedback only when the in-class activity is started by the professor and the presenter. Please wait ...',
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ),

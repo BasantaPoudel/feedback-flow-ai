@@ -54,9 +54,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     title: const Text("Results"),
                   ),
                   body: Center(
-                    child: Text(
-                      "Sorry, you didn't participate or receive any feedback in this activity.",
-                      style: Theme.of(context).textTheme.titleLarge,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        "Sorry, you didn't participate or receive any feedback in this activity.",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                     ),
                   ),
                 );

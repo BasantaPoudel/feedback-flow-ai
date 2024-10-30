@@ -83,7 +83,12 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
           rubricsFromProfessor;
     }
     // _userRepo.updateUser(presenter);
-    _userRepo.updateRubrics(rubricsFromProfessor, presenter, activity.title);
+    try {
+      _userRepo.updateRubrics(rubricsFromProfessor, presenter, activity.title,
+          activity.openFeedback, activity.openFeedForward);
+    } catch (e) {
+      log.d(e);
+    }
   }
 
   bool? checkIfFeedbackAlreadyProvidedByProfessor(
@@ -114,7 +119,12 @@ class PresenterScreenCubit extends Cubit<PresenterScreenState> {
     } else {
       presenter.activities?.elementAt(index!).rubrics[uId] = rubricsFromUser;
     }
-    _userRepo.updateRubrics(rubricsFromUser, presenter, activity.title);
+    try {
+      _userRepo.updateRubrics(rubricsFromUser, presenter, activity.title,
+          activity.openFeedback, activity.openFeedForward);
+    } catch (e) {
+      log.d(e);
+    }
   }
 
   String getUserId() {

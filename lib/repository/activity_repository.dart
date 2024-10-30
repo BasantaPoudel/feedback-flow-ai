@@ -25,14 +25,6 @@ class ActivityRepository extends MainRepository {
     }
   }
 
-  void deleteActivity(Activity activity) {
-    try {
-      activitiesRef.doc(activity.id).delete();
-    } catch (e) {
-      throw Exception('Error deleting activity: $e');
-    }
-  }
-
   updateActivityStatus(Activity activity) async {
     try {
       activitiesRef.doc(activity.id).update({
@@ -43,6 +35,14 @@ class ActivityRepository extends MainRepository {
     } catch (e) {
       throw Exception('Error updating activity status: $e');
       // log.d('Error: $e');
+    }
+  }
+
+  void deleteActivity(Activity activity) {
+    try {
+      activitiesRef.doc(activity.id).delete();
+    } catch (e) {
+      throw Exception('Error deleting activity: $e');
     }
   }
 }

@@ -145,7 +145,8 @@ class UserRepository extends MainRepository {
     return activities;
   }
 
-  void updateRubrics(List<Rubric> rubricsFromUser, presenter, title) async {
+  void updateRubrics(List<Rubric> rubricsFromUser, presenter, title,
+      openFeedback, openFeedForward) async {
     String uId;
     String userRole = await getUserRole();
     if (userRole == "professor") {
@@ -176,6 +177,8 @@ class UserRepository extends MainRepository {
         if (userRole == "professor") {
           activities[index]['isFeedbackByProfessor'] = true;
         }
+        activities[index]['openFeedback'] = openFeedback;
+        activities[index]['openFeedForward'] = openFeedForward;
         // Check if the document exists and then update it
         log.d("UpdatedActivity: $activities");
         transaction.update(docRef, {"activities": activities});

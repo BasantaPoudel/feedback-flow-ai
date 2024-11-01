@@ -40,6 +40,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Widget build(BuildContext context) {
     ResultScreenCubit resultScreenCubit =
         BlocProvider.of<ResultScreenCubit>(context);
+    String key = "";
 
     return BlocProvider(
         create: (context) => PresenterScreenCubit()..subscribeToData(),
@@ -120,7 +121,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                   )),
                               trailing: BlocBuilder<ResultScreenCubit,
                                   ResultScreenState>(builder: (context, state) {
-                                String key = "";
                                 if (state is ResultFromProfessor) {
                                   key = "professor";
                                 } else if (state is ResultFromStudents) {
@@ -140,7 +140,32 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             ));
                       },
                     ),
-                  )
+                  ),
+                  BlocBuilder<ResultScreenCubit, ResultScreenState>(
+                      builder: (context, state) {
+                    if (state is ResultFromProfessor) {
+                      return Container(
+                        padding: const EdgeInsets.all(15),
+                        margin: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Feedback: ${activity.openFeedback["professor"]}",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              "FeedForward: ${activity.openFeedForward["professor"]}",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const FittedBox();
+                    }
+                  }),
                 ]),
               );
             }));

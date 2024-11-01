@@ -170,15 +170,23 @@ class UserRepository extends MainRepository {
         var activities = currentValue['activities'];
 
         var currentRubrics = activities[index]['rubrics'];
+        var currentOpenFeedback = activities[index]['openFeedback'];
+        var currentOpenFeedForward = activities[index]['openFeedForward'];
+
         currentRubrics[uId] =
             rubricsFromUser.map((rubric) => rubric.toMap()).toList();
         activities[index]['rubrics'] = currentRubrics;
 
         if (userRole == "professor") {
           activities[index]['isFeedbackByProfessor'] = true;
+          currentOpenFeedForward["professor"] = openFeedForward["professor"];
+          currentOpenFeedback["professor"] = openFeedForward["professor"];
+        } else {
+          currentOpenFeedForward[uId] = openFeedForward[uId];
+          currentOpenFeedback[uId] = openFeedback[uId];
         }
-        activities[index]['openFeedback'] = openFeedback;
-        activities[index]['openFeedForward'] = openFeedForward;
+        activities[index]['openFeedback'] = currentOpenFeedback;
+        activities[index]['openFeedForward'] = currentOpenFeedForward;
         // Check if the document exists and then update it
         log.d("UpdatedActivity: $activities");
         transaction.update(docRef, {"activities": activities});

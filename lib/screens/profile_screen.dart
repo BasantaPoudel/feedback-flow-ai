@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
         })
       ],
       children: const [
-        Center(child: Text("App Version: 0.1.0+11")),
+        Center(child: Text("App Version: 0.1.0+12")),
       ],
     );
   }

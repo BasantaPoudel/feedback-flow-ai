@@ -1,6 +1,19 @@
-Copyright (c) 2025 Basanta Poudel. All rights reserved.
+Copyright (c) 2025 Basanta Poudel (Instituto Superior Técnico). All rights reserved.
 
-This repository is made publicly available for viewing and academic reference purposes only.
-No part of this codebase may be used, copied, modified, or distributed without explicit written permission from the author.
+This repository and its contents are made publicly available for viewing and academic reference purposes only.
+
+You are permitted to:
+- View, read, and cite this codebase for academic, educational, or research reference.
+
+You are NOT permitted to:
+- Copy, reproduce, modify, or create derivative works of the code;
+- Redistribute, publish, or make the code or parts of it available elsewhere;
+- Use the code or any derivative works for commercial, academic, or production purposes;
+- Include this code in other software, packages, or repositories.
+
+For any other use, including collaboration or adaptation, you must obtain prior written permission from the author.
 
 For inquiries, please contact: basantapoudel.dev@gmail.com
+
+Disclaimer:
+This code and its documentation are provided “as is” without warranty of any kind. The author is not responsible for any damages arising from the use or misuse of this material.
